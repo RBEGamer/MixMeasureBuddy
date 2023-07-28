@@ -40,10 +40,7 @@ class ui:
         
         self.last_display_content = "."
     
-    
-    #def show_error(self, _errmsg: str = ""):
-    #    self.last_display_source = 0
-    
+  
     
     def show_msg(self, _message: str = ""):
         full_refresh = False
@@ -53,7 +50,7 @@ class ui:
             self.display.erase()
             self.last_display_source = 0
             self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
-            self.display.set_pos(0,0)
+            self.display.set_pos(10,40)
             
             if len(_message) > 12:
                     self.display.set_font(tt14)
@@ -80,8 +77,13 @@ class ui:
             #self.display.set_pos(0, 90)
             self.display.set_font(tt14)
             self.display_print("{}".format(_description))
+    
+    
+    def set_full_refresh(self):
+        self.last_display_source = -1
         
-    def show_recipe_step(self, _action: str, _ingredient: str, _scale_val: int, _target_val: int):
+        
+    def show_recipe_step(self, _action: str, _ingredient: str, _current_step: int, _max_steps: int):
         full_refresh = False
         if self.last_display_source != 2:
             full_refresh = True
@@ -89,10 +91,18 @@ class ui:
         if full_refresh:
             self.display.erase()
             self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
-            self.display.set_pos(0, 10)
+            
+            
+            self.display.set_pos(50, 10)
+            self.display_print("{}".format(_action))
+            self.display.set_font(tt24)
+            
+            self.display.set_pos(0, 35)
             
             chars_row = 30
-            if len(_ingredient) < 11:
+            if _ingredient is None:
+                pass
+            elif len(_ingredient) < 11:
                 chars_row =10
                 self.display.set_font(tt32)
             elif len(_ingredient) < 15:
@@ -102,30 +112,15 @@ class ui:
                 chars_row = 30
                 self.display.set_font(tt14)
             self.display_print("{}".format(_ingredient))
-         
-         
-        
-        #color_value =  -1.0
-        #if _target_val is not None:
-        #    color_value = 1.0 - (_scale_val / _target_val) # 0-1.0
-        #if not full_refresh:
-        #    self.display.fill_rectangle(45, 50, self.SCR_WIDTH, 32)
-        #self.display.set_pos(45, 50)
-        # B G R
-        #if color_value < 1.0 and color_value > 0.0:
-        #    self.display.set_color(color565(0, int((1.0 - color_value) * 255), int(color_value*255)), color565(0, 0, 0))
-        #else:
-        #    self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
             
-            
-        #self.display.set_font(tt32)
-        #if _target_val is not None:
-        #    self.display_print("{} / {}g".format(int(_scale_val), int(_target_val)))
-        #else:
-        #    self.display_print("{}g".format(int(_scale_val)))
+            # SHOW STEPS
+            self.display.set_pos(60, 90)
+            self.display.set_font(tt24)
+            self.display_print("{} / {}".format(_current_step, _max_steps))
+             
+         
         
-
-        
+              
         
     def show_titlescreen(self):
         self.last_display_source = 3
@@ -134,13 +129,13 @@ class ui:
         self.display.set_font(tt32)
         self.display.set_pos(25,10)
         self.display_write("   Mix")
-        self.display.set_pos(25,40)
+        self.display.set_pos(25,45)
         self.display_write("Measure")
         self.display.set_pos(25,80)
         self.display_write(" Buddy")
         
         self.display.set_font(tt14)
-        self.display.set_pos(0,110)
+        self.display.set_pos(10,115)
         self.display_write("ID: {}".format(get_system_id()))
         
         

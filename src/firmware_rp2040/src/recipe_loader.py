@@ -10,10 +10,19 @@ import json
 import urequests
 from helper import get_system_id
 
+
+class USER_INTERACTION_MODE():
+    SCALE = 0
+    CONFIRM = 1
+    WAIT = 2
+    
 class recipe_loader:
+    
+    
+    
     RECIPE_BASE_DIR = "/sd"
     loaded_recipe = None
-    
+    current_recipe_step = None
     
     def __init__(self, _spi = None, cs_pin = 9):
         print("recipe_loader: __init__")
@@ -39,17 +48,75 @@ class recipe_loader:
         self.unload_recipe()
         self.create_initial_recipe()
         
+        
     
     def get_recipe_information(self) -> (str, str):
         if self.loaded_recipe is None:
             return ("invalid", "---")
         
         return (self.loaded_recipe['name'], self.loaded_recipe['description'])
+    
+    
+    
+    def switch_next_step(self):
+        if self.loaded_recipe is None:
+            return
+        if self.current_recipe_step is None:
+            self.current_recipe_step = 0
+        steps = self.loaded_recipe['steps']
+        n_steps = len(steps)
+        if self.current_recipe_step < n_steps:
+            self.current_recipe_step = self.current_recipe_step + 1
+    def switch_prev_step(self):
+        pass
+    
+    
+    def get_current_recipe_step(self) -> (USER_INTERACTION_MODE, str, str, int, int, int, bool): # (action, ingredient, current_step, max_steps, target_weight, finished)
+        if self.loaded_recipe is None:
+            return (None, None, None, None, None, None, True)
+        steps = self.loaded_recipe['steps']
+        n_steps = len(steps)
+        if self.current_recipe_step is None:
+            self.current_recipe_step = 0
         
+        if self.current_recipe_step >= n_steps:
+             return (None, None, None, None, None, None, True)
+            
+        step = steps[self.current_recipe_step]
+        if step['action'] == 'scale':
+            ingredient_name = self.loaded_recipe['ingredients'][step['ingredient']]
+            return (USER_INTERACTION_MODE.SCALE, step['action'], ingredient_name, self.current_recipe_step+1, n_steps, step['amount'], False)
+        elif step['action'] == 'confirm':     
+            return (USER_INTERACTION_MODE.CONFIRM, step['action'], step['text'], self.current_recipe_step+1, n_steps, 0, False)
+        elif step['action'] == 'wait':     
+            return (USER_INTERACTION_MODE.WAIT, step['action'], step['text'], self.current_recipe_step+1, n_steps, step['amount'], False)
+        else:
+            return (None, None, None, None, None, None, True)
+                    
     def unload_recipe(self):
         self.loaded_recipe = None
         
-
+    def get_ingredient_list(self) -> [str]:
+        if self.loaded_recipe is None:
+            return []
+        rt = []
+        ing = self.loaded_recipe['ingredients']
+        if ing is None or len(ing) <= 0:
+            return []
+        
+        for k,v in dict.iteritems():
+            rt.append(v)
+        return rt
+    
+    
+    def get_ingredient_str(self) -> str:
+        rt = ""
+        for item in self.get_ingredient_list():
+            rt = rt + item + "\n"
+        return rt
+        
+    
+    
     def create_initial_recipe(self):
         print("create_initial_recipe: Tequila Sunrise")
         name:str = "Tequila Sunrise"
@@ -59,13 +126,15 @@ class recipe_loader:
         recipe['name'] = "Tequila Sunrise"
         recipe['description'] = "A nice Tequila Sunrise Cocktail"
         recipe['version'] = "1.0.0"
-        recipe['ingredients'] = {'0': 'weißer Tequila','1': 'Orangensaft, ', '2': 'Grenadine'}
+        recipe['ingredients'] = {'0': 'weißer Tequila','1': 'Orangensaft', '2': 'Grenadine'}
         
         steps = []
-        steps.append( {'action':'scale', 'ingredient': '0', 'amount': 10}) # scale -> amount in g
-        steps.append( {'action':'scale', 'ingredient': '1', 'amount': 120})
-        steps.append( {'action':'scale', 'ingredient': '2', 'amount': 20})
-        #steps.append( {'action':'confirm', 'text': 'MIX EVERYTHING'})
+        steps.append( {'action': 'scale', 'ingredient': '0', 'amount': 10}) # scale -> amount in g
+        steps.append( {'action': 'scale', 'ingredient': '1', 'amount': 120})
+        steps.append( {'action': 'confirm', 'text': 'ADD ICE'}) # WAIT FOR USER OK
+        steps.append( {'action': 'scale', 'ingredient': '2', 'amount': 40})
+        steps.append( {'action': 'wait', 'text': 'WAIT FOR SETTLE DOWN', 'amount': 10}) # WAIT 20 SECONDS
+       
         recipe['steps'] = steps
        
         
@@ -75,7 +144,7 @@ class recipe_loader:
     def write_initial_settings(self):
         if "SETTINGS.json" in os.listdir(self.RECIPE_BASE_DIR):
             return
-        cred = {"wificredentials": [{"ssid":"ProDevMoDev", "psk": "6226054527192856"}], "api_endpoint": ["mixmeasurebuddy.com/api", "marcelochsendorf.com:4243"]}
+        cred = {"wificredentials": [{"ssid":"ProDevMoDev", "psk": "6226054527192856"}], "api_endpoint": ["mixmeasurebuddy.com/api/", "marcelochsendorf.com:4243"]}
         with open(self.RECIPE_BASE_DIR + "/" + "WIFI_CREDENTIALS.json", "w") as file:
             file.write(json.dumps(cred))
     
@@ -136,7 +205,7 @@ class recipe_loader:
         for url in cred["api_endpoint"]:
             try:
                 # GET LIST OF RECIPES
-                r = urequests.get("{}/{}/recipes".format(cred["api_endpoint"], str(get_system_id())),  headers=headers)
+                r = urequests.get("{}/{}/recipes.json".format(cred["api_endpoint"], str(get_system_id())),  headers=headers)
                 recipe_list = r.json() # ["resipe_file_uri_relative"]
                 r.close
                 

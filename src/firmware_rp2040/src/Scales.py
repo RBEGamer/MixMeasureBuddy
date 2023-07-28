@@ -18,7 +18,7 @@ class Scales(HX711):
     def raw_value(self):
         return self.read() - self.offset
 
-    def stable_value(self, reads=10, delay_us=500):
+    def stable_value(self, reads=10, delay_us=10):
         values = []
         for _ in range(reads):
             values.append(self.raw_value())
