@@ -1,0 +1,138 @@
+openapi: 3.0.1
+info:
+  title: Application
+  description: Generated at 28/07/2023 02:52:13. This is the swagger 
+    ui based on the open api 3.0 specification of the Application
+  version: 1.0.0 created by the flask swagger generator.
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: '/'
+paths:
+  '/docs/dist/{filename}':
+    get:
+      tags:
+      - swagger_ui
+      operationId: 'static'
+      parameters:
+      - in: path
+        name: filename
+        schema:
+          type: string
+        description: None
+        required: True
+  '/docs/{path}':
+    get:
+      tags:
+      - swagger_ui
+      operationId: 'show'
+      parameters:
+      - in: path
+        name: path
+        schema:
+          type: string
+        description: None
+        required: True
+  '/docs/':
+    get:
+      tags:
+      - swagger_ui
+      operationId: 'show'
+  '/mmb/{mmb_device_id}':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'mmbd_recipes'
+      parameters:
+      - in: path
+        name: mmb_device_id
+        schema:
+          type: string
+        description: None
+        required: True
+      responses:
+        '200':
+          $ref: '#/components/responses/mmbd_recipes_response'
+  '/mmb/{mmb_device_id}/{recipe_id}':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'mmbd_recipe'
+      parameters:
+      - in: path
+        name: mmb_device_id
+        schema:
+          type: string
+        description: None
+        required: True
+      - in: path
+        name: recipe_id
+        schema:
+          type: string
+        description: None
+        required: True
+      responses:
+        '200':
+          $ref: '#/components/responses/mmbd_recipe_response'
+  '/':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'index'
+components:
+  responses:
+    mmbd_recipes_response:
+      description: mmbd_recipes response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/mmbd_recipes_response_schema'
+    mmbd_recipe_response:
+      description: mmbd_recipe response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/mmbd_recipe_response_schema'
+  schemas:
+    mmbd_recipes_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer  
+          example: 10  
+        name:
+          type: string  
+          example: test_object  
+    mmbd_recipe_response_schema:
+      type: object
+      properties:
+        recipe:
+          $ref: "#/components/schemas/recipe_mmbd_recipe_response_schema"  
+        name:
+          type: string  
+          example: Recipe_Name  
+    recipe_mmbd_recipe_response_schema:
+      type: object
+      properties:
+        name:
+          type: string  
+          example: Tequila_Sunrise  
+        description:
+          type: string  
+          example: recipe text  
+        version:
+          type: string  
+          example: 1.0.0  
+        ingredients:
+          $ref: "#/components/schemas/ingredients_recipe_mmbd_recipe_response_schema"  
+        steps:
+          type: array  
+          items:
+            type: object
+    ingredients_recipe_mmbd_recipe_response_schema:
+      type: object
+      properties:
+        0:
+          type: string  
+          example: name  

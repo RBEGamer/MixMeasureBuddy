@@ -30,7 +30,7 @@ services:
     ports:
       - 27017:27017 # host:container
     volumes:
-      - './data:/data/db'
+      - './mongo/db:/data/db'
     environment:
       MONGO_INITDB_ROOT_USERNAME: mmb
       MONGO_INITDB_ROOT_PASSWORD: mmb
