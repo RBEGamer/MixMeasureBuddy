@@ -32,6 +32,7 @@ class Category(Document):
 
 class Recipe(Document):
     name = StringField(max_length=20, required=True, unique=True)
+    filename = StringField(required=True, unique=True)
     description = StringField(default="A nice new Cocktail", required=True)
     version = StringField(default="1.0.0", required=True, unique=False)
     ingredients = ListField(ReferenceField(Ingredient), unique=False)
@@ -57,6 +58,8 @@ class Users(Document):
     linked_recipes = ListField(ReferenceField(Recipe))
     permissions = IntField(default=0, required=True)
 
+    firmware_version = StringField(default="0.0.0", required=False , unique=False)
+    hardware_version = StringField(default="dev", required=False , unique=False)
 
     def __unicode__(self):
         return self.name

@@ -12,9 +12,10 @@ from configparser import ConfigParser
 import pymongo
 import mongoengine
 import names
+import urllib.parse
 # IMPORT CUSTOM DATABASE MODELS
 import dbmodels
-
+from flask import request
 
 logging.getLogger().setLevel(logging.DEBUG)
 load_dotenv() # LOAD .env
@@ -60,6 +61,15 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
     new_user = dbmodels.Users(name=names.get_full_name(), linked_device_id=mmb_device_id)
     # LINK SOME RECIPES FOR GETTING STARTED
     new_user.linked_recipes = dbmodels.Recipe.objects(default_recipe=True)
+
+
+    # STORE ADDITIONAL INFORMATION ABOUT THE DEVICE IF PRESENT
+    if 'DEVICE_FIRMWARE_VERSION' in request.headers:
+        new_user.firmware_version = request.headers['DEVICE_FIRMWARE_VERSION']
+
+    if 'DEVICE_HARDWARE_VERSION' in request.headers:
+        new_user.hardwareversion = request.headers['DEVICE_HARDWARE_VERSION']
+
     # SAVE USER
     new_user.save()
 
@@ -81,7 +91,7 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
 
     ret = []
     for r in linked_recipes:
-        ret. append(r.name)
+        ret. append(r.filename)
 
     return make_response(jsonify(ret), 200)
 
@@ -99,7 +109,7 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
 
 
     user_recipes = dbmodels.Users.objects.get(linked_device_id=mmb_device_id).linked_recipes
-    global_recipes = dbmodels.Recipe.objects(name=recipe_id)
+    global_recipes = dbmodels.Recipe.objects(filename=recipe_id)
     if len(global_recipes) <= 0:
         return make_response(jsonify({}), 404)
 
@@ -108,7 +118,7 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
 
     found = False
     for ur in user_recipes:
-        if recipe.name in ur.name:
+        if recipe.filename in ur.filename:
             found = True
             break
     if not found:
@@ -120,6 +130,7 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
     ret['name'] = recipe.name
     ret['description'] = recipe.description
     ret['version'] = recipe.version
+    ret['filename'] = recipe.filename + ".recipe"
     # TODO REMOVE
     for c in recipe.category:
         ret['category'] = c.name
@@ -257,6 +268,7 @@ if __name__ == "__main__":
 
         ra = dbmodels.Recipe()
         ra.name = "Tequila Sunrise"
+        ra.filename = urllib.parse.quote(ra.name.replace(' ', '_'))
         ra.category = dbmodels.Category.objects(name="Cocktails")
         ra.description = "A nice Tequila Sunrise Cocktail"
         ra.ingredients = i_list
@@ -283,6 +295,7 @@ if __name__ == "__main__":
 
         rb = dbmodels.Recipe()
         rb.name = "Pina Colada"
+        rb.filename = urllib.parse.quote(rb.name.replace(' ', '_'))
         rb.category = dbmodels.Category.objects(name="Cocktails")
         rb.description = "One of the most popular tropical cocktails from the Caribbean is the Pina Colada, simply delicious with strawberries"
         rb.ingredients = i_list
