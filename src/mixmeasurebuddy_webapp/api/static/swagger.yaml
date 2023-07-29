@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Application
-  description: Generated at 28/07/2023 02:52:13. This is the swagger 
+  description: Generated at 29/07/2023 03:26:33. This is the swagger 
     ui based on the open api 3.0 specification of the Application
   version: 1.0.0 created by the flask swagger generator.
 externalDocs:
@@ -10,7 +10,7 @@ externalDocs:
 servers:
   - url: '/'
 paths:
-  '/docs/dist/{filename}':
+  '/api/docs/dist/{filename}':
     get:
       tags:
       - swagger_ui
@@ -22,7 +22,7 @@ paths:
           type: string
         description: None
         required: True
-  '/docs/{path}':
+  '/api/docs/{path}':
     get:
       tags:
       - swagger_ui
@@ -34,12 +34,17 @@ paths:
           type: string
         description: None
         required: True
-  '/docs/':
+  '/api/docs/':
     get:
       tags:
       - swagger_ui
       operationId: 'show'
-  '/mmb/{mmb_device_id}':
+  '/api/mmb/':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'mmbd_index'
+  '/api/mmb/{mmb_device_id}/recipes':
     get:
       tags:
       - MixMeasureBuddy-API
@@ -54,7 +59,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/mmbd_recipes_response'
-  '/mmb/{mmb_device_id}/{recipe_id}':
+  '/api/mmb/{mmb_device_id}/recipe/{recipe_id}':
     get:
       tags:
       - MixMeasureBuddy-API
@@ -75,6 +80,11 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/mmbd_recipe_response'
+  '/api':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'api'
   '/':
     get:
       tags:

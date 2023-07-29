@@ -22,10 +22,11 @@ pydantic-core==2.4.0
 pydantic==2.1.1
 pymongo==4.4.1
 python-dotenv==1.0.0
-setuptools==65.5.1
+#setuptools==65.5.1
 SQLAlchemy==2.0.19
 typing-extensions==4.7.1
 Werkzeug==2.3.6
 wheel==0.38.4
 WTForms==3.0.1
 zipp==3.16.2
+names>=0.3.0
