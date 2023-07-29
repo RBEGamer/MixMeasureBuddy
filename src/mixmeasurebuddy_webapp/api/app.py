@@ -40,6 +40,7 @@ app.register_blueprint(get_swaggerui_blueprint(SWAGGER_URL, "/" + SWAGGERFILE_PA
 
 
 
+
 @blueprint.route('/api/mmb/', methods=['GET'])
 def mmbd_index(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
     return make_response(jsonify({'mmbd_recipes': '/api/mmb/<string:mmb_device_id>', 'mmbd_recipe': '/api/mmb/<string:mmb_device_id>/<string:recipe_id>'}), 200)
@@ -48,36 +49,57 @@ def mmbd_index(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / reci
 
 
 
-# ["resipe_file_uri_relative"]
+@blueprint.route('/api/mmb/<string:mmb_device_id>/register', methods=['GET'])
+def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
+    # CHECK USER ALREADY EXISTS
+    if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) > 0:
+        return make_response(jsonify({}), 200)
+
+    # CREATE NEW USER
+    new_user = dbmodels.Users(name=names.get_full_name(), linked_device_id=mmb_device_id)
+    # LINK SOME RECIPES FOR GETTING STARTED
+    new_user.linked_recipes = dbmodels.Recipe.objects(default_recipe=True)
+    # SAVE USER
+    new_user.save()
+
+
+    return make_response(jsonify({}), 200)
+
+
 @generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipes', methods=['GET'])
 def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
 
-    # CREATE USER IF NOT PRESENT
-
+    # CHECK DEVICE REGISTRATION
+    users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
     if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) <= 0:
-        user = dbmodels.Users(name="", linked_device_id=mmb_device_id)
-        user.save()
+        return make_response(jsonify([]), 401)
+
+    user = users[0]
+    linked_recipes = user.linked_recipes
+
+    ret = []
+    for r in linked_recipes:
+        ret. append(r.name)
+
+    return make_response(jsonify(ret), 200)
 
 
-    data: list = [
-        "Tequila_Sunrise",
-    ]
-    return make_response(jsonify(data), 200)
+
+
 
 @generator.response(status_code=200, schema={'recipe': {'name': 'Tequila_Sunrise', 'description': 'recipe text','version': '1.0.0','ingredients': {'0': 'name'},'steps':[{'action':'scale', 'ingredient':'0', 'amount':720},{'action':'confirm', 'text':'press ok'}]}, 'name': 'Recipe_Name'})
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipe/<string:recipe_id>', methods=['GET'])
 def mmbd_recipe(mmb_device_id: str, recipe_id: str):
-
-    # TODO ON RP2040 CHECK FOR VALID RESULT
-    # CREATE USER IF NOT PRESENT
+    # CHECK DEVICE REGISTRATION
     if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) <= 0:
-        user = dbmodels.Users(name="", linked_device_id=mmb_device_id)
-        user.save()
+        return make_response(jsonify({}), 401)
 
 
 
 
+
+    # PERFORM RECALULCATION STEP OF ML TO G
 
     data: dict = {
 
@@ -107,7 +129,7 @@ if __name__ == "__main__":
     DB_COLLECTION_RECIPES: str = "recipes"
     DB_COLLECTION_USERS: str = "users"
     DB_COLLECTION_INGREDIENTS: str = "ingredients"
-
+    DB_COLLECTION_CATEGORIES: str = "categories"
     # PREPARE DATABASE
     # WE ARE USING PYMONGO TO CHECK THE DATABASE
     db: pymongo.MongoClient = pymongo.MongoClient(DATABASE_CONNECTION_STRING)
@@ -118,7 +140,7 @@ if __name__ == "__main__":
         logging.debug("The MMB_DATABASE {} exists.".format(DB_NAME))
     mmb_database = db[DB_NAME]
     # CREATE COLLECTIONS
-    target_collections = [DB_COLLECTION_RECIPES, DB_COLLECTION_USERS, DB_COLLECTION_INGREDIENTS]
+    target_collections = [DB_COLLECTION_RECIPES, DB_COLLECTION_USERS, DB_COLLECTION_INGREDIENTS, DB_COLLECTION_CATEGORIES]
     existing_collections = mmb_database.list_collection_names()
     for collection in target_collections:
         if collection in existing_collections:
@@ -132,44 +154,80 @@ if __name__ == "__main__":
     # CREATE mongoengine CONNECTION
     cs = "{}/{}".format(DATABASE_CONNECTION_STRING, DB_NAME)
     logging.debug(cs)
-
-
     mongoengine.connect(host=cs)
 
+    # CREATE ADMIN USER
+    if len(dbmodels.Users.objects(linked_device_id="1337")) <= 0:
+        user = dbmodels.Users(name="MixMeasureBuddy Owner A")
+        user.linked_device_id="1337"
+        user.permissions = 1
+        user.save()
+    if len(dbmodels.Users.objects(linked_device_id="1338")) <= 0:
+        user = dbmodels.Users(name="MixMeasureBuddy Owner B")
+        user.linked_device_id="1338"
+        user.permissions = 1
+        user.save()
 
 
-    test_ing = [
-        "Pineapple-Juice",
-        "Cream",
-        "white Rum",
-        "Crushed Ice",
-        "Coconut-Juice",
-        "Strawberries",
-        "white Tequila",
-        "Grenadine",
-        "Orange-Juice"
-    ]
+    # CREATE CATEGORY
+    categories = ["Cocktails", "Virgin-Cocktails", "Longdrinks"]
+    for c in categories:
+        if len(dbmodels.Category.objects(name=c)) <= 0:
+            dbmodels.Category(name=c).save()
+
+
+
+    # CREATE  INGREDIENTS
+    test_ing = ["Pineapple-Juice", "Cream", "white Rum", "Strawberry-Syrup","Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila", "Grenadine", "Orange-Juice"]
 
     for i in test_ing:
         if len(dbmodels.Ingredient.objects(name=i)) <= 0:
-            r = dbmodels.Ingredient()
-            r.name = i
-            r.save()
+            r = dbmodels.Ingredient(name=i).save()
 
+
+    # CREATE TEST RECIPES
     if len(dbmodels.Recipe.objects(name="Tequila Sunrise")) <= 0:
-        i1 = dbmodels.Ingredient.objects(name="white Tequila")
+        i_list = []
+        i_list.append(dbmodels.Ingredient.objects(name="white Tequila")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Orange-Juice")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Grenadine")[0])
 
-        r = dbmodels.Recipe()
-        r.name = "Tequila Sunrise"
-        r.description = "A nice Tequila Sunrise Cocktail"
-        r.ingredients = [i1[0]]
-        r.steps = [dbmodels.Step(amount=10, action="scale", ingredient=[i1])]
-        r.save()
+        ra = dbmodels.Recipe()
+        ra.name = "Tequila Sunrise"
+        ra.category = dbmodels.Category.objects(name="Cocktails")
+        ra.description = "A nice Tequila Sunrise Cocktail"
+        ra.ingredients = i_list
+        ra.default_recipe = True
+        ra.author = dbmodels.Users.objects(linked_device_id="1337")[0]
+        #r.steps = [dbmodels.Step(amount=10, action="scale", ingredients=[i1])]
+        ra.save()
 
-    #    r1.ingredients["0"] = "10 Strawberries"
 
-        #r1.steps = [dbmodels.Step(text="puree strawberries", action="confirm")]
 
-        #r1.save()
+    if len(dbmodels.Recipe.objects(name="Pina Colada")) <= 0:
+        i_list = []
+        i_list.append(dbmodels.Ingredient.objects(name="Malibu-Coconut")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Pineapple-Juice")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Cream")[0])
+
+        i_steps = []
+        i_steps.append(dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
+        i_steps.append(dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0]))
+        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
+        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
+
+
+        rb = dbmodels.Recipe()
+        rb.name = "Pina Colada"
+        rb.category = dbmodels.Category.objects(name="Cocktails")
+        rb.description = "One of the most popular tropical cocktails from the Caribbean is the Pina Colada, simply delicious with strawberries"
+        rb.ingredients = i_list
+        rb.default_recipe = True
+        rb.author = dbmodels.Users.objects(linked_device_id="1338")[0]
+        rb.steps = i_steps
+        rb.save()
+
+
     # START FLASK
     app.run(host=os.environ.get("API_SERVER_BIND_ADDR", '0.0.0.0'), port=os.environ.get("API_SERVER_PORT", 5000), debug=True)

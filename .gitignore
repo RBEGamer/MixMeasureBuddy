@@ -163,3 +163,4 @@ cython_debug/
 src/mixmeasurebuddy_webapp/mongo/db/WiredTiger
 *.lock
 *.turtle
+*.bson

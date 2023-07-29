@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Application
-  description: Generated at 29/07/2023 03:26:33. This is the swagger 
+  description: Generated at 29/07/2023 15:51:33. This is the swagger 
     ui based on the open api 3.0 specification of the Application
   version: 1.0.0 created by the flask swagger generator.
 externalDocs:
@@ -44,6 +44,18 @@ paths:
       tags:
       - MixMeasureBuddy-API
       operationId: 'mmbd_index'
+  '/api/mmb/{mmb_device_id}/register':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'mmbd_register'
+      parameters:
+      - in: path
+        name: mmb_device_id
+        schema:
+          type: string
+        description: None
+        required: True
   '/api/mmb/{mmb_device_id}/recipes':
     get:
       tags:
