@@ -59,6 +59,7 @@ class ui:
             
             self.display_print("{}".format(_message))
         
+  
         
     def show_recipe_information(self, _name:str, _description: str = ""):
         full_refresh = False
@@ -137,6 +138,46 @@ class ui:
         self.display.set_font(tt14)
         self.display.set_pos(10,115)
         self.display_write("ID: {}".format(get_system_id()))
+    
+    
+    def show_recipe_ingredients(self, _ingredients: [str]):
+        full_refresh = False
+        if self.last_display_source != 4:
+            full_refresh = True
+        self.last_display_source = 4
         
+        if full_refresh:
+            self.display.erase()
+            self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
+            
+            self.display.set_font(tt24)
+            self.display.set_pos(5,10)
+            self.display_write("Ingredients")
+            
+            self.display.set_font(tt14)
+            y = 30
+            step = 15
+            for item in _ingredients:
+                y = y + step
+                self.display.set_pos(0,y)
+                self.display_print("* {}".format(item))
+    
+      
+    def show_scale(self, _value: int):
+        full_refresh = False
+        if self.last_display_source != 5:
+            full_refresh = True
+        self.last_display_source = 5
         
+        if full_refresh:
+            self.display.erase()
+            self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
+            self.display.set_pos(0, 10)
+            self.display.set_font(tt24)
+            self.display_print("{}".format("SCALE MODE"))
+            
+
+        self.display.set_pos(40, 60)
+
+        self.display_print("{:04d}g".format(_value))
        

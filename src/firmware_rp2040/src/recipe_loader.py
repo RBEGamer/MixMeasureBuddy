@@ -5,11 +5,11 @@ import network
 import network
 import socket
 import os
-from utime import sleep_us
+import time
 import json
 import urequests
 from helper import get_system_id
-
+from ui import ui
 
 class USER_INTERACTION_MODE():
     SCALE = 0
@@ -67,10 +67,16 @@ class recipe_loader:
         n_steps = len(steps)
         if self.current_recipe_step < n_steps:
             self.current_recipe_step = self.current_recipe_step + 1
+            
+            
     def switch_prev_step(self):
         pass
     
-    
+    def is_recipe_loaded(self):
+        if self.loaded_recipe is not None:
+            return True
+        return False
+        
     def get_current_recipe_step(self) -> (USER_INTERACTION_MODE, str, str, int, int, int, bool): # (action, ingredient, current_step, max_steps, target_weight, finished)
         if self.loaded_recipe is None:
             return (None, None, None, None, None, None, True)
@@ -101,11 +107,10 @@ class recipe_loader:
             return []
         rt = []
         ing = self.loaded_recipe['ingredients']
-        if ing is None or len(ing) <= 0:
+        if ing is None:
             return []
-        
-        for k,v in dict.iteritems():
-            rt.append(v)
+        for k in ing:
+            rt.append(ing[k])
         return rt
     
     
@@ -123,29 +128,49 @@ class recipe_loader:
         filename: str = name.replace(" ","_") + ".recipe"
         recipe: dict = dict()
         
-        recipe['name'] = "Tequila Sunrise"
+        recipe['name'] = name
         recipe['description'] = "A nice Tequila Sunrise Cocktail"
         recipe['version'] = "1.0.0"
         recipe['ingredients'] = {'0': 'weißer Tequila','1': 'Orangensaft', '2': 'Grenadine'}
-        
         steps = []
         steps.append( {'action': 'scale', 'ingredient': '0', 'amount': 10}) # scale -> amount in g
         steps.append( {'action': 'scale', 'ingredient': '1', 'amount': 120})
         steps.append( {'action': 'confirm', 'text': 'ADD ICE'}) # WAIT FOR USER OK
         steps.append( {'action': 'scale', 'ingredient': '2', 'amount': 40})
         steps.append( {'action': 'wait', 'text': 'WAIT FOR SETTLE DOWN', 'amount': 10}) # WAIT 20 SECONDS
-       
         recipe['steps'] = steps
        
+        with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
+            file.write(json.dumps(recipe))
+            
+            
+        print("create_initial_recipe: Strawberry Colada")
+        name:str = "Strawberry Colada"
+        filename: str = name.replace(" ","_") + ".recipe"
+        recipe: dict = dict()
         
+        recipe['name'] = name
+        recipe['description'] = "A fruity strawberry cocktail with coconut"
+        recipe['version'] = "1.0.0"
+        recipe['ingredients'] = {'0': '10 Strawberries','1': 'Coconut-Juice', '2': 'Cream', '3': 'Pineapple-Juice', '4': 'white Rum', '5': 'Crushed Ice'}
+        steps = []
+        steps.append( {'action': 'confirm', 'text': 'puree strawberries'}) # WAIT FOR USER OK
+        steps.append( {'action': 'confirm', 'text': 'add 1/2 crushed ice'}) # WAIT FOR USER OK
+        steps.append( {'action': 'scale', 'ingredient': '1', 'amount': 60}) # scale -> amount in g
+        steps.append( {'action': 'scale', 'ingredient': '2', 'amount': 30})
+        steps.append( {'action': 'scale', 'ingredient': '3', 'amount': 80})
+        steps.append( {'action': 'scale', 'ingredient': '4', 'amount': 50})
+        steps.append( {'action': 'wait', 'text': 'Shake', 'amount': 30}) # WAIT 20 SECONDS
+        recipe['steps'] = steps
+       
         with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
             file.write(json.dumps(recipe))
     
     def write_initial_settings(self):
         if "SETTINGS.json" in os.listdir(self.RECIPE_BASE_DIR):
             return
-        cred = {"wificredentials": [{"ssid":"ProDevMoDev", "psk": "6226054527192856"}], "api_endpoint": ["mixmeasurebuddy.com/api/", "marcelochsendorf.com:4243"]}
-        with open(self.RECIPE_BASE_DIR + "/" + "WIFI_CREDENTIALS.json", "w") as file:
+        cred = {"wificredentials": [{"ssid":"ProDevMoDev", "psk": "6226054527192856"}], "api_endpoint": ["192.168.178.43:9090/api/mmb"]}#,"mixmeasurebuddy.com/api/mmb", "marcelochsendorf.com:4243/api/mmb"]}
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
     
     
@@ -154,7 +179,7 @@ class recipe_loader:
         for f in os.listdir(self.RECIPE_BASE_DIR):
             if f.endswith('.recipe'):
                 # f = tequila_sunrise.recipe
-                name = ""
+                name = f.replace('.recipe', '').replace('_', ' ')
                 res.append((f,name))
         return res
     
@@ -175,7 +200,7 @@ class recipe_loader:
             self.loaded_recipe = json_recipe
             return True
     
-    def update_recipes(self):
+    def update_recipes(self, _gui: ui.ui) -> bool:
         
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
@@ -187,46 +212,67 @@ class recipe_loader:
         wlan.active(True)
         
         connect_ok = False
-        for wifi in cred:
-            wlan.connect(cred["wificredentials"]["ssid"], cred["wificredentials"]["psk"])
+        for wifi in cred["wificredentials"]:
+            print(wifi)
+            ssid = wifi["ssid"]
+            psk = wifi["psk"]
+            
+            _gui.show_msg("CONNECTING TO: {}".format(ssid))
+            wlan.connect(ssid, psk)
             timer = 0
             while wlan.isconnected() == False:
                 print('Waiting for connection...')
-                sleep(1)
+                time.sleep(1)
                 timer = timer + 1
                 if timer > 5:
                     break
             if wlan.isconnected():
                 connect_ok = True
+                _gui.show_msg("CONNECTION SUCCESS")
                 break
-        print(wlan.ifconfig())
+            
+        if not connect_ok:
+            _gui.show_msg("CONNECTION FAILED PLEASE UPDATE SETTINGS.JSON ON SD CARD")
+            time.sleep(2)
+            return False
         
-          
+        print(wlan.ifconfig())
+        _gui.show_msg("IP: {}".format(wlan.ifconfig()[0]))
+        time.sleep(2)
+        
+        headers={}
+        print(cred["api_endpoint"])
         for url in cred["api_endpoint"]:
+            if 'http://' not in url:
+                url = 'http://' + url
+            print(url)
+            _gui.show_msg("API: {}".format(url))
+            time.sleep(2)
             try:
                 # GET LIST OF RECIPES
-                r = urequests.get("{}/{}/recipes.json".format(cred["api_endpoint"], str(get_system_id())),  headers=headers)
+                r = urequests.get("{}/{}/recipes".format(url, str(get_system_id())),  headers=headers)
                 recipe_list = r.json() # ["resipe_file_uri_relative"]
-                r.close
-                
-                # DONWLOAD EACH RECIPE
-                for recipe in recipe_list:
-                    r = urequests.get("{}/{}/{}".format(cred["api_endpoint"], str(get_system_id()), recipe),  headers=headers)
-                    dl_recipe = r.json() # [{filename_without_ending, recipe}]
-                    r.close
-                    with open(self.RECIPE_BASE_DIR + "/" + dl_recipe['name'] + ".recipe", "w") as file:
-                        file.write(json.dumps( dl_recipe['recipe']))
+                r.close()
+                if recipe_list is not None:
+                    # DONWLOAD EACH RECIPE
+                    for recipe in recipe_list:
+                        _gui.show_msg("recipe update: {}".format(recipe))
+                        r = urequests.get("{}/{}/recipe/{}".format(url, str(get_system_id()), recipe),  headers=headers)
+                        dl_recipe = r.json() # [{filename_without_ending, recipe}]
+                        r.close()
+                        with open(self.RECIPE_BASE_DIR + "/" + dl_recipe['name'] + ".recipe", "w") as file:
+                            file.write(json.dumps( dl_recipe['recipe']))
                     
             except Exception as e:
+                _gui.show_msg(str(e))
                 print(str(e))
+  
+                
             
-        
-        
-        
-        
         
         # DISABLE WIFI
         wlan.active(False)
+        return True
     
 
     

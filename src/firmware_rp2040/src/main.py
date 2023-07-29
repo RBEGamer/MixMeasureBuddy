@@ -5,7 +5,6 @@ import neopixel
 import random
 import sdcard
 import uos
-from utime import sleep_us
 
 
 from helper import millis, fmap, imap
@@ -42,12 +41,21 @@ def tare_drink(_scale, _iterations = 5):
 
 # SYSTEM STATES
 SYSTATE_IDLE = 0
+# MENU
+SYSTEMSTATE_ENTER_MAINMENU = 1
+SYSTEMSTATE_MAINMENU = 2
 
+# MISC MODES
+SYSTEMSTATE_SCALE_MODE = 3
+SYSTEMSTATE_UPDATE_MODE = 4
 # SCALE ENABLED
-SYSTATE_RECIPE_START = 1
-SYSTATE_RECIPE_PLACEGLASS = 2
-SYSTATE_RECIPE_RUNNING = 3
-SYSTATE_RECIPE_FINISHED = 4
+SYSTATE_RECIPE_START = 10
+SYSTATE_RECIPE_SHOW_INGREDIENTS = 11
+SYSTATE_RECIPE_PLACEGLASS = 12
+SYSTATE_RECIPE_RUNNING = 13
+SYSTATE_RECIPE_FINISHED = 14
+
+
 
 
 if __name__ == "__main__":
@@ -67,8 +75,6 @@ if __name__ == "__main__":
     
     # INIT DISPLAY
     gui = ui.ui()
-    #gui.show_titlescreen()
-    
     # INIT SCALE
     scales = Scales()
     scales.tare()
@@ -85,21 +91,7 @@ if __name__ == "__main__":
     push_button_down = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_UP)  # 23 number pin is input
     
     
-    
-    
-    
-    #pin_tare = machine.Pin(3, machine.Pin.IN)
-    #pin_calibrate = machine.Pin(6, machine.Pin.IN)
-    if recipe.load_recipe("Tequila_Sunrise"):
-        print("loaded recipe: Tequila Sunrise")
-        system_state = SYSTATE_RECIPE_START
-        
-        information = recipe.get_recipe_information()
-        gui.show_recipe_information(information[0], information[1])
-        last_systate_update = millis()
-    else:
-        print("recipe loading failed")
-    
+   
     
     delay_value = None # FOR USER TIMER      
            
@@ -118,25 +110,60 @@ if __name__ == "__main__":
     
     UB_NONE = 0
     UB_UP = 1
-    UB_DOWN = 2
+    UB_UPLONG = 2
+    UB_DOWN = 3
+    
+    
     last_button_pressed = None
+    button_pressed = UB_NONE
     time_elapsed = 0
     load_next_step = False
-        
+    
+    
+  
+
+    
+    
+    found_recipes = []
+    mainmenu_recipe_index = 0
+    
+    system_state = SYSTEMSTATE_ENTER_MAINMENU #SYSTEMSTATE_UPDATE_MODE
     while True:
         
         
         # READ USER_BUTTONS
-        if push_button_up.value() and not push_button_down.value() and last_userbutton_update is None:
+        if push_button_up.value() and not push_button_down.value() and last_userbutton_update is None and button_pressed is UB_NONE:
             last_userbutton_update = millis()
             last_button_pressed = UB_UP
         
+     
         elif push_button_up.value() and push_button_down.value():
-            if last_userbutton_update is not None and abs(last_userbutton_update - millis()) > 1:
+            if last_userbutton_update is not None and last_button_pressed is not None:
+                
+                btn_duration = abs(last_userbutton_update - millis())
+                if last_button_pressed == UB_UP: #and  btn_duration >1 and btn_duration < 1000:
+                    print("UB_UP")
+                    button_pressed = UB_UP
+                else:
+                    button_pressed = UB_NONE
+     
+                
                 last_userbutton_update = None
+                last_button_pressed = None   
+
+
+        if last_button_pressed == UB_UP and abs(last_userbutton_update - millis()) > 1000:
+            button_pressed = UB_UPLONG
+            last_userbutton_update = None
+            last_button_pressed = None
+            print("UB_UPLONG")
+            #if last_userbutton_update is not None and abs(last_userbutton_update - millis()) > 1:
+            #    last_userbutton_update = None
+        
+        
         
         # READ SCALE
-        if system_state >= SYSTATE_RECIPE_START:
+        if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE:
             scale_value = scales.raw_value() #stable_value()
             scale_value_tared = scale_value - tare_value
             scale_value_g = fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , 50)
@@ -146,19 +173,150 @@ if __name__ == "__main__":
             scale_value_g =  scale_value_g + scale_offset
         
         
+            
+            
+            
+        # RETURN BUTTON
+        if system_state > SYSTEMSTATE_MAINMENU and (button_pressed == UB_UPLONG or button_pressed == UB_DOWN):
+            button_pressed = UB_NONE
+            system_state = SYSTEMSTATE_ENTER_MAINMENU
+        
+        # GLOBAL STATE MACHIENE
+        if system_state == SYSTATE_IDLE: # INITIAL SYSTEMSTATE
+            gui.show_titlescreen()
+            last_systate_update = millis()
+            system_state = SYSTEMSTATE_ENTER_MAINMENU
+            
+        elif system_state == SYSTEMSTATE_ENTER_MAINMENU: # RELOAD RECIPES
+            for i in range(NEOPIXEL_COUNT):
+                neopixelring[i] = (0, 0, 100)
+            neopixelring.write()
+            found_recipes = recipe.list_recpies()
+            mainmenu_recipe_index = -1 # TO TRIGGER FIRST TIME DISPLAY UPDATE AFTER ENTERING THE STATE
+            print(found_recipes)
+            last_systate_update = millis()
+            system_state = SYSTEMSTATE_MAINMENU
+                
+                
+        elif system_state == SYSTEMSTATE_MAINMENU: # DISPLAY MANIMENU
+            
+            # DISPLAY NEXT MENU
+
+            if button_pressed == UB_UP or mainmenu_recipe_index == -1:
+                button_pressed = UB_NONE
+                # TO TRIGGER FIRST TIME DISPLAY UPDATE AFTER ENTERING THE STATE
+                if mainmenu_recipe_index == -1:
+                    mainmenu_recipe_index = 0
+                
+            
+        
+                if mainmenu_recipe_index >= (len(found_recipes)-1) + 2: # +2 for UPDATE_RECIPES, SCALE_MODE
+                    mainmenu_recipe_index = 0
+                else:
+                    mainmenu_recipe_index = mainmenu_recipe_index + 1
+                    
+                # SHOW RECIPES
+                if mainmenu_recipe_index < len(found_recipes):
+                    rec_name = found_recipes[mainmenu_recipe_index][0]
+                    print(rec_name)
+                    if recipe.load_recipe(rec_name):
+                        gui.set_full_refresh()
+                        information = recipe.get_recipe_information()
+                        print(information)
+                        gui.show_recipe_information(information[0], information[1])
+                   
+                        
+                else:
+                    recipe.unload_recipe()
+                    
+                    if mainmenu_recipe_index == (len(found_recipes)-1)+1:
+                        gui.set_full_refresh()
+                        gui.show_recipe_information("SCALE MODE", "like a normal kitchen scale")
+                    elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
+                        gui.set_full_refresh()
+                        gui.show_recipe_information("RECIPE UPDATE", "updates all recipes using the webapp")
+                        
+                    print("extra menu {}".format(mainmenu_recipe_index))
+                        
+                        
+            elif button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
+                button_pressed = UB_NONE
+                last_systate_update = millis()
+                
+                if recipe.is_recipe_loaded():
+                    pass
+                    #system_state = SYSTATE_RECIPE_START
+                elif mainmenu_recipe_index == (len(found_recipes)-1)+1:
+                    system_state = SYSTEMSTATE_SCALE_MODE
+                    # UPDATE NEOPIXEL
+                    for i in range(NEOPIXEL_COUNT):
+                        neopixelring[i] = (0, 100, 100)
+                    neopixelring.write()
+                elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
+                    system_state = SYSTEMSTATE_UPDATE_MODE
+                    # UPDATE NEOPIXEL
+                    for i in range(NEOPIXEL_COUNT):
+                        neopixelring[i] = (100, 0, 100)
+                    neopixelring.write()
+
+                
+                
+
+                
+        elif system_state == SYSTEMSTATE_SCALE_MODE:
+            # UPDATE DISPLAY WITH SCALE READING
+            gui.show_scale(int(scale_value_g))
+            
+            if button_pressed == UB_UP:
+                button_pressed = UB_NONE
+                tare_value = tare_drink(scales, 1)
+            elif button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
+                last_button_pressed = UB_NONE
+                last_systate_update = millis()
+                system_state = SYSTATE_IDLE
+                
+        elif system_state == SYSTEMSTATE_UPDATE_MODE:
+            gui.show_msg("LOADING UPDATE MANAGER")
+            recipe.unload_recipe()
+            if recipe.update_recipes(gui):
+                for i in range(NEOPIXEL_COUNT):
+                    neopixelring[i] = (0, 0, 100)
+                neopixelring.write()
+                gui.show_msg("RECIPE UPDATE SUCCESS")
+            else:
+                for i in range(NEOPIXEL_COUNT):
+                    neopixelring[i] = (100, 0, 0)
+                neopixelring.write()
+                gui.show_msg("RECIPE UPDATE FAILED")
+            
+            if button_pressed == UB_UP or button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
+                button_pressed = UB_NONE
+                last_systate_update = millis()
+                system_state = SYSTATE_IDLE
+            
         
         
-        
-        if system_state == SYSTATE_RECIPE_START:
+        elif system_state == SYSTATE_RECIPE_START: # START RECIPE
             if  abs(last_systate_update - millis()) > 1000:
                 last_systate_update = millis()
-                system_state = SYSTATE_RECIPE_PLACEGLASS
-                scale_value_before_glass_added = scale_value_g
+                system_state = SYSTATE_RECIPE_SHOW_INGREDIENTS
                 
+                
+        elif system_state == SYSTATE_RECIPE_SHOW_INGREDIENTS:
+            gui.show_recipe_ingredients(recipe.get_ingredient_list())
+            for i in range(NEOPIXEL_COUNT):
+                neopixelring[i] = (100, 100, 0)
+            neopixelring.write()
+            if  abs(last_systate_update - millis()) > 20000 or button_pressed == UB_UP:
+                button_pressed = UB_NONE
+                scale_value_before_glass_added = scale_value_g
+                last_systate_update = millis()
+                system_state = SYSTATE_RECIPE_PLACEGLASS
+            
         elif system_state == SYSTATE_RECIPE_PLACEGLASS:
             gui.show_msg("PLACE GLASS")
-            print(scale_value_g)
-            if  abs(last_systate_update - millis()) > 7000 or scale_value_g > (scale_value_before_glass_added + 50):
+            #print(scale_value_g)
+            if  abs(last_systate_update - millis()) > 10000 or scale_value_g > (scale_value_before_glass_added + 50):
                 
                 gui.show_msg("CALIBRATING")
                 tare_value = tare_drink(scales, 1)
@@ -173,7 +331,7 @@ if __name__ == "__main__":
             neopixelring.write()
             gui.show_msg("DRINK READY TO SERVE")
             
-            if  abs(last_systate_update - millis()) > 1000:
+            if button_pressed == UB_UP or abs(last_systate_update - millis()) > 7000:
                 last_systate_update = millis()
                 system_state = SYSTATE_IDLE
                 
@@ -284,7 +442,7 @@ if __name__ == "__main__":
             
         else:
             for i in range(NEOPIXEL_COUNT):
-                neopixelring[i] = (0, 0, 50)
+                neopixelring[i] = (0, 0, 100)
             neopixelring.write()
         
         
