@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
 
     # CREATE  INGREDIENTS
-    test_ing = ["Pineapple-Juice", "Cream", "white Rum", "Strawberry-Syrup","Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila", "Grenadine", "Orange-Juice"]
+    test_ing = ["Aperol", "Prosecco", "Sodawater", "Pineapple-Juice", "", "Cream", "white Rum", "Strawberry-Syrup","Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila", "Grenadine", "Orange-Juice"]
 
     for i in test_ing:
         if len(dbmodels.Ingredient.objects(name=i)) <= 0:
@@ -251,6 +251,32 @@ if __name__ == "__main__":
 
 
     # CREATE TEST RECIPES
+
+    if len(dbmodels.Recipe.objects(name="Aperol Spritz")) <= 0:
+        i_list = []
+        i_list.append(dbmodels.Ingredient.objects(name="Aperol")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Prosecco")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Sodawater")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Crushed Ice")[0])
+
+        i_steps = []
+        i_steps.append(dbmodels.Step(amount=60, action="scale", ingredient=dbmodels.Ingredient.objects(name="Aperol")[0]))
+        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Prosecco")[0]))
+        i_steps.append(dbmodels.Step(amount=10, action="scale", ingredient=dbmodels.Ingredient.objects(name="Sodawater")[0]))
+
+
+        ra = dbmodels.Recipe()
+        ra.name = "Aperol Spritz"
+        ra.filename = urllib.parse.quote(ra.name.replace(' ', '_'))
+        ra.category = dbmodels.Category.objects(name="Longdrinks")
+        ra.description = "The Spritz, also Sprizz or Veneziano, is a mixed drink made from Prosecco or white wine and mineral water and a liqueur."
+        ra.ingredients = i_list
+        ra.default_recipe = True
+        ra.author = dbmodels.Users.objects(linked_device_id="1337")[0]
+        ra.steps = i_steps
+        ra.save()
+
+
     if len(dbmodels.Recipe.objects(name="Tequila Sunrise")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="white Tequila")[0])

@@ -1,4 +1,5 @@
 services:
+
   web:
     image: nginx
     volumes:
@@ -32,7 +33,7 @@ services:
     environment:
       - API_SERVER_ADDR=5000
       - FRONTEND_SERVER_ADDR=3002
-      - DATABASE_CONNECTION_STRING=mongodb://mongo:27017/
+      - DATABASE_CONNECTION_STRING=mongodb://mongo:27017
     volumes:
       - ./api:/src
     depends_on:
