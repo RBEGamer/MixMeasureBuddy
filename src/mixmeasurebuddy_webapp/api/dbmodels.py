@@ -3,7 +3,6 @@ import names
 from mongoengine import Document, IntField, EmbeddedDocument
 from mongoengine import DateTimeField, StringField, ReferenceField, ListField, DictField, BooleanField, FloatField, EmbeddedDocumentListField
 
-
 class Ingredient(Document):
     name = StringField(required=True, unique=True)
     weight_g_per_unit = FloatField(default=1.0, required=True)
@@ -18,9 +17,9 @@ class Ingredient(Document):
     meta = {'collection': 'ingredients'}
 
 class Step(EmbeddedDocument):
-    action = StringField(required=True)
-    text = StringField(required=False)
-    ingredient = ReferenceField(Ingredient, default=None)
+    action = StringField(required=True, default="")
+    text = StringField(required=False, default="")
+    ingredient = ReferenceField(Ingredient, required=False)
     amount = IntField(required=False)
 
 

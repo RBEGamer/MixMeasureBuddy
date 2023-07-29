@@ -15,6 +15,7 @@ import names
 # IMPORT CUSTOM DATABASE MODELS
 import dbmodels
 
+
 logging.getLogger().setLevel(logging.DEBUG)
 load_dotenv() # LOAD .env
 
@@ -73,7 +74,7 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
     # CHECK DEVICE REGISTRATION
     users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
     if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) <= 0:
-        return make_response(jsonify([]), 401)
+        return make_response(jsonify({"err": "please register device"}), 401)
 
     user = users[0]
     linked_recipes = user.linked_recipes
@@ -92,20 +93,73 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipe/<string:recipe_id>', methods=['GET'])
 def mmbd_recipe(mmb_device_id: str, recipe_id: str):
     # CHECK DEVICE REGISTRATION
-    if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) <= 0:
-        return make_response(jsonify({}), 401)
+    users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
+    if len(users) <= 0:
+        return make_response(jsonify({"err": "please register device"}), 401)
+
+
+    user_recipes = dbmodels.Users.objects.get(linked_device_id=mmb_device_id).linked_recipes
+    global_recipes = dbmodels.Recipe.objects(name=recipe_id)
+    if len(global_recipes) <= 0:
+        return make_response(jsonify({}), 404)
+
+    recipe = global_recipes[0]
+
+
+    found = False
+    for ur in user_recipes:
+        if recipe.name in ur.name:
+            found = True
+            break
+    if not found:
+        return make_response(jsonify({}), 404)
+
+    ret = {}
+    # CONVERT DATA FROM DB TO JSON
+    # SIMPLY TO SAVE SPACE FOR THE MICROCONTROLLERS
+    ret['name'] = recipe.name
+    ret['description'] = recipe.description
+    ret['version'] = recipe.version
+    # TODO REMOVE
+    for c in recipe.category:
+        ret['category'] = c.name
+        break
+
+    il = []
+    for c in recipe.ingredients:
+        il.append(str(c.name))
+    ret['ingredients'] = il
+
+    sl = []
+    for c in recipe.steps:
+        entry: dict = {
+            'action': c.action,
+        }
+
+        if c.text:
+            entry['text'] = c.text
+
+        # CONVERT UNITS
+        if c.ingredient:
+            entry['ingredient'] = c.ingredient.name
+
+        if c.amount:
+            if c.ingredient and c.ingredient.weight_g_per_unit:
+                entry['amount'] = float(c.amount) * float(c.ingredient.weight_g_per_unit)
+            else:
+                entry['amount'] = c.amount
+
+
+
+        sl.append(entry)
+
+    ret['steps'] = sl
 
 
 
 
+    return make_response(jsonify(ret), 404)
 
-    # PERFORM RECALULCATION STEP OF ML TO G
-
-    data: dict = {
-
-
-    }
-    return make_response(jsonify(data), 200)
 
 
 
@@ -191,6 +245,15 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="white Tequila")[0])
         i_list.append(dbmodels.Ingredient.objects(name="Orange-Juice")[0])
         i_list.append(dbmodels.Ingredient.objects(name="Grenadine")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Crushed Ice")[0])
+
+        i_steps = []
+        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="white Tequila")[0]))
+        i_steps.append(dbmodels.Step(amount=40, action="scale",ingredient=dbmodels.Ingredient.objects(name="Grenadine")[0]))
+        i_steps.append(dbmodels.Step(amount=110, action="scale", ingredient=dbmodels.Ingredient.objects(name="Orange-Juice")[0]))
+        i_steps.append(dbmodels.Step(action="wait", text="MIX", amount=30))
+        i_steps.append(dbmodels.Step(action="confirm", text="ADD ICE"))
+
 
         ra = dbmodels.Recipe()
         ra.name = "Tequila Sunrise"
@@ -199,7 +262,7 @@ if __name__ == "__main__":
         ra.ingredients = i_list
         ra.default_recipe = True
         ra.author = dbmodels.Users.objects(linked_device_id="1337")[0]
-        #r.steps = [dbmodels.Step(amount=10, action="scale", ingredients=[i1])]
+        ra.steps = i_steps
         ra.save()
 
 
