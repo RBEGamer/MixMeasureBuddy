@@ -160,8 +160,6 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
             else:
                 entry['amount'] = c.amount
 
-
-
         sl.append(entry)
 
     ret['steps'] = sl
@@ -329,6 +327,31 @@ if __name__ == "__main__":
 
 
 
+    if len(dbmodels.Recipe.objects(name="Strawberry Colada Lotte")) <= 0:
+        i_list = []
+        i_list.append(dbmodels.Ingredient.objects(name="Malibu-Coconut")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Pineapple-Juice")[0])
+        i_list.append(dbmodels.Ingredient.objects(name="Cream")[0])
+
+        i_steps = []
+        i_steps.append(dbmodels.Step(amount=50, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
+        i_steps.append(dbmodels.Step(amount=30, action="scale", ingredient=dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0]))
+        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
+        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
+
+        rb = dbmodels.Recipe()
+        rb.name = "Strawberry Colada Lotte"
+        rb.filename = urllib.parse.quote(rb.name.replace(' ', '_'))
+        rb.category = dbmodels.Category.objects(name="Cocktails")
+        rb.description = "Lottes delicious cocktail with strawberries"
+        rb.ingredients = i_list
+        rb.default_recipe = True
+        rb.author = dbmodels.Users.objects(linked_device_id="1338")[0]
+        rb.steps = i_steps
+        rb.save()
+
+
     if len(dbmodels.Recipe.objects(name="Pina Colada")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="Malibu-Coconut")[0])
@@ -338,7 +361,6 @@ if __name__ == "__main__":
 
         i_steps = []
         i_steps.append(dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
-        i_steps.append(dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0]))
         i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
         i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
 
