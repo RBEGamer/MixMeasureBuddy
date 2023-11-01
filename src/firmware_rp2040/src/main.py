@@ -99,7 +99,7 @@ if __name__ == "__main__":
     rt = recipe_loader.get_calibration_values()
     map_value_0g = rt[0]
     maps_value_50g = rt[1]
-    print("loaded scale calibration valued 0g:{} 50g:{}".format(map_value_0g, maps_value_50g))
+    print("loaded scale calibration valued 0g:{} {}g:{}".format(map_value_0g, config.CFG_CALIBRATION_WEIGHT_WEIGHT, maps_value_50g))
     
     
     # CONFIGURE USER BUTTONS
@@ -168,7 +168,7 @@ if __name__ == "__main__":
                 last_button_pressed = None   
 
 
-        if last_button_pressed == UB_UP and abs(last_userbutton_update - helper.millis()) > 1000:
+        if last_button_pressed == UB_UP and abs(last_userbutton_update - helper.millis()) > config.CFG_USER_LONG_BUTTON_PRESS_TIME:
             button_pressed = UB_UPLONG
             last_userbutton_update = None
             last_button_pressed = None
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE:
             scale_value = scales.raw_value() #stable_value()
             scale_value_tared = scale_value - tare_value
-            scale_value_g = helper.fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , 50)
+            scale_value_g = helper.fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , config.CFG_CALIBRATION_WEIGHT_WEIGHT)
         
             if scale_value_g <= 0.0:
                 scale_offset = -scale_value_g
@@ -289,7 +289,7 @@ if __name__ == "__main__":
                     system_state = SYSTEMSTATE_CALIBRATION_MODE_FULL
 
         elif system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL:
-                gui.show_msg("PLEASE PLACE 50g WEIGHT")
+                gui.show_msg("PLEASE PLACE {}g WEIGHT".format(config.CFG_CALIBRATION_WEIGHT_WEIGHT))
                 if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
                     gui.show_msg("PLEASE WAIT")
                     map_value_50g = get_stable_raw_scale_value()
@@ -348,7 +348,7 @@ if __name__ == "__main__":
         elif system_state == SYSTATE_RECIPE_PLACEGLASS:
             gui.show_msg("PLACE GLASS")
             #print(scale_value_g)
-            if  abs(last_systate_update - helper.millis()) > 10000 or scale_value_g > (scale_value_before_glass_added + 50):
+            if  abs(last_systate_update - helper.millis()) > 10000 or scale_value_g > (scale_value_before_glass_added + config.CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT):
                 
                 gui.show_msg("CALIBRATING")
                 tare_value = tare_drink(scales, 1)
