@@ -3,12 +3,11 @@ import machine
 import time, math
 import neopixel
 import random
-import sdcard
-import uos
+import network
 
-
-from helper import millis, fmap, imap
+import helper
 from Scales import Scales
+import config
 import recipe_loader
 import ui
 
@@ -60,23 +59,24 @@ SYSTATE_RECIPE_FINISHED = 14
 
 if __name__ == "__main__":
     
-    
+    # SETUP NETWORK IF PICO W
+    if helper.has_wifi():
+        network.country(config.CFG_NETWORK_WIFICOUNTRY)
+        network.hostname(config.CFG_NETWORK_HOSTNAME)
     
     system_state = SYSTATE_IDLE
     # INIT RECIPE LOADER AND INIT SD CARD
     recipe = recipe_loader.recipe_loader()
         
     # INIT NEOPIXEL RING
-    NEOPIXEL_COUNT = 60
-    neopixelring = neopixel.NeoPixel(machine.Pin(3), NEOPIXEL_COUNT)
-    for i in range(NEOPIXEL_COUNT):
-        neopixelring[i] = (0, 0, int(128* random.random()))
-    neopixelring.write()
+    neopixelring = neopixel.NeoPixel(machine.Pin(config.CFG_NEOPIXEL_PIN), config.CFG_NEOPIXEL_LED_COUNT)
+    helper.set_neopixel_random(neopixelring)
     
     # INIT DISPLAY
     gui = ui.ui()
     # INIT SCALE
-    scales = Scales()
+
+    scales = Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
     scales.tare()
     tare_value = tare_drink(scales, 1)
     scale_value = 0
@@ -87,8 +87,8 @@ if __name__ == "__main__":
     
     
     # CONFIGURE USER BUTTONS
-    push_button_up = machine.Pin(22, machine.Pin.IN, machine.Pin.PULL_UP)  # 23 number pin is input
-    push_button_down = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_UP)  # 23 number pin is input
+    push_button_up = machine.Pin(config.CFG_BUTTON_UP_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
+    push_button_down = machine.Pin(config.CFG_BUTTON_DOWN_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
     
     
    
@@ -103,9 +103,9 @@ if __name__ == "__main__":
     
     
     
-    last_display_update = millis()
-    last_systate_update = millis()
-    last_recipe_step_update = millis()
+    last_display_update = helper.millis()
+    last_systate_update = helper.millis()
+    last_recipe_step_update = helper.millis()
     last_userbutton_update = None
     
     UB_NONE = 0
@@ -133,14 +133,14 @@ if __name__ == "__main__":
         
         # READ USER_BUTTONS
         if push_button_up.value() and not push_button_down.value() and last_userbutton_update is None and button_pressed is UB_NONE:
-            last_userbutton_update = millis()
+            last_userbutton_update = helper.millis()
             last_button_pressed = UB_UP
         
      
         elif push_button_up.value() and push_button_down.value():
             if last_userbutton_update is not None and last_button_pressed is not None:
                 
-                btn_duration = abs(last_userbutton_update - millis())
+                btn_duration = abs(last_userbutton_update - helper.millis())
                 if last_button_pressed == UB_UP: #and  btn_duration >1 and btn_duration < 1000:
                     print("UB_UP")
                     button_pressed = UB_UP
@@ -152,21 +152,21 @@ if __name__ == "__main__":
                 last_button_pressed = None   
 
 
-        if last_button_pressed == UB_UP and abs(last_userbutton_update - millis()) > 1000:
+        if last_button_pressed == UB_UP and abs(last_userbutton_update - helper.millis()) > 1000:
             button_pressed = UB_UPLONG
             last_userbutton_update = None
             last_button_pressed = None
             print("UB_UPLONG")
-            #if last_userbutton_update is not None and abs(last_userbutton_update - millis()) > 1:
-            #    last_userbutton_update = None
-        
+           
+
+
         
         
         # READ SCALE
         if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE:
             scale_value = scales.raw_value() #stable_value()
             scale_value_tared = scale_value - tare_value
-            scale_value_g = fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , 50)
+            scale_value_g = helper.fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , 50)
         
             if scale_value_g <= 0.0:
                 scale_offset = -scale_value_g
@@ -184,17 +184,15 @@ if __name__ == "__main__":
         # GLOBAL STATE MACHIENE
         if system_state == SYSTATE_IDLE: # INITIAL SYSTEMSTATE
             gui.show_titlescreen()
-            last_systate_update = millis()
+            last_systate_update = helper.millis()
             system_state = SYSTEMSTATE_ENTER_MAINMENU
             
         elif system_state == SYSTEMSTATE_ENTER_MAINMENU: # RELOAD RECIPES
-            for i in range(NEOPIXEL_COUNT):
-                neopixelring[i] = (0, 0, 100)
-            neopixelring.write()
+            helper.set_neopixel_full(neopixelring, 0, 0, 100)
             found_recipes = recipe.list_recpies()
             mainmenu_recipe_index = -1 # TO TRIGGER FIRST TIME DISPLAY UPDATE AFTER ENTERING THE STATE
             print(found_recipes)
-            last_systate_update = millis()
+            last_systate_update = helper.millis()
             system_state = SYSTEMSTATE_MAINMENU
                 
                 
@@ -241,7 +239,7 @@ if __name__ == "__main__":
                         
             elif button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
                 button_pressed = UB_NONE
-                last_systate_update = millis()
+                last_systate_update = helper.millis()
                 
                 if recipe.is_recipe_loaded():
                     pass
@@ -249,15 +247,11 @@ if __name__ == "__main__":
                 elif mainmenu_recipe_index == (len(found_recipes)-1)+1:
                     system_state = SYSTEMSTATE_SCALE_MODE
                     # UPDATE NEOPIXEL
-                    for i in range(NEOPIXEL_COUNT):
-                        neopixelring[i] = (0, 100, 100)
-                    neopixelring.write()
+                    helper.set_neopixel_full(neopixelring, 0, 100, 100)
                 elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
                     system_state = SYSTEMSTATE_UPDATE_MODE
                     # UPDATE NEOPIXEL
-                    for i in range(NEOPIXEL_COUNT):
-                        neopixelring[i] = (100, 0, 100)
-                    neopixelring.write()
+                    helper.set_neopixel_full(neopixelring, 100, 0, 100)
 
                 
                 
@@ -272,67 +266,60 @@ if __name__ == "__main__":
                 tare_value = tare_drink(scales, 1)
             elif button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
                 last_button_pressed = UB_NONE
-                last_systate_update = millis()
+                last_systate_update = helper.millis()
                 system_state = SYSTATE_IDLE
                 
         elif system_state == SYSTEMSTATE_UPDATE_MODE:
             gui.show_msg("LOADING UPDATE MANAGER")
             recipe.unload_recipe()
             if recipe.update_recipes(gui):
-                for i in range(NEOPIXEL_COUNT):
-                    neopixelring[i] = (0, 0, 100)
-                neopixelring.write()
+                helper.set_neopixel_full(neopixelring, 0, 0, 100)
                 gui.show_msg("RECIPE UPDATE SUCCESS")
             else:
-                for i in range(NEOPIXEL_COUNT):
-                    neopixelring[i] = (100, 0, 0)
-                neopixelring.write()
+                helper.set_neopixel_full(neopixelring, 100, 0, 0)
                 gui.show_msg("RECIPE UPDATE FAILED")
             
             if button_pressed == UB_UP or button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
                 button_pressed = UB_NONE
-                last_systate_update = millis()
+                last_systate_update = helper.millis()
                 system_state = SYSTATE_IDLE
             
         
         
         elif system_state == SYSTATE_RECIPE_START: # START RECIPE
-            if  abs(last_systate_update - millis()) > 1000:
-                last_systate_update = millis()
+            if  abs(last_systate_update - helper.millis()) > 1000:
+                last_systate_update = helper.millis()
                 system_state = SYSTATE_RECIPE_SHOW_INGREDIENTS
                 
                 
         elif system_state == SYSTATE_RECIPE_SHOW_INGREDIENTS:
             gui.show_recipe_ingredients(recipe.get_ingredient_list())
-            for i in range(NEOPIXEL_COUNT):
-                neopixelring[i] = (100, 100, 0)
-            neopixelring.write()
-            if  abs(last_systate_update - millis()) > 20000 or button_pressed == UB_UP:
+            helper.set_neopixel_full(neopixelring, 100, 100, 0)
+
+            if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
                 button_pressed = UB_NONE
                 scale_value_before_glass_added = scale_value_g
-                last_systate_update = millis()
+                last_systate_update = helper.millis()
                 system_state = SYSTATE_RECIPE_PLACEGLASS
             
         elif system_state == SYSTATE_RECIPE_PLACEGLASS:
             gui.show_msg("PLACE GLASS")
             #print(scale_value_g)
-            if  abs(last_systate_update - millis()) > 10000 or scale_value_g > (scale_value_before_glass_added + 50):
+            if  abs(last_systate_update - helper.millis()) > 10000 or scale_value_g > (scale_value_before_glass_added + 50):
                 
                 gui.show_msg("CALIBRATING")
                 tare_value = tare_drink(scales, 1)
                 
                 system_state = SYSTATE_RECIPE_RUNNING
-                last_systate_update = millis()
-                last_recipe_step_update = millis()
+                last_systate_update = helper.millis()
+                last_recipe_step_update = helper.millis()
         
         elif system_state == SYSTATE_RECIPE_FINISHED:
-            for i in range(NEOPIXEL_COUNT):
-                neopixelring[i] = (0, int(128* random.random()), 0)
-            neopixelring.write()
+            helper.set_neopixel_random(neopixelring, False, True, False)
             gui.show_msg("DRINK READY TO SERVE")
             
-            if button_pressed == UB_UP or abs(last_systate_update - millis()) > 7000:
-                last_systate_update = millis()
+            if button_pressed == UB_UP or abs(last_systate_update - helper.millis()) > 7000:
+                last_systate_update = helper.millis()
                 system_state = SYSTATE_IDLE
                 
         elif system_state == SYSTATE_RECIPE_RUNNING:
@@ -356,7 +343,7 @@ if __name__ == "__main__":
             elif user_move == recipe_loader.USER_INTERACTION_MODE.WAIT:
                 delay_value = amount
                 target_value = None
-                time_elapsed = ((millis() - last_recipe_step_update))/1000
+                time_elapsed = ((helper.millis() - last_recipe_step_update))/1000
                 print(time_elapsed)
             else:
                 target_value = None
@@ -364,7 +351,7 @@ if __name__ == "__main__":
                 
             # CHECK OK ACTION OK
             if finished:
-                last_systate_update = millis()
+                last_systate_update = helper.millis()
                 # GOTO MAIN MENU IF GLASS IS REMOVED
                 if scale_value_g < scale_value_before_glass_added:
                     gui.show_msg("REMOVE GLASS")
@@ -384,7 +371,7 @@ if __name__ == "__main__":
                 load_next_step = False
                 recipe.switch_next_step()
                 gui.set_full_refresh()
-                last_recipe_step_update = millis()
+                last_recipe_step_update = helper.millis()
                 # IS THE NEW STEP THE FINISH STEP => SKIP TARE PROCESS
                 if not recipe.get_current_recipe_step()[6]:
                     gui.show_msg("CALIBRATING")
@@ -394,17 +381,16 @@ if __name__ == "__main__":
             
                 
             # UPDATE UI
-            if  abs(last_display_update - millis()) > 1000:
-                last_display_update = millis()
+            if  abs(last_display_update - helper.millis()) > 1000:
+                last_display_update = helper.millis()
                 gui.show_recipe_step(action, ingredient, current_step, max_steps)
                
             
-            # UPDATE NEOPIXEL
-            
+            # UPDATE NEOPIXEL  
             if user_move == recipe_loader.USER_INTERACTION_MODE.SCALE and scale_value_g is not None and target_value is not None:
-                disp_value = min([imap(scale_value_g, 0, target_value, 0 , NEOPIXEL_COUNT), NEOPIXEL_COUNT])
-                for i in range(NEOPIXEL_COUNT):
-                    color_value = imap(i, 0, NEOPIXEL_COUNT, 0 , 1.0)
+                disp_value = min([helper.imap(scale_value_g, 0, target_value, 0 , config.CFG_NEOPIXEL_LED_COUNT), config.CFG_NEOPIXEL_LED_COUNT])
+                for i in range(config.CFG_NEOPIXEL_LED_COUNT):
+                    color_value = helper.imap(i, 0, config.CFG_NEOPIXEL_LED_COUNT, 0 , 1.0)
                     if target_value < 0:
                         neopixelring[i] = (0, 0, 128)
                     elif scale_value_g >= target_value:
@@ -416,14 +402,12 @@ if __name__ == "__main__":
                         neopixelring[i] = (0, 0, 0)
                 neopixelring.write()
             elif user_move == recipe_loader.USER_INTERACTION_MODE.CONFIRM:
-                for i in range(NEOPIXEL_COUNT):
-                    neopixelring[i] = (100, 100, 0)
-                neopixelring.write()
+                helper.set_neopixel_full(neopixelring, 100, 100, 0)
             
             elif user_move == recipe_loader.USER_INTERACTION_MODE.WAIT and delay_value is not None and time_elapsed is not None:
-                lightup = min([imap(time_elapsed, 0, delay_value, 0 , NEOPIXEL_COUNT), NEOPIXEL_COUNT])
+                lightup = min([helper.imap(time_elapsed, 0, delay_value, 0 , config.CFG_NEOPIXEL_LED_COUNT), config.CFG_NEOPIXEL_LED_COUNT])
                 #print("lightup {} {} {}".format(lightup, time_elapsed, delay_value)
-                for i in range(NEOPIXEL_COUNT):
+                for i in range(config.CFG_NEOPIXEL_LED_COUNT):
                     if i < lightup:
                         neopixelring[i] = (10, 10, 10)
                     elif i == lightup:
@@ -433,20 +417,8 @@ if __name__ == "__main__":
                 neopixelring.write()
                 
             else:
-                for i in range(NEOPIXEL_COUNT):
-                    neopixelring[i] = (int(128* random.random()), 0, 0)
-                neopixelring.write()
-            
-            
-            
+                helper.set_neopixel_random(neopixelring, True, False, False)
             
         else:
-            for i in range(NEOPIXEL_COUNT):
-                neopixelring[i] = (0, 0, 100)
-            neopixelring.write()
-        
-        
-       
-        #time.sleep(0.2)
-
+            helper.set_neopixel_full(neopixelring, 0, 0, 100)
 

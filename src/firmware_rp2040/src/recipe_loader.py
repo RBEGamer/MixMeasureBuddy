@@ -2,14 +2,18 @@ import machine
 import sdcard
 import uos
 import network
-import network
 import socket
 import os
 import time
 import json
 import urequests
+
+
 from helper import get_system_id
 from ui import ui
+import config
+import helper
+
 
 class USER_INTERACTION_MODE():
     SCALE = 0
@@ -23,40 +27,46 @@ class recipe_loader:
     RECIPE_BASE_DIR = "/sd"
     loaded_recipe = None
     current_recipe_step = None
-    
-    def __init__(self, _spi = None, cs_pin = 9):
+    sd = None # sdcard class instance
+
+
+    def __init__(self, _spi = None, cs_pin = config.CFG_SDCARD_CS_PIN):
         print("recipe_loader: __init__")
         if _spi is None:
-            _spi = machine.SPI(1, baudrate=1000000, polarity=0, phase=0, bits=8, firstbit=machine.SPI.MSB, sck=machine.Pin(10), mosi=machine.Pin(11), miso=machine.Pin(8))
+            _spi = machine.SPI(config.CFG_SDCARD_SPIINSTANCE, baudrate=1000000, polarity=0, phase=0, bits=8, firstbit=machine.SPI.MSB, sck=machine.Pin(config.CFG_SDCARD_SCK_PIN), mosi=machine.Pin(config.CFG_SDCARD_MOSI_PIN), miso=machine.Pin(config.CFG_SDCARD_MISO_PIN))
         # Assign chip select (CS) pin (and start it high)
         self.cs = machine.Pin(cs_pin, machine.Pin.OUT)
 
-        # Intialize SPI peripheral (start with 1 MHz)
+        self.sd = None
+        try:
+            self.sd = sdcard.SDCard(_spi, self.cs)
+
+         # Mount filesystem
+            self.vfs = uos.VfsFat(self.sd)
+            uos.mount(self.vfs, self.RECIPE_BASE_DIR)
+        except Exception as e:
+            print("sdcard init failed using local filesystem on /sd", str(e))
+
+
+        if self.sd is None:
+            try: 
+                os.makedirs(self.RECIPE_BASE_DIR, exist_ok = True) 
+                print("Directory '%s' created successfully" % self.RECIPE_BASE_DIR) 
+            except OSError as error: 
+                print("Directory '%s' can not be created" % self.RECIPE_BASE_DIR) 
         
-
-        # Initialize SD card
-        self.sd = sdcard.SDCard(_spi, self.cs)
-
-        # Mount filesystem
-        self.vfs = uos.VfsFat(self.sd)
-        uos.mount(self.vfs, self.RECIPE_BASE_DIR)
         
         print(os.listdir(self.RECIPE_BASE_DIR))
-        
         
         self.write_initial_settings()
         self.unload_recipe()
         self.create_initial_recipe()
         
-        
-    
     def get_recipe_information(self) -> (str, str):
         if self.loaded_recipe is None:
             return ("invalid", "---")
         
         return (self.loaded_recipe['name'], self.loaded_recipe['description'])
-    
-    
     
     def switch_next_step(self):
         if self.loaded_recipe is None:
@@ -67,8 +77,7 @@ class recipe_loader:
         n_steps = len(steps)
         if self.current_recipe_step < n_steps:
             self.current_recipe_step = self.current_recipe_step + 1
-            
-            
+                  
     def switch_prev_step(self):
         pass
     
@@ -113,15 +122,12 @@ class recipe_loader:
             rt.append(ing[k])
         return rt
     
-    
     def get_ingredient_str(self) -> str:
         rt = ""
         for item in self.get_ingredient_list():
             rt = rt + item + "\n"
         return rt
         
-    
-    
     def create_initial_recipe(self):
         print("create_initial_recipe: Tequila Sunrise")
         name:str = "Tequila Sunrise"
@@ -169,10 +175,9 @@ class recipe_loader:
     def write_initial_settings(self):
         if "SETTINGS.json" in os.listdir(self.RECIPE_BASE_DIR):
             return
-        cred = {"wificredentials": [{"ssid":"ProDevMoDev", "psk": "6226054527192856"}], "api_endpoint": ["192.168.178.43:9090/api/mmb"]}#,"mixmeasurebuddy.com/api/mmb", "marcelochsendorf.com:4243/api/mmb"]}
+        cred = {"wificredentials": [{"ssid":"Makerspace", "psk": "MS8cCvpE"}], "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
-    
     
     def list_recpies(self) -> (str, str):
         res = []
@@ -201,7 +206,11 @@ class recipe_loader:
             return True
     
     def update_recipes(self, _gui: ui.ui) -> bool:
-        
+        if not helper.has_wifi():
+            _gui.show_msg("WIFI UPDATE NOT SUPPORTED")
+            return
+
+
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
             cred = json.loads(file.read())
