@@ -50,7 +50,7 @@ class recipe_loader:
 
         if self.sd is None:
             try: 
-                os.makedirs(self.RECIPE_BASE_DIR, exist_ok = True) 
+                os.mkdir(self.RECIPE_BASE_DIR) 
                 print("Directory '%s' created successfully" % self.RECIPE_BASE_DIR) 
             except OSError as error: 
                 print("Directory '%s' can not be created" % self.RECIPE_BASE_DIR) 
@@ -172,10 +172,23 @@ class recipe_loader:
         with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
             file.write(json.dumps(recipe))
     
+    def save_calibration_values(_scale_calibration_0g: int = None, _scale_calibration_50g: int = None):
+
+    def get_calibration_values(self):
+        cred = {}
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
+            cred = json.loads(file.read())
+        
+        if 'calibration' not in cred:
+            self.write_initial_settings()
+        
+        calibration_values = cred['calibration']
+        return (calibration_values['scale_calibration_0g'], calibration_values['scale_calibration_50g'])
+
     def write_initial_settings(self):
         if "SETTINGS.json" in os.listdir(self.RECIPE_BASE_DIR):
             return
-        cred = {"wificredentials": [{"ssid":"Makerspace", "psk": "MS8cCvpE"}], "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]}
+        cred = {"calibration":{"scale_calibration_0g":1288, "scale_calibration_50g":11400},"wificredentials": [{"ssid":"Makerspace", "psk": "MS8cCvpE"}], "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
     

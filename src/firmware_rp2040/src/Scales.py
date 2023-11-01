@@ -23,6 +23,10 @@ class Scales(HX711):
         for _ in range(reads):
             values.append(self.raw_value())
             sleep_us(delay_us)
+        
+        if len(values) <= 0:
+            values = [0.0]
+        
         return self._stabilizer(values)
 
     @staticmethod
@@ -30,6 +34,12 @@ class Scales(HX711):
         if len(values) <= 0:
             return 0.0
         weights = []
-        for prev in values:
-            weights.append(sum([1 for current in values if abs(prev - current) / (prev / 100) <= deviation]))
+        try:
+            for prev in values:
+                weights.append(sum([1 for current in values if abs(prev - current) / (prev / 100) <= deviation]))
+        except Exception as e:
+            print(str(e))
+            
+        if len(weights) <= 0:
+            return 0.0
         return sorted(zip(values, weights), key=lambda x: x[1]).pop()[0]

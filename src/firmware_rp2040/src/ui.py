@@ -13,6 +13,7 @@ import tt14
 import tt24
 import tt32
 import machine
+
 from helper import get_system_id
 class ui:
     
@@ -71,11 +72,11 @@ class ui:
             self.display.erase()
             self.display.erase()
         elif config.CFG_DISPLAY_TYPE == "ssd1306":
-            self.fill(0)
-            self.show()
+            self.display.fill(0)
+            self.display.show()
         elif config.CFG_DISPLAY_TYPE == "sh1106":
-            self.fill(0)
-            self.show()
+            self.display.fill(0)
+            self.display.show()
 
 
 

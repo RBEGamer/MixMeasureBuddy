@@ -35,6 +35,16 @@ def tare_drink(_scale, _iterations = 5):
     return tare_value
 
 
+def get_stable_raw_scale_value(_iterations = 10):
+    print("get_stable_raw_scale_value_begin")
+    tare_value = 0
+    scale_value = 0
+    for i in range(_iterations):
+        scale_value = scales.raw_value()
+        time.sleep(0.5)
+        tare_value = tare_value + scale_value
+    tare_value = tare_value / _iterations
+    return tare_value
 
 
 
@@ -47,6 +57,9 @@ SYSTEMSTATE_MAINMENU = 2
 # MISC MODES
 SYSTEMSTATE_SCALE_MODE = 3
 SYSTEMSTATE_UPDATE_MODE = 4
+SYSTEMSTATE_CALIBRATION_MODE_ENTRY = 5
+SYSTEMSTATE_CALIBRATION_MODE_ZERO = 6
+SYSTEMSTATE_CALIBRATION_MODE_FULL = 7
 # SCALE ENABLED
 SYSTATE_RECIPE_START = 10
 SYSTATE_RECIPE_SHOW_INGREDIENTS = 11
@@ -82,8 +95,11 @@ if __name__ == "__main__":
     scale_value = 0
     
     # CALIBTATION VALUES
-    map_value_0g = 1288
-    maps_value_50g = 11400
+    # TODO LOAD FFROM SETTINGS
+    rt = recipe_loader.get_calibration_values()
+    map_value_0g = rt[0]
+    maps_value_50g = rt[1]
+    print("loaded scale calibration valued 0g:{} 50g:{}".format(map_value_0g, maps_value_50g))
     
     
     # CONFIGURE USER BUTTONS
@@ -233,6 +249,9 @@ if __name__ == "__main__":
                     elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
                         gui.set_full_refresh()
                         gui.show_recipe_information("RECIPE UPDATE", "updates all recipes using the webapp")
+                    elif mainmenu_recipe_index == (len(found_recipes)-1)+3:
+                        gui.set_full_refresh()
+                        gui.show_recipe_information("CALIBRATE", "run a scale calibration program. A 50g weight is needed")
                         
                     print("extra menu {}".format(mainmenu_recipe_index))
                         
@@ -248,15 +267,39 @@ if __name__ == "__main__":
                     system_state = SYSTEMSTATE_SCALE_MODE
                     # UPDATE NEOPIXEL
                     helper.set_neopixel_full(neopixelring, 0, 100, 100)
+
                 elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
                     system_state = SYSTEMSTATE_UPDATE_MODE
                     # UPDATE NEOPIXEL
                     helper.set_neopixel_full(neopixelring, 100, 0, 100)
 
-                
-                
+                elif mainmenu_recipe_index == (len(found_recipes)-1)+3:
+                    system_state = SYSTEMSTATE_CALIBRATION_MODE_ENTRY
+                    # UPDATE NEOPIXEL
+                    helper.set_neopixel_full(neopixelring, 100, 0, 100)
+
 
                 
+                
+        elif system_state == SYSTEMSTATE_CALIBRATION_MODE_ENTRY:
+                gui.show_msg("REMOVE EVERYTHING FROM SCALE")
+                if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
+                    gui.show_msg("PLEASE WAIT")
+                    map_value_0g = get_stable_raw_scale_value()
+                    system_state = SYSTEMSTATE_CALIBRATION_MODE_FULL
+
+        elif system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL:
+                gui.show_msg("PLEASE PLACE 50g WEIGHT")
+                if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
+                    gui.show_msg("PLEASE WAIT")
+                    map_value_50g = get_stable_raw_scale_value()
+
+                    recipe_loader.save_calibration_values(map_value_0g, maps_value_50g)
+                    gui.show_msg("CALIBRATION SAVED")
+                    system_state = SYSTATE_IDLE
+                    
+
+
         elif system_state == SYSTEMSTATE_SCALE_MODE:
             # UPDATE DISPLAY WITH SCALE READING
             gui.show_scale(int(scale_value_g))
