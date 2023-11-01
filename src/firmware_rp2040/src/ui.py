@@ -52,7 +52,7 @@ class ui:
             else:
                 self.display.text(_str, x, y)
         
-            self.show()
+            self.display.show()
 
         elif config.CFG_DISPLAY_TYPE == "sh1106":
             if _wrap:
@@ -60,7 +60,7 @@ class ui:
             else:
                 self.display.text(_str, x, y)
         
-            self.show()
+            self.display.show()
    
     
     
