@@ -434,6 +434,9 @@ if __name__ == "__main__":
                 disp_value = min([helper.imap(scale_value_g, 0, target_value, 0 , config.CFG_NEOPIXEL_LED_COUNT), config.CFG_NEOPIXEL_LED_COUNT])
                 for i in range(config.CFG_NEOPIXEL_LED_COUNT):
                     color_value = helper.imap(i, 0, config.CFG_NEOPIXEL_LED_COUNT, 0 , 1.0)
+                    # APPLY START indEX OFFSET
+                    led_index = (i+config.CFG_NEOPIXEL_LED_START_OFFSET) % config.CFG_NEOPIXEL_LED_COUNT
+
                     if target_value < 0:
                         neopixelring[i] = (0, 0, 128)
                     elif scale_value_g >= target_value:
