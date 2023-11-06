@@ -172,7 +172,23 @@ class recipe_loader:
         with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
             file.write(json.dumps(recipe))
     
-    def save_calibration_values(_scale_calibration_0g: int = None, _scale_calibration_50g: int = None):
+    def save_calibration_values(self, _scale_calibration_0g: int = 0, _scale_calibration_50g: int = 11400):
+        cred = {}
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
+            cred = json.loads(file.read())
+        
+        if 'calibration' not in cred:
+            self.write_initial_settings()
+            # READ BACK AGAIN
+            with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
+                cred = json.loads(file.read())
+
+        cred['calibration']['scale_calibration_0g'] = _scale_calibration_0g
+        cred['calibration']['scale_calibration_50g'] = _scale_calibration_50g
+        
+    
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
+            file.write(json.dumps(cred))
 
     def get_calibration_values(self):
         cred = {}

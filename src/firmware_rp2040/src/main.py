@@ -95,8 +95,7 @@ if __name__ == "__main__":
     scale_value = 0
     
     # CALIBTATION VALUES
-    # TODO LOAD FFROM SETTINGS
-    rt = recipe_loader.get_calibration_values()
+    rt = recipe.get_calibration_values()
     map_value_0g = rt[0]
     maps_value_50g = rt[1]
     print("loaded scale calibration valued 0g:{} {}g:{}".format(map_value_0g, config.CFG_CALIBRATION_WEIGHT_WEIGHT, maps_value_50g))
@@ -294,7 +293,7 @@ if __name__ == "__main__":
                     gui.show_msg("PLEASE WAIT")
                     map_value_50g = get_stable_raw_scale_value()
 
-                    recipe_loader.save_calibration_values(map_value_0g, maps_value_50g)
+                    recipe.save_calibration_values(map_value_0g, maps_value_50g)
                     gui.show_msg("CALIBRATION SAVED")
                     system_state = SYSTATE_IDLE
                     
@@ -467,4 +466,5 @@ if __name__ == "__main__":
             
         else:
             helper.set_neopixel_full(neopixelring, 0, 0, 100)
+
 

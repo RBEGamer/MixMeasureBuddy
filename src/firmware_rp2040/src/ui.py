@@ -34,8 +34,8 @@ class ui:
          #           self.display.set_font(tt14)
          #   else:
          #       self.display.set_font(tt24)
-        x: int = (self.SCR_WIDTH / 100.0) * _pos_x_percentage
-        y: int = (self.SCR_WIDTH / 100.0) * _pos_y_percentage
+        x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
+        y: int = int((self.SCR_WIDTH / 100.0) * _pos_y_percentage)
 
         if config.CFG_DISPLAY_TYPE == "ili934":
 

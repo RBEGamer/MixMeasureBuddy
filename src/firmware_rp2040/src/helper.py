@@ -26,7 +26,7 @@ def get_system_id():
 def set_neopixel_full(_neopixelring, _r, _g, _b):
     for i in range(config.CFG_NEOPIXEL_LED_COUNT):
         _neopixelring[i] = (_r, _g, _b)
-        _neopixelring.write()
+    _neopixelring.write()
 
 def set_neopixel_random(_neopixelring, _er: bool = False, _eg: bool = False, _eb: bool = True):
     r: int = int(128* random.random()) * _er
@@ -39,5 +39,4 @@ def set_neopixel_random(_neopixelring, _er: bool = False, _eg: bool = False, _eb
 def has_wifi():
     if 'Raspberry Pi Pico W' in str(sys.implementation):
         return True
-    
     return False
