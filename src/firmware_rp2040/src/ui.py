@@ -18,13 +18,6 @@ from helper import get_system_id
 class ui:
     
 
-    def display_write(self, _str:str): 
-
-        self.display.write(_str)
-        
-    def display_print(self, _str:str):
-        self.display.print(_str)
-
 
     def display_text(self, _str:str, _wrap:bool = False, _pos_x_percentage:int = 0, _pos_y_percentage:int = 0):
 
@@ -35,8 +28,10 @@ class ui:
          #   else:
          #       self.display.set_font(tt24)
         x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
-        y: int = int((self.SCR_WIDTH / 100.0) * _pos_y_percentage)
+        y: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_percentage)
 
+       
+        
         if config.CFG_DISPLAY_TYPE == "ili934":
 
             self.display.set_pos(x, y)
@@ -46,22 +41,53 @@ class ui:
             else:
                  self.display.write(_str)
         
-        elif config.CFG_DISPLAY_TYPE == "ssd1306":
-            if _wrap:
+        elif config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
+            if not _wrap:
                 self.display.text(_str, x, y)
-            else:
-                self.display.text(_str, x, y)
-        
-            self.display.show()
+                self.display.show()
+                return
+            
 
-        elif config.CFG_DISPLAY_TYPE == "sh1106":
-            if _wrap:
-                self.display.text(_str, x, y)
-            else:
-                self.display.text(_str, x, y)
-        
+            # WRAP TEXT
+            words = []
+            new_lines = _str.split(" ")
+            for l in new_lines:
+                if not l == " ": 
+                    for w in str(l).split(" "):
+                        if not w == " ":
+                            words.append(w)
+            
+            chars_left = 1 + (self.SCR_WIDTH - x)/ int(config.CFG_DISPLAY_CHAR_WIDTH)
+            print("chars_left: {}".format(chars_left))
+            words_written = 0
+            line_y = y
+            print(words)
+            for w in words:
+                w_space = "{} ".format(w)
+
+
+                if (words_written+len(w_space)) >= chars_left:
+                    print("line_y:{}".format(line_y))
+                    words_written = 0
+                    line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
+
+
+                print("w: {}".format(w_space, line_y)) 
+                xpos = x + words_written * int(config.CFG_DISPLAY_CHAR_WIDTH)
+                self.display.text(w_space, xpos, line_y)
+
+                words_written = words_written + len(w_space)
+
+                if words_written >= chars_left:
+                    print("line_y:{}".format(line_y))
+                    words_written = 0
+                    line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
+                
             self.display.show()
-   
+           
+
+
+
     
     
     
@@ -141,8 +167,8 @@ class ui:
         if full_refresh:
             self.erase()
 
-            self.display_text("{}".format(_name), True, 0, 12)
-            self.display_text("{}".format(_description), True, 0, 70)
+            self.display_text("{}".format(_name), True, 0, 7)
+            self.display_text("{}".format(_description), True, 0, 35)
           
     
     
@@ -219,14 +245,9 @@ class ui:
     
       
     def show_scale(self, _value: int):
-        full_refresh = False
-        if self.last_display_source != 5:
-            full_refresh = True
         self.last_display_source = 5
-        
-        if full_refresh:
-            self.display.erase()
-            self.display_text("SCALE MODE", True, 0, 7)
-
-        self.display_text("{:04d}g".format(_value), True, 25, 46)
+        self.erase()
+        self.display_text("SCALE MODE", True, 0, 7)
+        self.display_text("      ", True, 25, 50)
+        self.display_text("{:04d}g".format(_value), True, 25, 50)
        

@@ -58,8 +58,10 @@ SYSTEMSTATE_MAINMENU = 2
 SYSTEMSTATE_SCALE_MODE = 3
 SYSTEMSTATE_UPDATE_MODE = 4
 SYSTEMSTATE_CALIBRATION_MODE_ENTRY = 5
-SYSTEMSTATE_CALIBRATION_MODE_ZERO = 6
-SYSTEMSTATE_CALIBRATION_MODE_FULL = 7
+SYSTEMSTATE_RAW_MODE = 6
+
+SYSTEMSTATE_CALIBRATION_MODE_ZERO = 7
+SYSTEMSTATE_CALIBRATION_MODE_FULL = 8
 # SCALE ENABLED
 SYSTATE_RECIPE_START = 10
 SYSTATE_RECIPE_SHOW_INGREDIENTS = 11
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     neopixelring = neopixel.NeoPixel(machine.Pin(config.CFG_NEOPIXEL_PIN), config.CFG_NEOPIXEL_LED_COUNT)
     helper.set_neopixel_random(neopixelring)
     
-    # INIT DISPLAY
+    # INIT DISPLAY7
     gui = ui.ui()
     # INIT SCALE
 
@@ -95,6 +97,7 @@ if __name__ == "__main__":
     scale_value = 0
     
     # CALIBTATION VALUES
+    # TODO LOAD FFROM SETTINGS
     rt = recipe.get_calibration_values()
     map_value_0g = rt[0]
     maps_value_50g = rt[1]
@@ -178,7 +181,7 @@ if __name__ == "__main__":
         
         
         # READ SCALE
-        if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE:
+        if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE or system_state == SYSTEMSTATE_RAW_MODE or system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL or system_state == SYSTEMSTATE_CALIBRATION_MODE_ZERO:
             scale_value = scales.raw_value() #stable_value()
             scale_value_tared = scale_value - tare_value
             scale_value_g = helper.fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , config.CFG_CALIBRATION_WEIGHT_WEIGHT)
@@ -223,7 +226,7 @@ if __name__ == "__main__":
                 
             
         
-                if mainmenu_recipe_index >= (len(found_recipes)-1) + 2: # +2 for UPDATE_RECIPES, SCALE_MODE
+                if mainmenu_recipe_index >= (len(found_recipes)-1) + 4: # +2 for UPDATE_RECIPES, SCALE_MODE
                     mainmenu_recipe_index = 0
                 else:
                     mainmenu_recipe_index = mainmenu_recipe_index + 1
@@ -251,6 +254,9 @@ if __name__ == "__main__":
                     elif mainmenu_recipe_index == (len(found_recipes)-1)+3:
                         gui.set_full_refresh()
                         gui.show_recipe_information("CALIBRATE", "run a scale calibration program. A 50g weight is needed")
+                    elif mainmenu_recipe_index == (len(found_recipes)-1)+4:
+                        gui.set_full_refresh()
+                        gui.show_recipe_information("HARDWARE TEST", "test internal hardware")
                         
                     print("extra menu {}".format(mainmenu_recipe_index))
                         
@@ -275,26 +281,35 @@ if __name__ == "__main__":
                 elif mainmenu_recipe_index == (len(found_recipes)-1)+3:
                     system_state = SYSTEMSTATE_CALIBRATION_MODE_ENTRY
                     # UPDATE NEOPIXEL
+                    helper.set_neopixel_full(neopixelring, 100, 10, 50)
+                elif mainmenu_recipe_index == (len(found_recipes)-1)+4:
+                    system_state = SYSTEMSTATE_RAW_MODE
+                    # UPDATE NEOPIXEL
                     helper.set_neopixel_full(neopixelring, 100, 0, 100)
 
 
+        elif system_state == SYSTEMSTATE_RAW_MODE:
+                gui.show_msg("SC:{}".format(get_stable_raw_scale_value()))
                 
                 
         elif system_state == SYSTEMSTATE_CALIBRATION_MODE_ENTRY:
                 gui.show_msg("REMOVE EVERYTHING FROM SCALE")
-                if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
+                if  button_pressed == UB_UP:
+                    button_pressed = UB_NONE
                     gui.show_msg("PLEASE WAIT")
                     map_value_0g = get_stable_raw_scale_value()
+                    print("map_value_0g:{}".format(map_value_0g))
                     system_state = SYSTEMSTATE_CALIBRATION_MODE_FULL
 
         elif system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL:
                 gui.show_msg("PLEASE PLACE {}g WEIGHT".format(config.CFG_CALIBRATION_WEIGHT_WEIGHT))
-                if  abs(last_systate_update - helper.millis()) > 20000 or button_pressed == UB_UP:
+                if  button_pressed == UB_UP:
+                    button_pressed = UB_NONE
                     gui.show_msg("PLEASE WAIT")
                     map_value_50g = get_stable_raw_scale_value()
 
                     recipe.save_calibration_values(map_value_0g, maps_value_50g)
-                    gui.show_msg("CALIBRATION SAVED")
+                    print("CALIBRATION SAVED map_value_0g:{} map_value_50g:{}".format(map_value_0g, map_value_50g))
                     system_state = SYSTATE_IDLE
                     
 
