@@ -21,27 +21,34 @@ print("main: __entry__")
 
 
 
+def get_scale_g(_scale, _map_value_0g, _maps_value_50g):
+    scale_value = _scale.raw_value()
+    scale_value_g = helper.fmap(scale_value, _map_value_0g, _maps_value_50g, 0 , config.CFG_CALIBRATION_WEIGHT_WEIGHT)
+    
+    if map_value_0g < maps_value_50g:
+        scale_value_g = -scale_value_g
+                
+    return scale_value_g
 
-
-def tare_drink(_scale, _iterations = 5):
+def tare_drink(_scale, _map_value_0g, _maps_value_50g, _iterations = 5):
     print("scale_tarebegin")
     tare_value = 0
     scale_value = 0
     for i in range(_iterations):
-        scale_value = scales.stable_value()
+        scale_value = get_scale_g(_scale, _map_value_0g, _maps_value_50g)
         time.sleep(0.5)
         tare_value = tare_value + scale_value
     tare_value = tare_value / _iterations
     return tare_value
 
 
-def get_stable_raw_scale_value(_iterations = 10):
-    print("get_stable_raw_scale_value_begin")
+def get_stable_raw_scale_value(_scale, _iterations = 5):
+    print("scale_tarebegin")
     tare_value = 0
     scale_value = 0
     for i in range(_iterations):
-        scale_value = scales.raw_value()
-        time.sleep(0.5)
+        scale_value = _scale.raw_value()
+        time.sleep(0.1)
         tare_value = tare_value + scale_value
     tare_value = tare_value / _iterations
     return tare_value
@@ -93,14 +100,19 @@ if __name__ == "__main__":
 
     scales = Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
     scales.tare()
-    tare_value = tare_drink(scales, 1)
-    scale_value = 0
+    
+    
     
     # CALIBTATION VALUES
     # TODO LOAD FFROM SETTINGS
     rt = recipe.get_calibration_values()
     map_value_0g = rt[0]
     maps_value_50g = rt[1]
+    
+    
+    tare_value = tare_drink(scales, map_value_0g, maps_value_50g, 1)
+    print("tare_value:{}".format(tare_value))
+    scale_value = 0
     print("loaded scale calibration valued 0g:{} {}g:{}".format(map_value_0g, config.CFG_CALIBRATION_WEIGHT_WEIGHT, maps_value_50g))
     
     
@@ -177,19 +189,31 @@ if __name__ == "__main__":
             print("UB_UPLONG")
            
 
-
+ 
+ 
         
         
         # READ SCALE
         if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE or system_state == SYSTEMSTATE_RAW_MODE or system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL or system_state == SYSTEMSTATE_CALIBRATION_MODE_ZERO:
-            scale_value = scales.raw_value() #stable_value()
-            scale_value_tared = scale_value - tare_value
-            scale_value_g = helper.fmap(scale_value_tared, map_value_0g, maps_value_50g, 0 , config.CFG_CALIBRATION_WEIGHT_WEIGHT)
-        
-            if scale_value_g <= 0.0:
-                scale_offset = -scale_value_g
-            scale_value_g =  scale_value_g + scale_offset
-        
+            scale_value_g = get_scale_g(scales, map_value_0g, maps_value_50g)
+            scale_value_g = scale_value_g - tare_value
+               
+           
+                
+                #if scale_value_g <= 0.0:
+           #     scale_offset = scale_value_g
+           # else:
+           #     scale_offset = scale_value_g
+            
+            
+            #if scale_value_g <= 0.0:
+            #    scale_value_g = scale_value_g - (0.0-scale_value_g)
+            #scale_value_g = scale_value_g - scale_value_tared
+                        
+            #scale_value_g =  scale_value_g - scale_offset
+            print("{}/{} => {} {}".format(map_value_0g, maps_value_50g, scale_value_g, tare_value))
+            
+
         
             
             
@@ -297,7 +321,7 @@ if __name__ == "__main__":
                 if  button_pressed == UB_UP:
                     button_pressed = UB_NONE
                     gui.show_msg("PLEASE WAIT")
-                    map_value_0g = get_stable_raw_scale_value()
+                    map_value_0g = get_stable_raw_scale_value(scales)
                     print("map_value_0g:{}".format(map_value_0g))
                     system_state = SYSTEMSTATE_CALIBRATION_MODE_FULL
 
@@ -306,8 +330,13 @@ if __name__ == "__main__":
                 if  button_pressed == UB_UP:
                     button_pressed = UB_NONE
                     gui.show_msg("PLEASE WAIT")
-                    map_value_50g = get_stable_raw_scale_value()
-
+                    map_value_50g = get_stable_raw_scale_value(scales)
+                    
+                    if map_value_0g > maps_value_50g:
+                       t = map_value_0g
+                       map_value_0g = maps_value_50g
+                       map_value_50g = t
+                
                     recipe.save_calibration_values(map_value_0g, maps_value_50g)
                     print("CALIBRATION SAVED map_value_0g:{} map_value_50g:{}".format(map_value_0g, map_value_50g))
                     system_state = SYSTATE_IDLE
@@ -316,11 +345,12 @@ if __name__ == "__main__":
 
         elif system_state == SYSTEMSTATE_SCALE_MODE:
             # UPDATE DISPLAY WITH SCALE READING
+            print("scale_value_g:{}g".format(scale_value_g))
             gui.show_scale(int(scale_value_g))
             
             if button_pressed == UB_UP:
                 button_pressed = UB_NONE
-                tare_value = tare_drink(scales, 1)
+                tare_value = tare_drink(scales, map_value_0g, maps_value_50g, 1)
             elif button_pressed == UB_UPLONG or button_pressed == UB_DOWN:
                 last_button_pressed = UB_NONE
                 last_systate_update = helper.millis()
