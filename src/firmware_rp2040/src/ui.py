@@ -18,7 +18,21 @@ from helper import get_system_id
 class ui:
     
 
-
+    def display_rect(self, _pos_x_percentage:int, _pos_y_percentage:int, _pos_x_end_perc:int, _pos_y_end_perc):
+        x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
+        y: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_percentage)
+        
+        xe: int = int((self.SCR_WIDTH / 100.0) * _pos_x_end_perc)
+        ye: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_end_perc)
+        
+        if config.CFG_DISPLAY_TYPE == "ili934":
+            self.display.fill_rectangle(x, y, abs(x-xe), abs(y-ye))
+            
+        elif config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
+            self.display.fill_rect(x, y, abs(x-xe), abs(y-ye), 0) # 0 = BG COLOR
+            self.display.show()
+        
+        
     def display_text(self, _str:str, _wrap:bool = False, _pos_x_percentage:int = 0, _pos_y_percentage:int = 0):
 
         _str = _str.replace("ß", "ss").replace("ö", "oe").replace("ä", "ae").replace("ü", "ue")
@@ -58,28 +72,28 @@ class ui:
                             words.append(w)
             
             chars_left = 1 + (self.SCR_WIDTH - x)/ int(config.CFG_DISPLAY_CHAR_WIDTH)
-            print("chars_left: {}".format(chars_left))
+            #print("chars_left: {}".format(chars_left))
             words_written = 0
             line_y = y
-            print(words)
+            #print(words)
             for w in words:
                 w_space = "{} ".format(w)
 
 
                 if (words_written+len(w_space)) >= chars_left:
-                    print("line_y:{}".format(line_y))
+                    #print("line_y:{}".format(line_y))
                     words_written = 0
                     line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
 
 
-                print("w: {}".format(w_space, line_y)) 
+                #print("w: {}".format(w_space, line_y)) 
                 xpos = x + words_written * int(config.CFG_DISPLAY_CHAR_WIDTH)
                 self.display.text(w_space, xpos, line_y)
 
                 words_written = words_written + len(w_space)
 
                 if words_written >= chars_left:
-                    print("line_y:{}".format(line_y))
+                    #print("line_y:{}".format(line_y))
                     words_written = 0
                     line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
                 
@@ -245,9 +259,16 @@ class ui:
     
       
     def show_scale(self, _value: int):
+        full_refresh = False
+        if self.last_display_source != 5:
+            full_refresh = True
         self.last_display_source = 5
-        self.erase()
-        self.display_text("SCALE MODE", True, 0, 7)
-        self.display_text("      ", True, 25, 50)
+        
+        if full_refresh:
+            self.erase()
+            self.display_text("SCALE MODE", True, 0, 7)
+        
+        self.display_rect(25,50, 100, 60)
         self.display_text("{:04d}g".format(_value), True, 25, 50)
        
+

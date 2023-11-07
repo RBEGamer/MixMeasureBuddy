@@ -18,28 +18,38 @@ class Scales(HX711):
     def raw_value(self):
         return self.read() - self.offset
 
-    def stable_value(self, reads=10, delay_us=10):
-        values = []
-        for _ in range(reads):
-            values.append(self.raw_value())
-            sleep_us(delay_us)
+    def stable_raw_value(self, without_offset: bool = False, reads=10, delay_us=10):     
+        stable_values = []
+        for i in range(reads):
+            if without_offset:
+                stable_values.append(self.read())
+            else:   
+                
+                stable_values.append(self.raw_value())
+            time.sleep_ms(10)
         
-        if len(values) <= 0:
-            values = [0.0]
+        tare_value = 0.0
+        for v in stable_values:
+            tare_value = tare_value + v
         
-        return self._stabilizer(values)
-
-    @staticmethod
-    def _stabilizer(values, deviation=10):
-        if len(values) <= 0:
-            return 0.0
-        weights = []
-        try:
-            for prev in values:
-                weights.append(sum([1 for current in values if abs(prev - current) / (prev / 100) <= deviation]))
-        except Exception as e:
-            print(str(e))
+        return tare_value / reads
+    
+ 
+    def set_scale(self, _scale_factor: float):
+        if _scale_factor is None or _scale_factor == 0.0:
+            _scale_factor = 1.0
+            print("set _scale_factor to 1.0 due parameter _scale_factor is None or Zero")
+        self.SCALE_FACTOR = _scale_factor
+        
+    def get_unit(self, _stable: bool = False) -> float:
+        if self.SCALE_FACTOR == 0.0:
+            self.SCALE_FACTOR = 1.0
             
-        if len(weights) <= 0:
-            return 0.0
-        return sorted(zip(values, weights), key=lambda x: x[1]).pop()[0]
+        if _stable:
+            return self.raw_value() / self.SCALE_FACTOR
+        
+        return self.stable_raw_value() / self.SCALE_FACTOR
+        
+        
+        
+ 
