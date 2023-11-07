@@ -22,6 +22,14 @@ class USER_INTERACTION_MODE():
     
 class recipe_loader:
     
+    INITIAL_SETTINGS_DATA: dict = {"calibration":
+                                   {"scale_calibration_0g":"0", "scale_calibration_50g":"50", "scale_calibration_weight": config.CFG_CALIBRATION_WEIGHT_WEIGHT},
+                                   "wificredentials": [
+                                       {"ssid":"Makerspace", "psk": "MS8cCvpE"}
+                                    ],
+                                   "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]
+                                   }
+        
     
     
     RECIPE_BASE_DIR = "/sd"
@@ -207,9 +215,8 @@ class recipe_loader:
     def write_initial_settings(self):
         if "SETTINGS.json" in os.listdir(self.RECIPE_BASE_DIR):
             return
-        cred = {"calibration":{"scale_calibration_0g":"0", "scale_calibration_50g":"50", "scale_calibration_weight": config.CFG_CALIBRATION_WEIGHT_WEIGHT},"wificredentials": [{"ssid":"Makerspace", "psk": "MS8cCvpE"}], "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
-            file.write(json.dumps(cred))
+            file.write(json.dumps(self.INITIAL_SETTINGS_DATA))
     
     def list_recpies(self) -> (str, str):
         res = []

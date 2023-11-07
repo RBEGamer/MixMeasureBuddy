@@ -64,7 +64,7 @@ class ui:
 
             # WRAP TEXT
             words = []
-            new_lines = _str.split(" ")
+            new_lines = _str.split("\n")
             for l in new_lines:
                 if not l == " ": 
                     for w in str(l).split(" "):
@@ -221,7 +221,7 @@ class ui:
             self.display_text("{}".format(_ingredient), True, 0, 27)
             
             # SHOW STEPS
-            self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 70)
+            self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 90)
 
 
              
@@ -230,31 +230,34 @@ class ui:
               
         
     def show_titlescreen(self):
-        self.last_display_source = 3
-        self.erase()
-
-        self.display_text("MIX", True, 15, 7)
-        self.display_text("MEASURE", True, 15, 35)
-        self.display_text("BUDDY", True, 15, 62)
-        self.display_text("ID: {}".format(get_system_id()), True, 7, 89)
-    
-    
-    def show_recipe_ingredients(self, _ingredients: [str]):
         full_refresh = False
-        if self.last_display_source != 4:
+        if self.last_display_source != 3:
+            full_refresh = True
+        self.last_display_source = 3
+        
+        if full_refresh:
+            self.erase()
+            self.display_text("MIX", True, 25, 10)
+            self.display_text("MEASURE", True, 25, 30)
+            self.display_text("BUDDY", True, 25, 50)
+            self.display_text("{}".format(get_system_id()), True, 7, 70)
+    
+    
+    def show_recipe_ingredients(self, _ingredients: [str], _force_refresh: bool = True):
+        full_refresh = False
+        if self.last_display_source != 4 or _force_refresh:
             full_refresh = True
         self.last_display_source = 4
         
         if full_refresh:
-            self.display.erase()
-
-            self.display_text("Ingredients", True, 3, 7)
+            self.erase()
+            self.display_text("Ingredients", True, 0, 7)
  
-            y = 23
-            step = 11
-            for item in _ingredients:
-                y = y + step
-                self.display_text("* {}".format(item), True, 0, y)
+        text = ""
+        for item in _ingredients:
+            text = text + "{}\n".format(item)
+                
+            self.display_text(text, True, 0, 30)
 
     
       
