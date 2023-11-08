@@ -45,6 +45,8 @@ SYSTATE_RECIPE_PLACEGLASS = 12
 SYSTATE_RECIPE_RUNNING = 13
 SYSTATE_RECIPE_FINISHED = 14
 
+SYSTEMSTATE_UPDATE_MODE_QR_START = 20
+SYSTEMSTATE_UPDATE_MODE_QR_RUNNING = 21
 
 UB_NONE = 0
 UB_RELEASE = 1
@@ -274,7 +276,7 @@ if __name__ == "__main__":
                     helper.set_neopixel_full(neopixelring, 0, 100, 100)
 
                 elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
-                    system_state = SYSTEMSTATE_UPDATE_MODE
+                    system_state = SYSTEMSTATE_UPDATE_MODE_QR_START
                     # UPDATE NEOPIXEL
                     helper.set_neopixel_full(neopixelring, 100, 0, 100)
 
@@ -358,9 +360,28 @@ if __name__ == "__main__":
                 else:
                     neopixelring[led_index] = (10, 10, 10)
             neopixelring.write()
+            
+            
+            
+        elif system_state == SYSTEMSTATE_UPDATE_MODE_QR_START:
+            user_portal_url: str = recipe.check_update_url()
+            if user_portal_url != "":
+                gui.show_device_qr_code(user_portal_url)
+                system_state = SYSTEMSTATE_UPDATE_MODE_QR_RUNNING
+            else:
+                system_state = SYSTEMSTATE_UPDATE_MODE
+            
+            
+        elif system_state == SYSTEMSTATE_UPDATE_MODE_QR_RUNNING:
+            gui.show_msg("LOADING UPDATE MANAGER")
+            if button_pressed == UB_DOWN or button_pressed == UB_UP:
+                button_pressed = UB_NONE
+                system_state = SYSTEMSTATE_UPDATE_MODE
                 
         elif system_state == SYSTEMSTATE_UPDATE_MODE:
-            gui.show_msg("LOADING UPDATE MANAGER")
+            gui.show_msg("UPDATING RECIPES")
+            
+        
             recipe.unload_recipe()
             if recipe.update_recipes(gui):
                 helper.set_neopixel_full(neopixelring, 0, 0, 100)
