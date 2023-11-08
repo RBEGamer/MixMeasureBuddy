@@ -190,7 +190,7 @@ class recipe_loader:
 
         cred['calibration']['scale_calibration_0g'] = _scale_calibration_0g
         cred['calibration']['scale_calibration_50g'] = _scale_calibration_50g
-        
+        cred['calibration']['scale_calibration_weight'] = config.CFG_CALIBRATION_WEIGHT_WEIGHT
     
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
