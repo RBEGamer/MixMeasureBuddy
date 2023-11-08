@@ -25,7 +25,8 @@ class recipe_loader:
     INITIAL_SETTINGS_DATA: dict = {"calibration":
                                    {"scale_calibration_0g":"0", "scale_calibration_50g":"50", "scale_calibration_weight": config.CFG_CALIBRATION_WEIGHT_WEIGHT},
                                    "wificredentials": [
-                                       {"ssid":"Makerspace", "psk": "MS8cCvpE"}
+                                       {"ssid":"Makerspace", "psk": "MS8cCvpE"},
+                                       {"ssid":"ProDevMo", "psk": "6226054527192856"}
                                     ],
                                    "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]
                                    }
@@ -190,7 +191,7 @@ class recipe_loader:
 
         cred['calibration']['scale_calibration_0g'] = _scale_calibration_0g
         cred['calibration']['scale_calibration_50g'] = _scale_calibration_50g
-        cred['calibration']['scale_calibration_weight'] = config.CFG_CALIBRATION_WEIGHT_WEIGHT
+        
     
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
@@ -244,10 +245,14 @@ class recipe_loader:
             self.loaded_recipe = json_recipe
             return True
     
-    def update_recipes(self, _gui: ui.ui) -> bool:
+    
+    def disable_wifi(self):
+        wlan = network.WLAN(network.STA_IF)
+        wlan.active(False)
+        
+    def connect_wifi(self) -> bool:
         if not helper.has_wifi():
-            _gui.show_msg("WIFI UPDATE NOT SUPPORTED")
-            return
+            return False
 
 
         cred = {}
@@ -265,7 +270,7 @@ class recipe_loader:
             ssid = wifi["ssid"]
             psk = wifi["psk"]
             
-            _gui.show_msg("CONNECTING TO: {}".format(ssid))
+            print("CONNECTING TO: {}".format(ssid))
             wlan.connect(ssid, psk)
             timer = 0
             while wlan.isconnected() == False:
@@ -276,9 +281,11 @@ class recipe_loader:
                     break
             if wlan.isconnected():
                 connect_ok = True
-                _gui.show_msg("CONNECTION SUCCESS")
                 break
-            
+        return True
+    
+    
+    
         if not connect_ok:
             _gui.show_msg("CONNECTION FAILED PLEASE UPDATE SETTINGS.JSON ON SD CARD")
             time.sleep(2)
@@ -286,8 +293,43 @@ class recipe_loader:
         
         print(wlan.ifconfig())
         _gui.show_msg("IP: {}".format(wlan.ifconfig()[0]))
+        
+        
+    def check_update_url(self) -> str:
+        if not self.connect_wifi():
+            return ""
+        ok_url:str = ""
+        
+        cred = {}
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
+            cred = json.loads(file.read())
+        print(cred["api_endpoint"])
+        for url in cred["api_endpoint"]:
+            if 'http://' not in url:
+                url = 'http://' + url
+            print(url)
+            
+            try:
+                # GET LIST OF RECIPES
+                final = "{}/{}".format(url, str(get_system_id()))
+                r = urequests.get(final)
+                r.close()
+                ok_url = final
+                    
+            except Exception as e:
+                print(str(e))
+                
+        return ok_url
+        
+    def update_recipes(self, _gui: ui.ui) -> bool:
+        if not self.connect_wifi():
+            return False
+        
         time.sleep(2)
         
+        cred = {}
+        with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
+            cred = json.loads(file.read())
         headers={}
         print(cred["api_endpoint"])
         for url in cred["api_endpoint"]:
@@ -317,9 +359,7 @@ class recipe_loader:
   
                 
             
-        
-        # DISABLE WIFI
-        wlan.active(False)
+        self.disable_wifi()
         return True
     
 
