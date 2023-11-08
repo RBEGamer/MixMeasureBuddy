@@ -84,7 +84,7 @@ if __name__ == "__main__":
     calibration_factor = recipe.get_calibration_factor()
     print("calibration_factor {}".format(calibration_factor))
     map_value_0g = 0
-    maps_value_50g = 0
+    map_value_50g = 0
     
     scales.set_scale(calibration_factor)
     scales.tare()
@@ -293,6 +293,12 @@ if __name__ == "__main__":
         elif system_state == SYSTEMSTATE_RAW_MODE:
                 gui.show_msg("SRV:{}\nPBU:{}\nPBD:{}\nSS:{}\nTRE:{}\nID:{}".format(scales.stable_raw_value(without_offset=True), push_button_up.value(), push_button_down.value(), system_state, tare_value, helper.get_system_id()))
                 
+                if button_pressed == UB_UP:
+                    button_pressed = UB_NONE
+                    user_portal_url: str = recipe.check_update_url()
+                    if user_portal_url != "":
+                        gui.show_device_qr_code(user_portal_url)
+                        time.sleep(10)
          
                 
                 
@@ -311,13 +317,13 @@ if __name__ == "__main__":
                     button_pressed = UB_NONE
                     gui.show_msg("PLEASE WAIT")
                     map_value_50g = scales.stable_raw_value(without_offset=True)
-                    
-                    if map_value_0g > maps_value_50g:
+                    # FLIP MIN MAX IF LOADCELL IS INVERTED
+                    if map_value_0g > map_value_50g:
                        t = map_value_0g
-                       map_value_0g = maps_value_50g
+                       map_value_0g = map_value_50g
                        map_value_50g = t
                 
-                    recipe.save_calibration_values(map_value_0g, maps_value_50g)
+                    recipe.save_calibration_values(map_value_0g, map_value_50g)
                     print("CALIBRATION SAVED map_value_0g:{} map_value_50g:{}".format(map_value_0g, map_value_50g))
                     calibration_factor = recipe.get_calibration_factor()
                     scales.set_scale(calibration_factor)
@@ -343,7 +349,7 @@ if __name__ == "__main__":
                 system_state = SYSTATE_IDLE
             
             # UPDATE NEOPIXEL RING FROM TAREVALUE TO MAX MEASURED VALUE
-            target_value = max([scale_value_g, target_value])
+            target_value = max([scale_value_g, target_value, 10])
             disp_value = min([helper.imap(scale_value_g, tare_value, target_value, 0 , config.CFG_NEOPIXEL_LED_COUNT), config.CFG_NEOPIXEL_LED_COUNT])
             for i in range(config.CFG_NEOPIXEL_LED_COUNT):
                 color_value = helper.imap(i, 0, config.CFG_NEOPIXEL_LED_COUNT, 0 , 1.0)
@@ -351,12 +357,12 @@ if __name__ == "__main__":
                 led_index = int((i+config.CFG_NEOPIXEL_LED_START_OFFSET) % config.CFG_NEOPIXEL_LED_COUNT)
 
                 if target_value < 0:
-                    neopixelring[led_index] = (0, 0, 128)
+                    neopixelring[led_index] = (10, 0, 10)
                 elif scale_value_g >= target_value:
-                    neopixelring[led_index] = (0, 255, 0)
+                    neopixelring[led_index] = (255, 0, 255)
                 elif i < disp_value:
                     #       R  G  B
-                    neopixelring[led_index] = (int((1.0 - color_value) * 255), int(color_value*255), 0)
+                    neopixelring[led_index] = (int(color_value*255), 0, int((1.0 - color_value) * 255))
                 else:
                     neopixelring[led_index] = (10, 10, 10)
             neopixelring.write()
@@ -364,10 +370,13 @@ if __name__ == "__main__":
             
             
         elif system_state == SYSTEMSTATE_UPDATE_MODE_QR_START:
-            user_portal_url: str = recipe.check_update_url()
-            if user_portal_url != "":
-                gui.show_device_qr_code(user_portal_url)
-                system_state = SYSTEMSTATE_UPDATE_MODE_QR_RUNNING
+            if config.CFG_DISPLAY_USER_QR_CODE:
+                user_portal_url: str = recipe.check_update_url()
+                if user_portal_url != "":
+                    gui.show_device_qr_code(user_portal_url)
+                    system_state = SYSTEMSTATE_UPDATE_MODE_QR_RUNNING
+                else:
+                    system_state = SYSTEMSTATE_UPDATE_MODE
             else:
                 system_state = SYSTEMSTATE_UPDATE_MODE
             
