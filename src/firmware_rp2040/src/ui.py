@@ -13,11 +13,20 @@ import tt14
 import tt24
 import tt32
 import machine
-
+from uQR import QRCode
 from helper import get_system_id
 class ui:
     
-
+    def pixel(self, x, y, value):
+        if config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
+            self.display.pixel(x, y, value)
+        elif config.CFG_DISPLAY_TYPE == "ili934":
+            self.display.pixel(x, y, value)
+        
+    def show(self):
+        if config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
+            self.display.show()
+        
     def display_rect(self, _pos_x_percentage:int, _pos_y_percentage:int, _pos_x_end_perc:int, _pos_y_end_perc):
         x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
         y: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_percentage)
@@ -189,7 +198,7 @@ class ui:
     def set_full_refresh(self):
         self.last_display_source = -1
         
-        
+     
     def show_recipe_step(self, _action: str, _ingredient: str, _current_step: int, _max_steps: int):
         full_refresh = False
         if self.last_display_source != 2:
@@ -273,5 +282,25 @@ class ui:
         
         self.display_rect(25,50, 100, 60)
         self.display_text("{:04d}g".format(_value), True, 25, 50)
-       
+    
+    def show_device_qr_code(self, _url:str = "", _offset_x:int = 0, _offset_y:int = 0):
+        full_refresh = False
+        if self.last_display_source != 6:
+            full_refresh = True
+        self.last_display_source = 6
+        
+        if full_refresh:
+            self.erase()
+            
+            qr = QRCode()
+            if _url == "":
+                qr.add_data("{}".format(get_system_id()))
+            else:
+                qr.add_data("{}".format(_url))
+            matrix = qr.get_matrix()
+            for y in range(len(matrix)*2):                   
+                for x in range(len(matrix[0])*2):            
+                    value = not matrix[int(y/2)][int(x/2)]   
+                    self.pixel(x + _offset_x, y + _offset_y, value)
+        self.show()  
 

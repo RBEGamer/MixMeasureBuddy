@@ -23,7 +23,7 @@ class USER_INTERACTION_MODE():
 class recipe_loader:
     
     INITIAL_SETTINGS_DATA: dict = {"calibration":
-                                   {"scale_calibration_0g":"0", "scale_calibration_50g":"50", "scale_calibration_weight": config.CFG_CALIBRATION_WEIGHT_WEIGHT},
+                                   {"sc_min":"0", "sc_full":"50", "sc_weight": config.CFG_CALIBRATION_WEIGHT_WEIGHT},
                                    "wificredentials": [
                                        {"ssid":"Makerspace", "psk": "MS8cCvpE"},
                                        {"ssid":"ProDevMo", "psk": "6226054527192856"}
@@ -181,7 +181,7 @@ class recipe_loader:
         with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
             file.write(json.dumps(recipe))
     
-    def save_calibration_values(self, _scale_calibration_0g: int = None, _scale_calibration_50g: int = None):
+    def save_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float):
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
             cred = json.loads(file.read())
@@ -189,9 +189,10 @@ class recipe_loader:
         if 'calibration' not in cred:
             self.write_initial_settings()
 
-        cred['calibration']['scale_calibration_0g'] = _scale_calibration_0g
-        cred['calibration']['scale_calibration_50g'] = _scale_calibration_50g
-        
+        cred['calibration']['sc_min'] = str(_scale_calibration_0g)
+        cred['calibration']['sc_full'] = str(_scale_calibration_50g)
+        cred['calibration']['sc_weight'] = str(config.CFG_CALIBRATION_WEIGHT_WEIGHT)
+        print(cred['calibration'])
     
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "w") as file:
             file.write(json.dumps(cred))
@@ -205,12 +206,13 @@ class recipe_loader:
             self.write_initial_settings()
         
         calibration_values = cred['calibration']
-        scale_calibration_0g = int(calibration_values['scale_calibration_0g'])
-        scale_calibration_50g = int(calibration_values['scale_calibration_50g'])
-        scale_calibration_weight = int(calibration_values['scale_calibration_weight'])
+        print(calibration_values)
+        sc_min = float(cred['calibration']['sc_min'])
+        sc_full = float(cred['calibration']['sc_full'])
+        sc_weight = float(cred['calibration']['sc_weight'])
         
-        calibration_factor =  (scale_calibration_0g-scale_calibration_50g)/ scale_calibration_weight
-        print("get_calibration_factor using ({}-{}) / {} = {}".format(scale_calibration_0g, scale_calibration_50g, scale_calibration_weight, calibration_factor))
+        calibration_factor =  (sc_min-sc_full) / sc_weight
+        print("get_calibration_factor using ({}-{}) / {} = {}".format(sc_min, sc_full, sc_weight, calibration_factor))
         return calibration_factor
 
     def write_initial_settings(self):
