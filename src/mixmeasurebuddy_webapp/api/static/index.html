@@ -62,11 +62,6 @@
         <a class="nav-link" href="#anch_about">Über das Projekt</a>
       </li>
 
-      
-      <li class="nav-item">
-        <a class="nav-link" href="#anch_schwerpunkte">Schwerpunkte</a>
-      </li>
-
       <li class="nav-item">
         <a class="nav-link" href="#anch_picutres">Gallerie</a>
       </li>
@@ -74,12 +69,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#faq">FAQ</a>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="/statistics">Statistiken</a>
-      </li>
-
-
 
     </ul>
 
@@ -147,7 +136,9 @@
   <div class="col-md-7 order-md-2">
     <h2 class="featurette-heading"><a class="fhcolor_text" href="/">Build your own</a></h2>
     <p class="lead">
-
+The mix & measure buddy is easy to build yourself. The construction and the components used are designed in such a way that anyone with a little skill can build it themselves in about two hours. All electrical components are plugged into a plug-in board, so no soldering is required.
+The required 3d printed parts can be produced by yourself with a standard 3d fdm 3d printer or can be produced in the local makerspace.
+The software is written in mikropython and is initially designed for the Raspberry Pi Pico (W) and can be quickly adapted to all common microcontrollers with or without Wifi interface.
     </p>
   </div>
   <div class="col-md-5 order-md-1">
@@ -161,45 +152,18 @@
 
 
 
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading"><a class="fhcolor_text" href="https://www.fh-aachen.de/studium/informatik-bsc">Mechanik</a></h2>
-        <p class="lead">
 
-          Mechanik ist die Lehre von der Bewegung von Körpern sowie den dabei wirkenden Kräften.
-          Um die Schachfiguren von einem Feld auf das nächste zu versetzten, braucht es Mechanik.
-          <br></br>
-          Mechanik ist nicht direkt Teil des Informatikstudiums, doch die Verwendung und das Programmieren von Motoren definitiv.
-          <br>
-          Die Bewegung im Schachtisch geht von zwei Schrittmotoren und zwei Elektromagneten aus.
-          Alle Schachfiguren müssen daher magnetisch sein.
-          <br><br>
-          Die Elektromagnete werden unter dem Tisch in X- und Y-Richtung verschoben.
-          Für jede Richtung ist einer der Schrittmotoren zuständig. An der gewünschten Position angekommen, wird einer der Elektromagenten anktiviert, sodass die die Figur oberhalb der Platte magnetisch an diesen gebunden ist.
-          Zwei Elektromagneten sind dehalb nötig, um die Ecken der Platte erreichen zu können.
-          Wäre nur ein Elektromagnet mittig angebracht, würde die Konstruktion des Kreuztisches verhindern, dass die Ecken des Tisches erreicht werden können.
-      </div>
-      <div class="col-md-5">
-        <img class="featurette-image img-fluid mx-auto" data-src="/img/rsz_img_7413.png" src="/img/rsz_img_7413.png" alt="code snipped illustration">
-      </div>
-    </div>
 
 
   <div class="row featurette">
-    <div class="col-md-7 order-md-2">
-      <h2 class="featurette-heading"><a class="fhcolor_text" href="https://www.fh-aachen.de/studium/informatik-bsc">Verteile Systeme</a></h2>
+    <div class="col-md-7">
+      <h2 class="featurette-heading"><a class="fhcolor_text" href="/">Recipe Database</a></h2>
       <p class="lead">
-        Cloud-Computing ist die bedarfsabhängige Bereitstellung von IT-Ressourcen über das Internet.
-        Der Tisch benötigt eine Cloud-Verbindung, um andere Spieler zu finden und zu verbinden. Zudem wird auch die Berechnung von möglichen Zügen in der Cloud ausgeführt.
-        Doch was ist die Cloud? Die Cloud ist ein Computer oder mehrere Computer, welche mit dem Internet verbunden sind und für andere erreichbar sind.
-        <br><br>
-        Dieser kann auf bestimmte Anfragen genau definierte Antworten zurücksenden.
-        Im Fall der Schachcloud steht dieser in einem Rechenzentrum in Frankfurt; alle Schachtische, die sich im Internet befinden, versuchen eine Verbindung mit der Schach-Cloud herzustellen und ihren Gegenspieler nach neuen Schachzügen.
-        <br>
-        Dazu sendet der Tisch seine eindeutige Nummer und die Position aller Figuren auf dem Schachbrett.
-        Die Cloud führt noch andere Aktionen aus, wie das Zusammenbringen von Spielern, welche auf der Suche nach einem Spiel sind (Matchmaking).
-        Auch werden alle bereits geführen Spiele gespeichert und können mit anderen geteilt werden.
-
+          The online recipe database and the recipe editor are an optional component of the Mix & Measure Buddy ecosystem.
+          Here you can create and manage your own favourite recipes and share them with others. With one click, you can then synchronise a collection of recipes to your Mix & Measure Buddy and save them offline.
+          It is also possible to distribute different recipe lists to different Mix & Measure Buddy devices.
+          An API is also available for programmers to interact automatically with prescriptions in the prescription database.
+          As this is an opensource project, the online prescription database service can also be set up on your own computer or sbc and modified as required.
         <br><br>
 
       </p>
@@ -229,11 +193,11 @@
         <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/img/gallery/a_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/a.png"></a></div>
         <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="/img/gallery/b_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/b.png"></a></div>
         <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/c_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/c.png"></a></div>
-     <!--   <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/d_high.jpg" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/d.jpg"></a></div>
-        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/e_high.jpg" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/e.jpg"></a></div>
-        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/f_high.jpg" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/f.jpg"></a></div>
-        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/g_high.jpg" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/g.jpg"></a></div>
-        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/h_high.jpg" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/h.jpg"></a></div> -->
+       <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/d_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/d.png"></a></div>
+        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/e_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/e.png"></a></div>
+        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/f_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/f.png"></a></div>
+      <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/g_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/g.png"></a></div>
+        <div class="col-sm-6 col-md-4 col-lg-3 item"><a href="img/gallery/h_high.png" data-lightbox="photos"><img class="img-fluid" src="/img/gallery/h.png"></a></div>
       </div>
     </div>
 
@@ -367,13 +331,11 @@
 
 
 
+
     <div class="row">
       <div class="col-lg-12 text-center text-lg-center my-auto">
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form action="/redirect" method="GET">
-          <input type="hidden" name="destination" value="impressum"/>
-          <input type="submit" class="btn btn-dark" value="IMPRESSUM" />
-          </form>
+          <a class="btn btn-primary" href="https://marcelochsendorf.com/impressum" role="button">Impressum | imprint</a>
         </div>
       </div>
     </div>
