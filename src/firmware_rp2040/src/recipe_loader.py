@@ -287,15 +287,7 @@ class recipe_loader:
         return True
     
     
-    
-        if not connect_ok:
-            _gui.show_msg("CONNECTION FAILED PLEASE UPDATE SETTINGS.JSON ON SD CARD")
-            time.sleep(2)
-            return False
-        
-        print(wlan.ifconfig())
-        _gui.show_msg("IP: {}".format(wlan.ifconfig()[0]))
-        
+
         
     def check_update_url(self) -> str:
         if not self.connect_wifi():

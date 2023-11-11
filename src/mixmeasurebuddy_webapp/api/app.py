@@ -1,5 +1,6 @@
 import json
 
+import bleach
 from flask import Flask, jsonify, make_response, Blueprint, redirect
 from dotenv import load_dotenv
 import os
@@ -30,11 +31,14 @@ SWAGGERFILE_PATH_ABS = Path.joinpath(Path(__file__).parent, Path(SWAGGERFILE_PAT
 # Create the bluepints
 blueprint = Blueprint(config.get('GENERAL', 'APP_NAME') + '-API', __name__)
 # Create the flask app
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='',
+            static_folder='static',
+            template_folder='templates')
 # LOAD CONFIG
 
 # SETUP MONFO
 
+# TODO sANTInITE ALL VAriabled
 # Create swagger version 3.0 generator
 generator = Generator.of(SwaggerVersion.VERSION_THREE)
 # Call factory function to create our blueprint
@@ -45,14 +49,19 @@ app.register_blueprint(get_swaggerui_blueprint(SWAGGER_URL, "/" + SWAGGERFILE_PA
 
 @blueprint.route('/api/mmb/', methods=['GET'])
 def mmbd_index(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
+    mmb_device_id = bleach.clean(mmb_device_id)
     return make_response(jsonify({'mmbd_recipes': '/api/mmb/<string:mmb_device_id>', 'mmbd_recipe': '/api/mmb/<string:mmb_device_id>/<string:recipe_id>'}), 200)
 
-
+@app.route('/api/mmb/<string:mmb_device_id>', methods=['GET'])
+def mmbd_manage_redirect(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
+    mmb_device_id = bleach.clean(mmb_device_id)
+    return redirect('/manage.html?mmb_device_id={}'.format(mmb_device_id))
 
 
 
 @blueprint.route('/api/mmb/<string:mmb_device_id>/register', methods=['GET'])
 def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
+    mmb_device_id = bleach.clean(mmb_device_id)
     # CHECK USER ALREADY EXISTS
     if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) > 0:
         return make_response(jsonify({}), 200)
@@ -76,11 +85,20 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
 
     return make_response(jsonify({}), 200)
 
+@generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
+@blueprint.route('/api/recipes', methods=['GET'])
+def user_all_recipes():  # mixmeasurebuddy.com/api/ system_id / recipes.json
+
+
+    recipes = dbmodels.Recipe.objects()
+
+    return make_response(jsonify(recipes), 200)
+
 
 @generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipes', methods=['GET'])
 def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
-
+    mmb_device_id = bleach.clean(mmb_device_id)
     # CHECK DEVICE REGISTRATION
     users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
     if len(dbmodels.Users.objects(linked_device_id=mmb_device_id)) <= 0:
@@ -102,6 +120,8 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
 @generator.response(status_code=200, schema={'recipe': {'name': 'Tequila_Sunrise', 'description': 'recipe text','version': '1.0.0','ingredients': {'0': 'name'},'steps':[{'action':'scale', 'ingredient':'0', 'amount':720},{'action':'confirm', 'text':'press ok'}]}, 'name': 'Recipe_Name'})
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipe/<string:recipe_id>', methods=['GET'])
 def mmbd_recipe(mmb_device_id: str, recipe_id: str):
+    mmb_device_id = bleach.clean(mmb_device_id)
+    recipe_id = bleach.clean(recipe_id)
     # CHECK DEVICE REGISTRATION
     users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
     if len(users) <= 0:
@@ -180,7 +200,7 @@ def api():
 
 @blueprint.route('/')
 def index():
-    return redirect('/api')
+    return redirect('/index.html')
 
 app.register_blueprint(blueprint)
 generator.generate_swagger(app, destination_path=SWAGGERFILE_PATH)
@@ -378,4 +398,4 @@ if __name__ == "__main__":
 
 
     # START FLASK
-    app.run(host=os.environ.get("API_SERVER_BIND_ADDR", '0.0.0.0'), port=os.environ.get("API_SERVER_PORT", 5000), debug=True)
+    app.run(host=os.environ.get("API_SERVER_BIND_ADDR", '0.0.0.0'), port=os.environ.get("API_SERVER_PORT", 5500), debug=True)

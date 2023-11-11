@@ -164,3 +164,7 @@ src/mixmeasurebuddy_webapp/mongo/db/WiredTiger
 *.lock
 *.turtle
 *.bson
+*.interim
+*.0000000001
+*.0000000002
+*.2023-11-08T22-01-09Z-00000

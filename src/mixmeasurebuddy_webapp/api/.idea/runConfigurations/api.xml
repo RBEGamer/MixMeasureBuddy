@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="api" type="Python.FlaskServer">
-    <option name="additionalOptions" value="--host=0.0.0.0 --port=5000" />
+    <option name="additionalOptions" value="--host=0.0.0.0 --port=5500" />
     <option name="flaskDebug" value="true" />
     <module name="api" />
     <option name="target" value="$PROJECT_DIR$/app.py" />
@@ -10,7 +10,7 @@
     <envs>
       <env name="DATABASE_CONNECTION_STRING" value="mongodb://mongo:27018" />
     </envs>
-    <option name="SDK_HOME" value="$USER_HOME$/drink-stash/api/venv/bin/python" />
+    <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
     <option name="SDK_NAME" value="Python 3.9 (api)" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     <option name="IS_MODULE_SDK" value="false" />

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Application
-  description: Generated at 29/07/2023 19:26:22. This is the swagger 
+  description: Generated at 09/11/2023 00:45:21. This is the swagger 
     ui based on the open api 3.0 specification of the Application
   version: 1.0.0 created by the flask swagger generator.
 externalDocs:
@@ -10,6 +10,18 @@ externalDocs:
 servers:
   - url: '/'
 paths:
+  '/{filename}':
+    get:
+      tags:
+      - None
+      operationId: 'static'
+      parameters:
+      - in: path
+        name: filename
+        schema:
+          type: string
+        description: None
+        required: True
   '/api/docs/dist/{filename}':
     get:
       tags:
@@ -39,6 +51,18 @@ paths:
       tags:
       - swagger_ui
       operationId: 'show'
+  '/api/mmb/{mmb_device_id}':
+    get:
+      tags:
+      - None
+      operationId: 'mmbd_manage_redirect'
+      parameters:
+      - in: path
+        name: mmb_device_id
+        schema:
+          type: string
+        description: None
+        required: True
   '/api/mmb/':
     get:
       tags:
@@ -56,6 +80,14 @@ paths:
           type: string
         description: None
         required: True
+  '/api/recipes':
+    get:
+      tags:
+      - MixMeasureBuddy-API
+      operationId: 'user_all_recipes'
+      responses:
+        '200':
+          $ref: '#/components/responses/user_all_recipes_response'
   '/api/mmb/{mmb_device_id}/recipes':
     get:
       tags:
@@ -104,6 +136,12 @@ paths:
       operationId: 'index'
 components:
   responses:
+    user_all_recipes_response:
+      description: user_all_recipes response
+      content:
+         application/json:
+             schema:
+                 $ref: '#/components/schemas/user_all_recipes_response_schema'
     mmbd_recipes_response:
       description: mmbd_recipes response
       content:
@@ -117,6 +155,15 @@ components:
              schema:
                  $ref: '#/components/schemas/mmbd_recipe_response_schema'
   schemas:
+    user_all_recipes_response_schema:
+      type: object
+      properties:
+        id:
+          type: integer  
+          example: 10  
+        name:
+          type: string  
+          example: test_object  
     mmbd_recipes_response_schema:
       type: object
       properties:
