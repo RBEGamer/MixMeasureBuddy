@@ -3,13 +3,19 @@ import machine
 import time, math
 import neopixel
 import random
-import network
-
 import helper
 from Scales import Scales
 import config
 import recipe_loader
 import ui
+
+if helper.has_wifi():
+    import network
+    
+    
+
+
+
 
 print("main: __entry__")
 
