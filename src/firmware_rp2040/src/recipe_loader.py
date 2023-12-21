@@ -13,8 +13,7 @@ import helper
 if helper.has_wifi():
     import network
     import socket
-
-import urequests
+    import urequests
 
 
 
