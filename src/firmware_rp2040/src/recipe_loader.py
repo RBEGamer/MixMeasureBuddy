@@ -1,18 +1,22 @@
 import machine
 import sdcard
 import uos
-import network
-import socket
 import os
 import time
 import json
-import urequests
-
 
 from helper import get_system_id
 from ui import ui
 import config
 import helper
+
+
+if helper.has_wifi():
+    
+import network
+    import socket
+    import urequests
+
 
 
 class USER_INTERACTION_MODE():
