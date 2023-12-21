@@ -5,17 +5,16 @@ import os
 import time
 import json
 
-from helper import get_system_id
 from ui import ui
 import config
 import helper
 
 
 if helper.has_wifi():
-    
-import network
+    import network
     import socket
-    import urequests
+
+import urequests
 
 
 
@@ -309,7 +308,7 @@ class recipe_loader:
             
             try:
                 # GET LIST OF RECIPES
-                final = "{}/{}".format(url, str(get_system_id()))
+                final = "{}/{}".format(url, str(helper.get_system_id()))
                 r = urequests.get(final)
                 r.close()
                 ok_url = final
@@ -338,14 +337,14 @@ class recipe_loader:
             time.sleep(2)
             try:
                 # GET LIST OF RECIPES
-                r = urequests.get("{}/{}/recipes".format(url, str(get_system_id())),  headers=headers)
+                r = urequests.get("{}/{}/recipes".format(url, str(helper.get_system_id())),  headers=headers)
                 recipe_list = r.json() # ["resipe_file_uri_relative"]
                 r.close()
                 if recipe_list is not None:
                     # DONWLOAD EACH RECIPE
                     for recipe in recipe_list:
                         _gui.show_msg("recipe update: {}".format(recipe))
-                        r = urequests.get("{}/{}/recipe/{}".format(url, str(get_system_id()), recipe),  headers=headers)
+                        r = urequests.get("{}/{}/recipe/{}".format(url, str(helper.get_system_id()), recipe),  headers=headers)
                         dl_recipe = r.json() # [{filename_without_ending, recipe}]
                         r.close()
                         with open(self.RECIPE_BASE_DIR + "/" + dl_recipe['name'] + ".recipe", "w") as file:
