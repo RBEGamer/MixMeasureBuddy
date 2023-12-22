@@ -258,6 +258,9 @@ class recipe_loader:
         if not helper.has_wifi():
             return False
 
+        if helper.has_wifi():
+            network.country(config.CFG_NETWORK_WIFICOUNTRY)
+            network.hostname(config.CFG_NETWORK_HOSTNAME)
 
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:

@@ -1,0 +1,6 @@
+{
+    "excludeList": ["README.md", "pymakr.conf", ".vscode", "microfreezer", "build"],
+    "directoriesKeptInFrozen": ["lib", "sd", "."],
+    "enableZlibCompression": true,
+    "flashRootFolder": "/"
+  }

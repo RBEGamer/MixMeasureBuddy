@@ -1,7 +1,5 @@
 from hx711 import HX711
 import time, math
-from utime import sleep_us
-
 
 class Scales(HX711):
     def __init__(self, d_out = 5, pd_sck = 12):

@@ -9,25 +9,7 @@ import config
 import recipe_loader
 import ui
 
-if helper.has_wifi():
-    import network
-    
-    
-
-
-
-
 print("main: __entry__")
-
-
-
-
-
-
-
-
-
-
 
 
 # SYSTEM STATES
@@ -62,12 +44,7 @@ UB_DOWN = 4
 
 
 if __name__ == "__main__":
-    
-    # SETUP NETWORK IF PICO W
-    if helper.has_wifi():
-        network.country(config.CFG_NETWORK_WIFICOUNTRY)
-        network.hostname(config.CFG_NETWORK_HOSTNAME)
-    
+        
     system_state = SYSTATE_IDLE
     # INIT RECIPE LOADER AND INIT SD CARD
     recipe = recipe_loader.recipe_loader()
@@ -255,11 +232,18 @@ if __name__ == "__main__":
                     recipe.unload_recipe()
                     
                     if mainmenu_recipe_index == (len(found_recipes)-1)+1:
-                        gui.set_full_refresh()
-                        gui.show_recipe_information("SCALE MODE", "like a normal kitchen scale")
+                        if helper.has_wifi():
+                            gui.set_full_refresh()
+                            gui.show_recipe_information("SCALE MODE", "like a normal kitchen scale")
+                        else:
+                            mainmenu_recipe_index = (len(found_recipes)-1)+3
                     elif mainmenu_recipe_index == (len(found_recipes)-1)+2:
-                        gui.set_full_refresh()
-                        gui.show_recipe_information("RECIPE UPDATE", "updates all recipes using the webapp")
+                        if helper.has_wifi():
+                            gui.set_full_refresh()
+                            gui.show_recipe_information("RECIPE UPDATE", "updates all recipes using the webapp")
+                        else:
+                            mainmenu_recipe_index = (len(found_recipes)-1)+3
+                            
                     elif mainmenu_recipe_index == (len(found_recipes)-1)+3:
                         gui.set_full_refresh()
                         gui.show_recipe_information("CALIBRATE", "run a scale calibration program. A 50g weight is needed")
