@@ -51,7 +51,7 @@ This driver supports:
 """
 
 from math import sin, cos
-
+import vga2_8x8 as font1
 #
 # This allows sphinx to build the docs
 #
@@ -316,6 +316,21 @@ class ST7789:
             if display[0] == width and display[1] == height:
                 return display[2]
         return None
+
+
+  
+
+    def show():
+        pass
+    
+    def text(self, text, x, y, color=1):
+        self.text(self, font1, text, x, y, color=WHITE, background=BLACK)
+
+
+    def erase(self):
+        self.fill(0)
+
+
 
     def init(self, commands):
         """
