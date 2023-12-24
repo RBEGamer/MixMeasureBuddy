@@ -2,7 +2,7 @@ include("$(MPY_DIR)/ports/rp2/boards/RPI_PICO/manifest.py")
 
 # TO DECOMPRESS THE SYSTEM IMAGE LATER ON THE THIRD ADDED BOOTSTAGE BOOTSTAGE
 #require("zlib")
-
+require("abc")
 # ADD NEEDED LIBRARIES HERE
 package("neopixel", base_path="_SPATH_/thridparty_libs")
 package("sdcard", base_path="_SPATH_/thridparty_libs")

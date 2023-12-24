@@ -1,10 +1,11 @@
 from utime import sleep_us
 import machine
-import time, math
+import time
+import math
 import neopixel
 import random
 import helper
-from mmb.Scales import Scales
+import Scales
 import config
 import recipe_loader
 import ui
@@ -50,14 +51,14 @@ if __name__ == "__main__":
     recipe = recipe_loader.recipe_loader()
         
     # INIT NEOPIXEL RING
-    neopixelring = npx.NeoPixel(machine.Pin(config.CFG_NEOPIXEL_PIN), config.CFG_NEOPIXEL_LED_COUNT)
+    neopixelring = neopixel.NeoPixel(machine.Pin(config.CFG_NEOPIXEL_PIN), config.CFG_NEOPIXEL_LED_COUNT)
     helper.set_neopixel_random(neopixelring)
     
     # INIT DISPLAY7
     gui = ui.ui()
     # INIT SCALE
 
-    scales = Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
+    scales = Scales.Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
     scales.tare()
     
     

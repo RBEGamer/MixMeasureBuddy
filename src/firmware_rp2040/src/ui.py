@@ -1,167 +1,89 @@
 import config
-
-#if config.CFG_DISPLAY_TYPE == "ili934":
-from mmb.ili934xnew import ILI9341, color565
-#elif config.CFG_DISPLAY_TYPE == "ssd1306":
-import mmb.ssd1306
-#elif config.CFG_DISPLAY_TYPE == "sh1106":
-import mmb.bsh1106
-
-
-import mmb.glcdfont
-import mmb.tt14
-import mmb.tt24
-import mmb.tt32
-import machine
-from mmb.uQR import QRCode
-from helper import get_system_id
+import mmb_display
+import uQR
+import helper
 class ui:
     
+    display: mmb_display
+
+
+
     def pixel(self, x, y, value):
-        if config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
-            self.display.pixel(x, y, value)
-        elif config.CFG_DISPLAY_TYPE == "ili934":
-            self.display.pixel(x, y, value)
+        self.display.pixel(x, y, value)
         
     def show(self):
-        if config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
             self.display.show()
         
     def display_rect(self, _pos_x_percentage:int, _pos_y_percentage:int, _pos_x_end_perc:int, _pos_y_end_perc):
-        x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
-        y: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_percentage)
+        x: int = int((config.SCR_WIDTH / 100.0) * _pos_x_percentage)
+        y: int = int((config.SCR_HEIGHT / 100.0) * _pos_y_percentage)
         
-        xe: int = int((self.SCR_WIDTH / 100.0) * _pos_x_end_perc)
-        ye: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_end_perc)
+        xe: int = int((config.SCR_WIDTH / 100.0) * _pos_x_end_perc)
+        ye: int = int((config.SCR_HEIGHT / 100.0) * _pos_y_end_perc)
         
-        if config.CFG_DISPLAY_TYPE == "ili934":
-            self.display.fill_rectangle(x, y, abs(x-xe), abs(y-ye))
-            
-        elif config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
-            self.display.fill_rect(x, y, abs(x-xe), abs(y-ye), 0) # 0 = BG COLOR
-            self.display.show()
+
+        self.display.fill_rect(x, y, abs(x-xe), abs(y-ye), 0) # 0 = BG COLOR
+        self.display.show()
         
         
     def display_text(self, _str:str, _wrap:bool = False, _pos_x_percentage:int = 0, _pos_y_percentage:int = 0):
-
         _str = _str.replace("ß", "ss").replace("ö", "oe").replace("ä", "ae").replace("ü", "ue")
 
-         #if len(_message) > 12:
-         #           self.display.set_font(tt14)
-         #   else:
-         #       self.display.set_font(tt24)
-        x: int = int((self.SCR_WIDTH / 100.0) * _pos_x_percentage)
-        y: int = int((self.SCR_HEIGHT / 100.0) * _pos_y_percentage)
+        x: int = int((config.SCR_WIDTH / 100.0) * _pos_x_percentage)
+        y: int = int((config.SCR_HEIGHT / 100.0) * _pos_y_percentage)
 
-       
-        
-        if config.CFG_DISPLAY_TYPE == "ili934":
-
-            self.display.set_pos(x, y)
-            
-            if _wrap:
-                 self.display.print(_str)
-            else:
-                 self.display.write(_str)
-        
-        elif config.CFG_DISPLAY_TYPE == "ssd1306" or config.CFG_DISPLAY_TYPE == "sh1106":
-            if not _wrap:
-                self.display.text(_str, x, y)
-                self.display.show()
-                return
-            
-
-            # WRAP TEXT
-            words = []
-            new_lines = _str.split("\n")
-            for l in new_lines:
-                if not l == " ": 
-                    for w in str(l).split(" "):
-                        if not w == " ":
-                            words.append(w)
-            
-            chars_left = 1 + (self.SCR_WIDTH - x)/ int(config.CFG_DISPLAY_CHAR_WIDTH)
-            #print("chars_left: {}".format(chars_left))
-            words_written = 0
-            line_y = y
-            #print(words)
-            for w in words:
-                w_space = "{} ".format(w)
-
-
-                if (words_written+len(w_space)) >= chars_left:
-                    #print("line_y:{}".format(line_y))
-                    words_written = 0
-                    line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
-
-
-                #print("w: {}".format(w_space, line_y)) 
-                xpos = x + words_written * int(config.CFG_DISPLAY_CHAR_WIDTH)
-                self.display.text(w_space, xpos, line_y)
-
-                words_written = words_written + len(w_space)
-
-                if words_written >= chars_left:
-                    #print("line_y:{}".format(line_y))
-                    words_written = 0
-                    line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
-                
+        if not _wrap:
+            self.display.text(_str, x, y)
             self.display.show()
+            return
+            
+
+        # WRAP TEXT
+        words = []
+        new_lines = _str.split("\n")
+        for l in new_lines:
+            if not l == " ": 
+                for w in str(l).split(" "):
+                    if not w == " ":
+                        words.append(w)
+        
+        chars_left = 1 + (config.SCR_WIDTH - x)/ int(config.CFG_DISPLAY_CHAR_WIDTH)
+        #print("chars_left: {}".format(chars_left))
+        words_written = 0
+        line_y = y
+        #print(words)
+        for w in words:
+            w_space = "{} ".format(w)
+
+
+            if (words_written+len(w_space)) >= chars_left:
+                #print("line_y:{}".format(line_y))
+                words_written = 0
+                line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
+
+
+            #print("w: {}".format(w_space, line_y)) 
+            xpos = x + words_written * int(config.CFG_DISPLAY_CHAR_WIDTH)
+            self.display.text(w_space, xpos, line_y)
+
+            words_written = words_written + len(w_space)
+
+            if words_written >= chars_left:
+                #print("line_y:{}".format(line_y))
+                words_written = 0
+                line_y = line_y + int(config.CFG_DISPLAY_LINE_SPACING)
+            
+        self.display.show()
            
-
-
-
-    
-    
-    
-
-    def erase(self):
-        # with used lib ili934 needs two rease commands....
-        if config.CFG_DISPLAY_TYPE == "ili934":
-            self.display.erase()
-            self.display.erase()
-        elif config.CFG_DISPLAY_TYPE == "ssd1306":
-            self.display.fill(0)
-            self.display.show()
-        elif config.CFG_DISPLAY_TYPE == "sh1106":
-            self.display.fill(0)
-            self.display.show()
-
 
 
     def __init__(self):
-
-        
+        # CREATE A DISPLAY INSTANCE
+        self.display = mmb_display.mmb_display.display_instance_creator()
            
 
-        # DISPLAY SETTINGS
-        if config.CFG_DISPLAY_TYPE == "ili934":
-            self.SCR_WIDTH = 160
-            self.SCR_HEIGHT = 128
-            SCR_ROT = 7
-            _spi = machine.SPI(config.CFG_ILI9341_SPIINSTANCE, baudrate=15625000, sck=machine.Pin(config.CFG_ILI9341_SCK_PIN), mosi=machine.Pin(config.CFG_ILI9341_MOSI_PIN), miso=machine.Pin(config.CFG_ILI9341_MISO_PIN))
-            self.display = ILI9341(_spi, cs=machine.Pin(config.CFG_ILI9341_CS_PIN), dc=machine.Pin(config.CFG_ILI9341_DC_PIN), rst=machine.Pin(config.CFG_ILI9341_RST_PIN), w=self.SCR_WIDTH, h=self.SCR_HEIGHT, r=SCR_ROT)
-            # SET COLOR AN COLOR DISPLAY TO BLACK WHITE
-            self.display.set_color(color565(255, 255, 255), color565(0, 0, 0))
-            self.display.set_font(tt14)
-        elif config.CFG_DISPLAY_TYPE == "sh1106":
-            self.SCR_WIDTH = 128
-            self.SCR_HEIGHT = 64
-            i2c = machine.I2C(config.CFG_OLED_I2CINSTANCE, scl=machine.Pin(config.CFG_OLED_SCL_PIN), sda=machine.Pin(config.CFG_OLED_SDA_PIN), freq=400000)
-            self.display = sh1106.SH1106_I2C(self.SCR_WIDTH, self.SCR_HEIGHT, i2c, None, config.CFG_OLED_ADDR)
-            self.display.sleep(False)
-            self.display.fill(0)
-
-        elif config.CFG_DISPLAY_TYPE == "ssd1306":
-            self.SCR_WIDTH = 128
-            self.SCR_HEIGHT = 64
-            i2c = machine.I2C(config.CFG_OLED_I2CINSTANCE, scl=machine.Pin(config.CFG_OLED_SCL_PIN), sda=machine.Pin(config.CFG_OLED_SDA_PIN), freq=400000)
-            self.display = ssd1306.SSD1306_I2C(self.SCR_WIDTH, self.SCR_HEIGHT, i2c, config.CFG_OLED_ADDR)
-
-       
-
          
-        self.erase()
+        self.display.erase()
 
         self.last_display_source: int = -1
         self.last_display_content = "."
@@ -173,7 +95,7 @@ class ui:
         if self.last_display_source != 0 or _message != self.last_display_content:
             self.last_display_content = _message
 
-            self.erase()
+            self.display.erase()
             self.display_text("{}".format(_message), True, 0, 0)
 
             self.last_display_source = 0
@@ -188,7 +110,7 @@ class ui:
         self.last_display_source = 1
         
         if full_refresh:
-            self.erase()
+            self.display.erase()
 
             self.display_text("{}".format(_name), True, 0, 7)
             self.display_text("{}".format(_description), True, 0, 35)
@@ -205,30 +127,11 @@ class ui:
             full_refresh = True
         self.last_display_source = 2
         if full_refresh:
-            self.erase()
+            self.display.erase()
 
-            
-            
-           
             self.display_text("{}".format(_action), True, 31, 7)
            
-            
-            chars_row = 30
-            if _ingredient is None:
-                pass
-            elif len(_ingredient) < 11:
-                chars_row =10
-                #self.display.set_font(tt32)
-            elif len(_ingredient) < 15:
-                chars_row = 15
-                #self.display.set_font(tt24)
-            else:
-                chars_row = 30
-                #self.display.set_font(tt14)
-
-
-            self.display_text("{}".format(_ingredient), True, 0, 27)
-            
+            self.display_text("{}".format(_ingredient), True, 0, 27)    
             # SHOW STEPS
             self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 90)
 
@@ -245,11 +148,11 @@ class ui:
         self.last_display_source = 3
         
         if full_refresh:
-            self.erase()
+            self.display.erase()
             self.display_text("MIX", True, 25, 10)
             self.display_text("MEASURE", True, 25, 30)
             self.display_text("BUDDY", True, 25, 50)
-            self.display_text("{}".format(get_system_id()), True, 7, 70)
+            self.display_text("{}".format(helper.get_system_id()), True, 7, 70)
     
     
     def show_recipe_ingredients(self, _ingredients: [str], _force_refresh: bool = True):
@@ -259,7 +162,7 @@ class ui:
         self.last_display_source = 4
         
         if full_refresh:
-            self.erase()
+            self.display.erase()
             self.display_text("Ingredients", True, 0, 7)
  
         text = ""
@@ -277,7 +180,7 @@ class ui:
         self.last_display_source = 5
         
         if full_refresh:
-            self.erase()
+            self.display.erase()
             self.display_text("SCALE MODE", True, 0, 7)
         
         self.display_rect(25,50, 100, 60)
@@ -290,11 +193,11 @@ class ui:
         self.last_display_source = 6
         
         if full_refresh:
-            self.erase()
+            self.display.erase()
             
-            qr = QRCode()
+            qr = uQR.QRCode()
             if _url == "":
-                qr.add_data("{}".format(get_system_id()))
+                qr.add_data("{}".format(helper.get_system_id()))
             else:
                 qr.add_data("{}".format(_url))
             matrix = qr.get_matrix()
