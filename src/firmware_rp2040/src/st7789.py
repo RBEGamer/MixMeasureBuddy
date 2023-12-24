@@ -51,7 +51,7 @@ This driver supports:
 """
 
 from math import sin, cos
-import vga2_8x8 as font1
+import static_modules.vga2_8x8 as font1
 #
 # This allows sphinx to build the docs
 #

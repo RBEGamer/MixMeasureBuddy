@@ -22,11 +22,11 @@ def restore_filesystem(_basepath: str = "/", _override: bool = False):
     del os
 
 
-module("tt14.py", base_path="/var/build/src/src")
-module("tt24.py", base_path="/var/build/src/src")
-module("tt32.py", base_path="/var/build/src/src")
-module("vga2_16x16.py", base_path="/var/build/src/src")
-module("vga2_16x32.py", base_path="/var/build/src/src")
-module("vga2_8x8.py", base_path="/var/build/src/src")
-module("vga2_bold_16x16.py", base_path="/var/build/src/src")
-module("vga2_bold_16x32.py", base_path="/var/build/src/src")
+module("tt14.py", base_path="/var/build/src/src/static_modules")
+module("tt24.py", base_path="/var/build/src/src/static_modules")
+module("tt32.py", base_path="/var/build/src/src/static_modules")
+module("vga2_16x16.py", base_path="/var/build/src/src/static_modules")
+module("vga2_16x32.py", base_path="/var/build/src/src/static_modules")
+module("vga2_8x8.py", base_path="/var/build/src/src/static_modules")
+module("vga2_bold_16x16.py", base_path="/var/build/src/src/static_modules")
+module("vga2_bold_16x32.py", base_path="/var/build/src/src/static_modules")

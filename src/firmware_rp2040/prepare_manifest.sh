@@ -22,7 +22,7 @@ for i in *.py.TEMPLATE; do
         echo "$p"
 
    
-        echo "module(\""$p\"", base_path=\""$PWD/src\"")" >> "$fbname"
+        echo "module(\""$p\"", base_path=\""$PWD/src/static_modules\"")" >> "$fbname"
     done
 done
 # generate manifest file by adding all .py files in src into a new manufest file:
