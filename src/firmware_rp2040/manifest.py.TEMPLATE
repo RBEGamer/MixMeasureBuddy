@@ -1,3 +1,0 @@
-include("$(MPY_DIR)/ports/rp2/boards/manifest.py")
-
-#module("foo.py", base_path="src/drivers")

@@ -2,7 +2,7 @@ import time
 import ubinascii
 import machine
 import config
-import neopixel
+import npx
 import random
 import sys
 

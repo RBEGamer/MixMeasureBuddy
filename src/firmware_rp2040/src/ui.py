@@ -1,19 +1,19 @@
 import config
 
 #if config.CFG_DISPLAY_TYPE == "ili934":
-from ili934xnew import ILI9341, color565
+from mmb.ili934xnew import ILI9341, color565
 #elif config.CFG_DISPLAY_TYPE == "ssd1306":
-import ssd1306
+import mmb.ssd1306
 #elif config.CFG_DISPLAY_TYPE == "sh1106":
-import sh1106
+import mmb.bsh1106
 
 
-import glcdfont
-import tt14
-import tt24
-import tt32
+import mmb.glcdfont
+import mmb.tt14
+import mmb.tt24
+import mmb.tt32
 import machine
-from uQR import QRCode
+from mmb.uQR import QRCode
 from helper import get_system_id
 class ui:
     

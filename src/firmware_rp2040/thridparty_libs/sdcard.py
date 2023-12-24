@@ -304,3 +304,6 @@ class SDCard:
             return self.sectors
         if op == 5:  # get block size in bytes
             return 512
+
+
+__version__ = '0.1.0'

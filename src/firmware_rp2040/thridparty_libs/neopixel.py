@@ -48,3 +48,6 @@ class NeoPixel:
     def write(self):
         # BITSTREAM_TYPE_HIGH_LOW = 0
         bitstream(self.pin, 0, self.timing, self.buf)
+
+
+__version__ = '0.1.0'

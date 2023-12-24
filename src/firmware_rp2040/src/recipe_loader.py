@@ -8,7 +8,7 @@ import json
 from ui import ui
 import config
 import helper
-
+import example_recipes
 
 if helper.has_wifi():
     import network
@@ -35,7 +35,7 @@ class recipe_loader:
         
     
     
-    RECIPE_BASE_DIR = "/sd"
+    RECIPE_BASE_DIR = "/data"
     loaded_recipe = None
     current_recipe_step = None
     sd = None # sdcard class instance
@@ -56,7 +56,7 @@ class recipe_loader:
             self.vfs = uos.VfsFat(self.sd)
             uos.mount(self.vfs, self.RECIPE_BASE_DIR)
         except Exception as e:
-            print("sdcard init failed using local filesystem on /sd", str(e))
+            print("sdcard init failed using local filesystem on /data", str(e))
 
 
         if self.sd is None:
