@@ -183,6 +183,8 @@ class recipe_loader:
         with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
             file.write(json.dumps(recipe))
     
+
+    
     def save_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float):
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:

@@ -1,7 +1,7 @@
 from utime import sleep_us
 import machine
 import time, math
-import npx
+import neopixel
 import random
 import helper
 from mmb.Scales import Scales

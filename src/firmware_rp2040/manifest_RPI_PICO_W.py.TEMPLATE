@@ -1,4 +1,4 @@
-include("$(MPY_DIR)/ports/rp2/boards/RPI_PICO/manifest.py")
+include("$(MPY_DIR)/ports/rp2/boards/RPI_PICO_W/manifest.py")
 
 # TO DECOMPRESS THE SYSTEM IMAGE LATER ON THE THIRD ADDED BOOTSTAGE BOOTSTAGE
 #require("zlib")

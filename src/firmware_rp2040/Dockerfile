@@ -42,4 +42,4 @@ COPY . ${CUSTOM_SRC_DIR}
 
 WORKDIR ${CUSTOM_SRC_DIR}
 #RUN ls ${CUSTOM_SRC_DIR}
-ENTRYPOINT [ls]
+ENTRYPOINT ["./build_firmware.sh"]
