@@ -10,7 +10,7 @@ SCR_HEIGHT = 0
 # ssd1306 = 128x64 olded with ssd1306 controller
 # sh1106 = 128x64 olded with ssh1106 controller
 # ili934 =  TFT 3,2 Zoll, 240x320 with ILI934 controller
-CFG_DISPLAY_TYPE = "sh1106" # sh1106 ssd1306 ili934
+CFG_DISPLAY_TYPE = "st7789" # sh1106 sh1106 ssd1306 ili934
 CFG_CALIBRATION_WEIGHT_WEIGHT = 50
 CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT = 50 # Xg more on scale to trigger next step in recipe => 1/3 weight of a typical glass
 CFG_USER_LONG_BUTTON_PRESS_TIME = 1000 # time to regsiter a long button press in ms
@@ -50,6 +50,16 @@ if CFG_DISPLAY_TYPE == "ili934":
     SCR_HEIGHT = 128
 
 
+CFG_ST7789_SPIINSTANCE = 0
+CFG_ST7789_SCK_PIN = 18
+CFG_ST7789_MOSI_PIN = 19
+CFG_ST7789_MISO_PIN = 16
+CFG_ST7789_CS_PIN = 17
+if CFG_DISPLAY_TYPE == "st7789":
+    SCR_WIDTH = 240
+    SCR_HEIGHT = 240
+
+
 # IF ssd1306 OR sh1106 IS USED
 CFG_OLED_I2CINSTANCE = 0
 CFG_OLED_SCL_PIN = 17
@@ -60,3 +70,6 @@ CFG_DISPLAY_CHAR_WIDTH = 8
 if CFG_DISPLAY_TYPE == "ssd1306" or CFG_DISPLAY_TYPE == "sh1106":
     SCR_WIDTH = 128
     SCR_HEIGHT = 64
+
+
+    
