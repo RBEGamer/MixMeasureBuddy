@@ -45,9 +45,9 @@ for i in $CUSTOM_SRC_DIR/manifest_*.py; do
     # BUILD FIRMWARE    
     cd $MICROPYTHON_BASE_DIR/ports/$PORT_TYPE
     # DOWNLOAD BOARD SPECIFIC SDK
-    make submodules
+    make submodules -j$(nproc)
     make clean
-    make BOARD=$BOARD_NAME FROZEN_MANIFEST=$i
+    make BOARD=$BOARD_NAME FROZEN_MANIFEST=$i -j$(nproc)
 
 
     # COPY OUTPUT RESULT TO RESULT-FOLDER

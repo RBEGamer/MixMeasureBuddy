@@ -13,7 +13,7 @@ for i in *.py.TEMPLATE; do
     sed -i -e 's|_SPATH_|'$PWD'|' "$fbname"
 
 
-
+    echo -e "\n\n" >> "$fbname"
     for j in $PWD/src/static_modules/*.py; do
     [ -f "$j" ] || break
         echo "$j"
@@ -21,7 +21,7 @@ for i in *.py.TEMPLATE; do
         p="$(basename $j)"
         echo "$p"
 
-   
+
         echo "module(\""$p\"", base_path=\""$PWD/src/static_modules\"")" >> "$fbname"
     done
 done

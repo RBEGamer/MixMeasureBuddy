@@ -51,7 +51,7 @@ This driver supports:
 """
 
 from math import sin, cos
-import static_modules.vga2_8x8 as font1
+import static_modules.vga2_8x8 as font
 #
 # This allows sphinx to build the docs
 #
@@ -323,8 +323,9 @@ class ST7789:
     def show():
         pass
     
-    def text(self, text, x, y, color=1):
-        self.text(self, font1, text, x, y, color=WHITE, background=BLACK)
+    def text(self, text, x, y, _color=1):
+        f = font
+        self.rawtext(self, font, text, x, y)
 
 
     def erase(self):
@@ -693,7 +694,7 @@ class ST7789:
 
         return buffer
 
-    def _text8(self, font, text, x0, y0, fg_color=WHITE, bg_color=BLACK):
+    def _text8(self, _font, text, x0, y0, fg_color=WHITE, bg_color=BLACK):
         """
         Internal method to write characters with width of 8 and
         heights of 8 or 16.
@@ -710,11 +711,11 @@ class ST7789:
         for char in text:
             ch = ord(char)
             if (
-                font.FIRST <= ch < font.LAST
-                and x0 + font.WIDTH <= self.width
-                and y0 + font.HEIGHT <= self.height
+                _font.FIRST <= ch < _font.LAST
+                and x0 + _font.WIDTH <= self.width
+                and y0 + _font.HEIGHT <= self.height
             ):
-                if font.HEIGHT == 8:
+                if _font.HEIGHT == 8:
                     passes = 1
                     size = 8
                     each = 0
@@ -724,13 +725,13 @@ class ST7789:
                     each = 8
 
                 for line in range(passes):
-                    idx = (ch - font.FIRST) * size + (each * line)
-                    buffer = self._pack8(font.FONT, idx, fg_color, bg_color)
+                    idx = (ch - _font.FIRST) * size + (each * line)
+                    buffer = self._pack8(_font.FONT, idx, fg_color, bg_color)
                     self.blit_buffer(buffer, x0, y0 + 8 * line, 8, 8)
 
                 x0 += 8
 
-    def _text16(self, font, text, x0, y0, fg_color=WHITE, bg_color=BLACK):
+    def _text16(self, _font, text, x0, y0, fg_color=WHITE, bg_color=BLACK):
         """
         Internal method to draw characters with width of 16 and heights of 16
         or 32.
@@ -747,12 +748,12 @@ class ST7789:
         for char in text:
             ch = ord(char)
             if (
-                font.FIRST <= ch < font.LAST
-                and x0 + font.WIDTH <= self.width
-                and y0 + font.HEIGHT <= self.height
+                _font.FIRST <= ch < _font.LAST
+                and x0 + _font.WIDTH <= self.width
+                and y0 + _font.HEIGHT <= self.height
             ):
                 each = 16
-                if font.HEIGHT == 16:
+                if _font.HEIGHT == 16:
                     passes = 2
                     size = 32
                 else:
@@ -760,12 +761,12 @@ class ST7789:
                     size = 64
 
                 for line in range(passes):
-                    idx = (ch - font.FIRST) * size + (each * line)
-                    buffer = self._pack16(font.FONT, idx, fg_color, bg_color)
+                    idx = (ch - _font.FIRST) * size + (each * line)
+                    buffer = self._pack16(_font.FONT, idx, fg_color, bg_color)
                     self.blit_buffer(buffer, x0, y0 + 8 * line, 16, 8)
             x0 += 16
 
-    def text(self, font, text, x0, y0, color=WHITE, background=BLACK):
+    def rawtext(self, _font, text, x0, y0, color=WHITE, background=BLACK):
         """
         Draw text on display in specified font and colors. 8 and 16 bit wide
         fonts are supported.
@@ -785,10 +786,10 @@ class ST7789:
             else ((background << 8) & 0xFF00) | (background >> 8)
         )
 
-        if font.WIDTH == 8:
-            self._text8(font, text, x0, y0, fg_color, bg_color)
+        if _font.WIDTH == 8:
+            self._text8(_font, text, x0, y0, fg_color, bg_color)
         else:
-            self._text16(font, text, x0, y0, fg_color, bg_color)
+            self._text16(_font, text, x0, y0, fg_color, bg_color)
 
     def bitmap(self, bitmap, x, y, index=0):
         """
@@ -879,7 +880,7 @@ class ST7789:
                 self._set_window(x, y + row, to_col, to_row)
                 self._write(None, buffer)
 
-    def write(self, font, string, x, y, fg=WHITE, bg=BLACK):
+    def write(self, _font, string, x, y, fg=WHITE, bg=BLACK):
         """
         Write a string using a converted true-type font on the display starting
         at the specified column and row
@@ -892,7 +893,7 @@ class ST7789:
             fg (int): foreground color, optional, defaults to WHITE
             bg (int): background color, optional, defaults to BLACK
         """
-        buffer_len = font.HEIGHT * font.MAX_WIDTH * 2
+        buffer_len = _font.HEIGHT * _font.MAX_WIDTH * 2
         buffer = bytearray(buffer_len)
         fg_hi = fg >> 8
         fg_lo = fg & 0xFF
@@ -902,20 +903,20 @@ class ST7789:
 
         for character in string:
             try:
-                char_index = font.MAP.index(character)
-                offset = char_index * font.OFFSET_WIDTH
+                char_index = _font.MAP.index(character)
+                offset = char_index * _font.OFFSET_WIDTH
                 bs_bit = font.OFFSETS[offset]
-                if font.OFFSET_WIDTH > 1:
-                    bs_bit = (bs_bit << 8) + font.OFFSETS[offset + 1]
+                if _font.OFFSET_WIDTH > 1:
+                    bs_bit = (bs_bit << 8) + _font.OFFSETS[offset + 1]
 
-                if font.OFFSET_WIDTH > 2:
-                    bs_bit = (bs_bit << 8) + font.OFFSETS[offset + 2]
+                if _font.OFFSET_WIDTH > 2:
+                    bs_bit = (bs_bit << 8) + _font.OFFSETS[offset + 2]
 
-                char_width = font.WIDTHS[char_index]
-                buffer_needed = char_width * font.HEIGHT * 2
+                char_width = _font.WIDTHS[char_index]
+                buffer_needed = char_width * _font.HEIGHT * 2
 
                 for i in range(0, buffer_needed, 2):
-                    if font.BITMAPS[bs_bit // 8] & 1 << (7 - (bs_bit % 8)) > 0:
+                    if _font.BITMAPS[bs_bit // 8] & 1 << (7 - (bs_bit % 8)) > 0:
                         buffer[i] = fg_hi
                         buffer[i + 1] = fg_lo
                     else:
@@ -925,7 +926,7 @@ class ST7789:
                     bs_bit += 1
 
                 to_col = x + char_width - 1
-                to_row = y + font.HEIGHT - 1
+                to_row = y + _font.HEIGHT - 1
                 if self.width > to_col and self.height > to_row:
                     self._set_window(x, y, to_col, to_row)
                     self._write(None, buffer[:buffer_needed])
@@ -935,7 +936,7 @@ class ST7789:
             except ValueError:
                 pass
 
-    def write_width(self, font, string):
+    def write_width(self, _font, string):
         """
         Returns the width in pixels of the string if it was written with the
         specified font
@@ -951,8 +952,8 @@ class ST7789:
         width = 0
         for character in string:
             try:
-                char_index = font.MAP.index(character)
-                width += font.WIDTHS[char_index]
+                char_index = _font.MAP.index(character)
+                width += _font.WIDTHS[char_index]
             except ValueError:
                 pass
 
