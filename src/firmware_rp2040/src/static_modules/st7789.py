@@ -51,7 +51,7 @@ This driver supports:
 """
 
 from math import sin, cos
-import static_modules.vga2_8x8 as font
+import vga2_8x8
 #
 # This allows sphinx to build the docs
 #
@@ -307,6 +307,10 @@ class ST7789:
         self.needs_swap = False
         self.fill(0x0)
 
+        # LOAD DEFAULT FONT
+        self.font = vga2_8x8
+
+
         if backlight is not None:
             backlight.value(1)
 
@@ -318,14 +322,16 @@ class ST7789:
         return None
 
 
-  
+    def set_font(self, _font):
+        self.font = _font
 
-    def show():
+
+    def show(self):
         pass
     
     def text(self, text, x, y, _color=1):
-        f = font
-        self.rawtext(self, font, text, x, y)
+
+        self.rawtext(self, self.font, text, x, y)
 
 
     def erase(self):

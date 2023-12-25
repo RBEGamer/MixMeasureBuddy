@@ -1,4 +1,4 @@
-import hx711
+import static_modules.hx711 as hx711
 import time
 import math
 
