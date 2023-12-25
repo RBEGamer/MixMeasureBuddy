@@ -20,10 +20,18 @@ module("fsdatareconstructor.py", base_path="/var/build/src/lib/")
 
 
 
+module("glcdfont.py", base_path="/var/build/src/src/static_modules")
+module("hx711.py", base_path="/var/build/src/src/static_modules")
+module("ili934xnew.py", base_path="/var/build/src/src/static_modules")
+module("sh1106.py", base_path="/var/build/src/src/static_modules")
+module("ssd1306.py", base_path="/var/build/src/src/static_modules")
+module("st7789.py", base_path="/var/build/src/src/static_modules")
 module("tt14.py", base_path="/var/build/src/src/static_modules")
 module("tt24.py", base_path="/var/build/src/src/static_modules")
 module("tt32.py", base_path="/var/build/src/src/static_modules")
+module("uQR.py", base_path="/var/build/src/src/static_modules")
 module("vga2_16x16.py", base_path="/var/build/src/src/static_modules")
 module("vga2_16x32.py", base_path="/var/build/src/src/static_modules")
+module("vga2_8x8.py", base_path="/var/build/src/src/static_modules")
 module("vga2_bold_16x16.py", base_path="/var/build/src/src/static_modules")
 module("vga2_bold_16x32.py", base_path="/var/build/src/src/static_modules")

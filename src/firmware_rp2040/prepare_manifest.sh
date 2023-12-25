@@ -1,8 +1,9 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-#cd ./microfreezer
-#python3 ./microfreezer.py -s ../ -d ../build/
-for i in *.py.TEMPLATE; do
+
+# generate manifest file by adding all modules .py files in src/static_modules into a new manifest file
+# also: prelace _SPATH_ with the current abs paths of the file in order to make them searchable by micropython build script
+for i in manifest_*.py.TEMPLATE; do
     [ -f "$i" ] || break
     
     fbname=$(basename "$i" .TEMPLATE)
@@ -20,10 +21,9 @@ for i in *.py.TEMPLATE; do
          
         p="$(basename $j)"
         echo "$p"
-
-
+        # ADD CUSTOM PYTHON MODULES FROM static_modules FOLDER
+        # module("foo.py", base_path="src/drivers")
         echo "module(\""$p\"", base_path=\""$PWD/src/static_modules\"")" >> "$fbname"
     done
 done
-# generate manifest file by adding all .py files in src into a new manufest file:
-# module("foo.py", base_path="src/drivers")
+
