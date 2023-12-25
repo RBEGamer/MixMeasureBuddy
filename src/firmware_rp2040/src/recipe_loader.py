@@ -33,8 +33,6 @@ class recipe_loader:
                                    "api_endpoint": ["mixmeasurebuddy.com/api/mmb", "mixmeasurebuddy.local/api/mmb"]
                                    }
         
-    
-    
     RECIPE_BASE_DIR = "/data"
     loaded_recipe = None
     current_recipe_step = None
@@ -140,49 +138,11 @@ class recipe_loader:
         return rt
         
     def create_initial_recipe(self):
-        print("create_initial_recipe: Tequila Sunrise")
-        name:str = "Tequila Sunrise"
-        filename: str = name.replace(" ","_") + ".recipe"
-        recipe: dict = dict()
-        
-        recipe['name'] = name
-        recipe['description'] = "A nice Tequila Sunrise Cocktail"
-        recipe['version'] = "1.0.0"
-        recipe['ingredients'] = {'0': 'weißer Tequila','1': 'Orangensaft', '2': 'Grenadine'}
-        steps = []
-        steps.append( {'action': 'scale', 'ingredient': '0', 'amount': 10}) # scale -> amount in g
-        steps.append( {'action': 'scale', 'ingredient': '1', 'amount': 120})
-        steps.append( {'action': 'confirm', 'text': 'ADD ICE'}) # WAIT FOR USER OK
-        steps.append( {'action': 'scale', 'ingredient': '2', 'amount': 40})
-        steps.append( {'action': 'wait', 'text': 'WAIT FOR SETTLE DOWN', 'amount': 10}) # WAIT 20 SECONDS
-        recipe['steps'] = steps
-       
-        with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
-            file.write(json.dumps(recipe))
+        for k in example_recipes.EXAMPLE_RECIPES_COLLECTION:
+            with open(self.RECIPE_BASE_DIR + "/" + k, "w") as file:
+                file.write(json.dumps(example_recipes.EXAMPLE_RECIPES_COLLECTION[k]))
             
-            
-        print("create_initial_recipe: Strawberry Colada")
-        name:str = "Strawberry Colada"
-        filename: str = name.replace(" ","_") + ".recipe"
-        recipe: dict = dict()
         
-        recipe['name'] = name
-        recipe['description'] = "A fruity strawberry cocktail with coconut"
-        recipe['version'] = "1.0.0"
-        recipe['ingredients'] = {'0': '10 Strawberries','1': 'Coconut-Juice', '2': 'Cream', '3': 'Pineapple-Juice', '4': 'white Rum', '5': 'Crushed Ice'}
-        steps = []
-        steps.append( {'action': 'confirm', 'text': 'puree strawberries'}) # WAIT FOR USER OK
-        steps.append( {'action': 'confirm', 'text': 'add 1/2 crushed ice'}) # WAIT FOR USER OK
-        steps.append( {'action': 'scale', 'ingredient': '1', 'amount': 60}) # scale -> amount in g
-        steps.append( {'action': 'scale', 'ingredient': '2', 'amount': 30})
-        steps.append( {'action': 'scale', 'ingredient': '3', 'amount': 80})
-        steps.append( {'action': 'scale', 'ingredient': '4', 'amount': 50})
-        steps.append( {'action': 'wait', 'text': 'Shake', 'amount': 30}) # WAIT 20 SECONDS
-        recipe['steps'] = steps
-       
-        with open(self.RECIPE_BASE_DIR + "/" + filename, "w") as file:
-            file.write(json.dumps(recipe))
-    
 
     
     def save_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float):
@@ -236,7 +196,6 @@ class recipe_loader:
     
     def load_recipe(self, _filename: str) -> bool:
          
-        # Open the file we just created and read from it
         if '.recipe' not in _filename:
             _filename = _filename + ".recipe"
             
@@ -251,8 +210,10 @@ class recipe_loader:
             self.loaded_recipe = json_recipe
             return True
     
-    
+
     def disable_wifi(self):
+        if not helper.has_wifi():
+            return False
         wlan = network.WLAN(network.STA_IF)
         wlan.active(False)
         
@@ -260,9 +221,8 @@ class recipe_loader:
         if not helper.has_wifi():
             return False
 
-        if helper.has_wifi():
-            network.country(config.CFG_NETWORK_WIFICOUNTRY)
-            network.hostname(config.CFG_NETWORK_HOSTNAME)
+        network.country(config.CFG_NETWORK_WIFICOUNTRY)
+        network.hostname(config.CFG_NETWORK_HOSTNAME)
 
         cred = {}
         with open(self.RECIPE_BASE_DIR + "/" + "SETTINGS.json", "r") as file:
@@ -270,10 +230,10 @@ class recipe_loader:
         
         if "wificredentials" not in cred or len(cred["wificredentials"]) <= 0:
             return False
+        
         wlan = network.WLAN(network.STA_IF)
         wlan.active(True)
         
-        connect_ok = False
         for wifi in cred["wificredentials"]:
             print(wifi)
             ssid = wifi["ssid"]
@@ -286,10 +246,12 @@ class recipe_loader:
                 print('Waiting for connection...')
                 time.sleep(1)
                 timer = timer + 1
-                if timer > 5:
-                    break
+
+                if timer > 10:
+                    wlan.active(False)
+                    return False
+                
             if wlan.isconnected():
-                connect_ok = True
                 break
         return True
     
