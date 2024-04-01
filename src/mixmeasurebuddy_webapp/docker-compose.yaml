@@ -21,14 +21,14 @@ services:
   mmb_frontend:
     build:
       context: frontend
-      target: builder
+      target: mmb_frontend
     environment:
       - FRONTEND_SERVER_ADDR=3000
 
   mmb_api:
     build:
       context: api
-      target: builder
+      target: mmb_api
     stop_signal: SIGINT
     environment:
       - API_SERVER_ADDR=5500
