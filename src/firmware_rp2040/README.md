@@ -4,7 +4,7 @@
 
 ```bash
 # BUILD DOCKER IMAGE
-$ docker build -t mixmeasurebuddyfirmwarebuilder .
+$ docker build -t docker.io/library/mixmeasurebuddyfirmwarebuilder .
 
 # RUN BUILD PROCESS
 $ cd _THIS_FOLDER_
