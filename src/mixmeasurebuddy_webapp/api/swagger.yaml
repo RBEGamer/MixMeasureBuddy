@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Application
-  description: Generated at 01/04/2024 21:11:10. This is the swagger 
+  description: Generated at 02/04/2024 01:03:22. This is the swagger 
     ui based on the open api 3.0 specification of the Application
   version: 1.0.0 created by the flask swagger generator.
 externalDocs:

@@ -5,6 +5,8 @@ from flask import Flask, jsonify, make_response, Blueprint, redirect
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+
+
 from flask_swagger_generator.components import SwaggerVersion
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_swagger_generator.generators import Generator
@@ -14,6 +16,9 @@ import pymongo
 import mongoengine
 import names
 import urllib.parse
+
+from mongoengine import DEFAULT_CONNECTION_NAME, connect
+
 # IMPORT CUSTOM DATABASE MODELS
 import dbmodels
 from flask import request
@@ -24,8 +29,18 @@ load_dotenv() # LOAD .env
 config = ConfigParser()
 config.read(Path.joinpath(Path(__file__).parent, Path("config.cfg")))
 
+DATABASE_CONNECTION_STRING: str = os.environ.get("DATABASE_CONNECTION_STRING", "mongodb://mongo:27017")
+DATABASE_NAME: str = os.environ.get("MMB_DATABASE_NAME", "mixmeasurebuddy")
+DB_COLLECTION_RECIPES: str = "recipes"
+DB_COLLECTION_USERS: str = "users"
+DB_COLLECTION_INGREDIENTS: str = "ingredients"
+DB_COLLECTION_CATEGORIES: str = "categories"
+
+
+
+
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
-SWAGGERFILE_PATH = 'static/swagger.yaml'
+SWAGGERFILE_PATH = 'swagger.yaml'
 SWAGGERFILE_PATH_ABS = Path.joinpath(Path(__file__).parent, Path(SWAGGERFILE_PATH))
 
 # Create the bluepints
@@ -34,6 +49,12 @@ blueprint = Blueprint(config.get('GENERAL', 'APP_NAME') + '-API', __name__)
 app = Flask(__name__,static_url_path='',
             static_folder='static',
             template_folder='templates')
+
+db = mongoengine
+
+connect(DATABASE_NAME, host=DATABASE_CONNECTION_STRING, alias='default')
+
+#db.connect('microblog') # connects to database named microblog
 # LOAD CONFIG
 
 # SETUP MONFO
@@ -88,10 +109,9 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
 @generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
 @blueprint.route('/api/recipes', methods=['GET'])
 def user_all_recipes():  # mixmeasurebuddy.com/api/ system_id / recipes.json
-
-
-    recipes = dbmodels.Recipe.objects()
-
+    recipes = []
+    for book in dbmodels.Recipe.objects:
+        recipes.append(book.tojson())
     return make_response(jsonify(recipes), 200)
 
 
@@ -205,25 +225,20 @@ def index():
 app.register_blueprint(blueprint)
 generator.generate_swagger(app, destination_path=SWAGGERFILE_PATH)
 
-if __name__ == "__main__":
-    # CHECK DB CONNECTION
-    DATABASE_CONNECTION_STRING: str = os.environ.get("DATABASE_CONNECTION_STRING", "mongodb://mongo:27017")
-    DB_NAME: str = os.environ.get("MMB_DATABASE_NAME", "mixmeasurebuddy")
-    DB_COLLECTION_RECIPES: str = "recipes"
-    DB_COLLECTION_USERS: str = "users"
-    DB_COLLECTION_INGREDIENTS: str = "ingredients"
-    DB_COLLECTION_CATEGORIES: str = "categories"
+
+def prepeare_database():
     # PREPARE DATABASE
     # WE ARE USING PYMONGO TO CHECK THE DATABASE
-    db: pymongo.MongoClient = pymongo.MongoClient(DATABASE_CONNECTION_STRING)
+    pm_db: pymongo.MongoClient = pymongo.MongoClient(DATABASE_CONNECTION_STRING)
     # CREATE DATABASE
-    dblist = db.list_database_names()
+    dblist = pm_db.list_database_names()
 
     if DB_NAME in dblist:
         logging.debug("The MMB_DATABASE {} exists.".format(DB_NAME))
-    mmb_database = db[DB_NAME]
+    mmb_database = pm_db[DB_NAME]
     # CREATE COLLECTIONS
-    target_collections = [DB_COLLECTION_RECIPES, DB_COLLECTION_USERS, DB_COLLECTION_INGREDIENTS, DB_COLLECTION_CATEGORIES]
+    target_collections = [DB_COLLECTION_RECIPES, DB_COLLECTION_USERS, DB_COLLECTION_INGREDIENTS,
+                          DB_COLLECTION_CATEGORIES]
     existing_collections = mmb_database.list_collection_names()
     for collection in target_collections:
         if collection in existing_collections:
@@ -231,13 +246,20 @@ if __name__ == "__main__":
         else:
             mmb_database.create_collection(collection)
     # FINALLY CLOSE CONNECTION
-    db.close()
+    pm_db.close()
 
 
-    # CREATE mongoengine CONNECTION
-    cs = "{}/{}".format(DATABASE_CONNECTION_STRING, DB_NAME)
+
+if __name__ == "__main__":
+    # CHECK DB CONNECTION
+
+
+
+    # CREATE mongoengine CONNECTION so we can use mongoengine later on
+    cs = "{}/{}".format(DATABASE_CONNECTION_STRING, DATABASE_NAME)
     logging.debug(cs)
-    mongoengine.connect(host=cs)
+    mongoengine.register_connection(alias=DEFAULT_CONNECTION_NAME)
+    mongoengine.connect(DATABASE_NAME, host=cs)
 
     # CREATE ADMIN USER
     if len(dbmodels.Users.objects(linked_device_id="1337")) <= 0:
@@ -259,7 +281,6 @@ if __name__ == "__main__":
             dbmodels.Category(name=c).save()
 
 
-
     # CREATE  INGREDIENTS
     test_ing = ["Aperol", "Prosecco", "Elderflower-Syrup", "Sodawater", "Pineapple-Juice", "", "Cream", "white Rum", "Strawberry-Syrup","Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila", "Grenadine", "Orange-Juice"]
 
@@ -269,7 +290,6 @@ if __name__ == "__main__":
 
 
     # CREATE TEST RECIPES
-
     if len(dbmodels.Recipe.objects(name="Hugo")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="Prosecco")[0])
