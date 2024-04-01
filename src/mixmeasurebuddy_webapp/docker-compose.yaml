@@ -37,13 +37,13 @@ services:
     volumes:
       - ./api:/src
     depends_on:
-      -  mongo  
+      -  mmb_mongo  
     links:
-      - "mongo:mongo"
+      - "mmb_mongo:mmb_mongo"
 
   mmb_mongo:
     image: mongo
     ports:
       - 27018:27017 # host:container
-    volumes:
-      - './mongo/db:/data/db'
+#    volumes:
+#      - './mongo/db:/data/db'
