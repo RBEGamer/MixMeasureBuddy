@@ -124,33 +124,6 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/mmbd_recipe_response'
-  '/api/mmb/{mmb_device_id}/link_recipe/{recipe_id}/{link_state}':
-    get:
-      tags:
-        - MixMeasureBuddy-API
-      operationId: 'mmbd_recipe'
-      parameters:
-        - in: path
-          name: mmb_device_id
-          schema:
-            type: string
-          description: None
-          required: True
-        - in: path
-          name: recipe_id
-          schema:
-            type: string
-          description: None
-          required: True
-        - in: path
-          name: link_state
-          schema:
-            type: boolean
-          description: None
-          required: True
-      responses:
-        '200':
-          $ref: '#/components/responses/mmbd_recipe_response'
   '/api':
     get:
       tags:

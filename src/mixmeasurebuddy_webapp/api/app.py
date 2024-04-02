@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-
 from flask_swagger_generator.components import SwaggerVersion
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_swagger_generator.generators import Generator
@@ -24,7 +23,7 @@ import dbmodels
 from flask import request
 
 logging.getLogger().setLevel(logging.DEBUG)
-load_dotenv() # LOAD .env
+load_dotenv()  # LOAD .env
 
 config = ConfigParser()
 config.read(Path.joinpath(Path(__file__).parent, Path("config.cfg")))
@@ -36,9 +35,6 @@ DB_COLLECTION_USERS: str = "users"
 DB_COLLECTION_INGREDIENTS: str = "ingredients"
 DB_COLLECTION_CATEGORIES: str = "categories"
 
-
-
-
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
 SWAGGERFILE_PATH = 'swagger.yaml'
 SWAGGERFILE_PATH_ABS = Path.joinpath(Path(__file__).parent, Path(SWAGGERFILE_PATH))
@@ -46,7 +42,7 @@ SWAGGERFILE_PATH_ABS = Path.joinpath(Path(__file__).parent, Path(SWAGGERFILE_PAT
 # Create the bluepints
 blueprint = Blueprint(config.get('GENERAL', 'APP_NAME') + '-API', __name__)
 # Create the flask app
-app = Flask(__name__,static_url_path='',
+app = Flask(__name__, static_url_path='',
             static_folder='static',
             template_folder='templates')
 
@@ -54,7 +50,7 @@ db = mongoengine
 
 connect(DATABASE_NAME, host=DATABASE_CONNECTION_STRING, alias='default')
 
-#db.connect('microblog') # connects to database named microblog
+# db.connect('microblog') # connects to database named microblog
 # LOAD CONFIG
 
 # SETUP MONFO
@@ -63,21 +59,21 @@ connect(DATABASE_NAME, host=DATABASE_CONNECTION_STRING, alias='default')
 # Create swagger version 3.0 generator
 generator = Generator.of(SwaggerVersion.VERSION_THREE)
 # Call factory function to create our blueprint
-app.register_blueprint(get_swaggerui_blueprint(SWAGGER_URL, "/" + SWAGGERFILE_PATH,config={'app_name': "MixMeasureBuddy-API"}))
-
-
+app.register_blueprint(
+    get_swaggerui_blueprint(SWAGGER_URL, "/" + SWAGGERFILE_PATH, config={'app_name': "MixMeasureBuddy-API"}))
 
 
 @blueprint.route('/api/mmb/', methods=['GET'])
 def mmbd_index(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
     mmb_device_id = bleach.clean(mmb_device_id)
-    return make_response(jsonify({'mmbd_recipes': '/api/mmb/<string:mmb_device_id>', 'mmbd_recipe': '/api/mmb/<string:mmb_device_id>/<string:recipe_id>'}), 200)
+    return make_response(jsonify({'mmbd_recipes': '/api/mmb/<string:mmb_device_id>',
+                                  'mmbd_recipe': '/api/mmb/<string:mmb_device_id>/<string:recipe_id>'}), 200)
+
 
 @app.route('/api/mmb/<string:mmb_device_id>', methods=['GET'])
 def mmbd_manage_redirect(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / recipes.json
     mmb_device_id = bleach.clean(mmb_device_id)
     return redirect('/manage.html?mmb_device_id={}'.format(mmb_device_id))
-
 
 
 @blueprint.route('/api/mmb/<string:mmb_device_id>/register', methods=['GET'])
@@ -92,7 +88,6 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
     # LINK SOME RECIPES FOR GETTING STARTED
     new_user.linked_recipes = dbmodels.Recipe.objects(default_recipe=True)
 
-
     # STORE ADDITIONAL INFORMATION ABOUT THE DEVICE IF PRESENT
     if 'DEVICE_FIRMWARE_VERSION' in request.headers:
         new_user.firmware_version = request.headers['DEVICE_FIRMWARE_VERSION']
@@ -103,8 +98,8 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
     # SAVE USER
     new_user.save()
 
-
     return make_response(jsonify({}), 200)
+
 
 @generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
 @blueprint.route('/api/recipes', methods=['GET'])
@@ -129,15 +124,60 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
 
     ret = []
     for r in linked_recipes:
-        ret. append(r.filename)
+        ret.append(r.filename)
 
     return make_response(jsonify(ret), 200)
 
 
 
 
+# @generator.response(status_code=200, schema={'err': None})
+@blueprint.route('/api/mmb/<string:mmb_device_id>/link_recipe/<string:recipe_id>/<string:link_state>', methods=['GET'])
+def mmbd_link_recipe(mmb_device_id: str, recipe_id: str, link_state: str):
+    mmb_device_id = bleach.clean(mmb_device_id)
+    recipe_id = bleach.clean(recipe_id)
+    link_state = bleach.clean(link_state)
+    try:
+        if link_state.lower() == "true":
+            link_state = True
+        elif link_state.lower() == "false":
+            link_state = False
+        else:
+            link_state = bool(int(link_state))
+    except:
+        return make_response(jsonify({'err': 'link_state parameter invalid 0 or 1'}), 502)
 
-@generator.response(status_code=200, schema={'recipe': {'name': 'Tequila_Sunrise', 'description': 'recipe text','version': '1.0.0','ingredients': {'0': 'name'},'steps':[{'action':'scale', 'ingredient':'0', 'amount':720},{'action':'confirm', 'text':'press ok'}]}, 'name': 'Recipe_Name'})
+    # CHECK USER EXISTS
+    users = dbmodels.Users.objects(linked_device_id=mmb_device_id)
+    if len(users) <= 0:
+        return make_response(jsonify({"err": "please register device"}), 401)
+
+    # CHECK RECIPE EXISTS
+    recipe = dbmodels.Recipe.objects(id=recipe_id)
+    if len(recipe) <= 0:
+        return make_response(jsonify({"err": "invalid recipe id"}), 401)
+
+    # LINK TOGETHER USER AND RECIPE
+    r = recipe.first()
+    u = users.first()
+    # REMOVE RECIPE IF SELECTED
+    if r in u.linked_recipes and not link_state:
+        u.linked_recipes.remove(r)
+        u.save()
+    # ADD RECIPE IF SELECTED
+    elif r not in u.linked_recipes and link_state:
+        u.linked_recipes.append(r)
+        u.save()
+
+
+    return make_response(jsonify({}), 200)
+
+
+@generator.response(status_code=200, schema={
+    'recipe': {'name': 'Tequila_Sunrise', 'description': 'recipe text', 'version': '1.0.0',
+               'ingredients': {'0': 'name'}, 'steps': [{'action': 'scale', 'ingredient': '0', 'amount': 720},
+                                                       {'action': 'confirm', 'text': 'press ok'}]},
+    'name': 'Recipe_Name'})
 @blueprint.route('/api/mmb/<string:mmb_device_id>/recipe/<string:recipe_id>', methods=['GET'])
 def mmbd_recipe(mmb_device_id: str, recipe_id: str):
     mmb_device_id = bleach.clean(mmb_device_id)
@@ -147,14 +187,12 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
     if len(users) <= 0:
         return make_response(jsonify({"err": "please register device"}), 401)
 
-
     user_recipes = dbmodels.Users.objects.get(linked_device_id=mmb_device_id).linked_recipes
     global_recipes = dbmodels.Recipe.objects(filename=recipe_id)
     if len(global_recipes) <= 0:
         return make_response(jsonify({}), 404)
 
     recipe = global_recipes[0]
-
 
     found = False
     for ur in user_recipes:
@@ -204,23 +242,18 @@ def mmbd_recipe(mmb_device_id: str, recipe_id: str):
 
     ret['steps'] = sl
 
-
-
-
     return make_response(jsonify(ret), 404)
-
-
-
-
 
 
 @blueprint.route('/api')
 def api():
     return redirect(SWAGGER_URL)
 
+
 @blueprint.route('/')
 def index():
     return redirect('/index.html')
+
 
 app.register_blueprint(blueprint)
 generator.generate_swagger(app, destination_path=SWAGGERFILE_PATH)
@@ -249,11 +282,8 @@ def prepeare_database():
     pm_db.close()
 
 
-
 if __name__ == "__main__":
     # CHECK DB CONNECTION
-
-
 
     # CREATE mongoengine CONNECTION so we can use mongoengine later on
     cs = "{}/{}".format(DATABASE_CONNECTION_STRING, DATABASE_NAME)
@@ -264,15 +294,14 @@ if __name__ == "__main__":
     # CREATE ADMIN USER
     if len(dbmodels.Users.objects(linked_device_id="1337")) <= 0:
         user = dbmodels.Users(name="MixMeasureBuddy Owner A")
-        user.linked_device_id="1337"
+        user.linked_device_id = "1337"
         user.permissions = 1
         user.save()
     if len(dbmodels.Users.objects(linked_device_id="1338")) <= 0:
         user = dbmodels.Users(name="MixMeasureBuddy Owner B")
-        user.linked_device_id="1338"
+        user.linked_device_id = "1338"
         user.permissions = 1
         user.save()
-
 
     # CREATE CATEGORY
     categories = ["Cocktails", "Virgin-Cocktails", "Longdrinks"]
@@ -280,14 +309,14 @@ if __name__ == "__main__":
         if len(dbmodels.Category.objects(name=c)) <= 0:
             dbmodels.Category(name=c).save()
 
-
     # CREATE  INGREDIENTS
-    test_ing = ["Aperol", "Prosecco", "Elderflower-Syrup", "Sodawater", "Pineapple-Juice", "", "Cream", "white Rum", "Strawberry-Syrup","Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila", "Grenadine", "Orange-Juice"]
+    test_ing = ["Aperol", "Prosecco", "Elderflower-Syrup", "Sodawater", "Pineapple-Juice", "", "Cream", "white Rum",
+                "Strawberry-Syrup", "Malibu-Coconut", "Crushed Ice", "Coconut-Juice", "Strawberries", "white Tequila",
+                "Grenadine", "Orange-Juice"]
 
     for i in test_ing:
         if len(dbmodels.Ingredient.objects(name=i)) <= 0:
             r = dbmodels.Ingredient(name=i).save()
-
 
     # CREATE TEST RECIPES
     if len(dbmodels.Recipe.objects(name="Hugo")) <= 0:
@@ -298,10 +327,12 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="Crushed Ice")[0])
 
         i_steps = []
-        i_steps.append(dbmodels.Step(amount=150, action="scale", ingredient=dbmodels.Ingredient.objects(name="Prosecco")[0]))
-        i_steps.append(dbmodels.Step(amount=100, action="scale", ingredient=dbmodels.Ingredient.objects(name="Sodawater")[0]))
-        i_steps.append(dbmodels.Step(amount=30, action="scale", ingredient=dbmodels.Ingredient.objects(name="Elderflower-Syrup")[0]))
-
+        i_steps.append(
+            dbmodels.Step(amount=150, action="scale", ingredient=dbmodels.Ingredient.objects(name="Prosecco")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=100, action="scale", ingredient=dbmodels.Ingredient.objects(name="Sodawater")[0]))
+        i_steps.append(dbmodels.Step(amount=30, action="scale",
+                                     ingredient=dbmodels.Ingredient.objects(name="Elderflower-Syrup")[0]))
 
         ra = dbmodels.Recipe()
         ra.name = "Hugo"
@@ -322,10 +353,12 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="Crushed Ice")[0])
 
         i_steps = []
-        i_steps.append(dbmodels.Step(amount=60, action="scale", ingredient=dbmodels.Ingredient.objects(name="Aperol")[0]))
-        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Prosecco")[0]))
-        i_steps.append(dbmodels.Step(amount=10, action="scale", ingredient=dbmodels.Ingredient.objects(name="Sodawater")[0]))
-
+        i_steps.append(
+            dbmodels.Step(amount=60, action="scale", ingredient=dbmodels.Ingredient.objects(name="Aperol")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Prosecco")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=10, action="scale", ingredient=dbmodels.Ingredient.objects(name="Sodawater")[0]))
 
         ra = dbmodels.Recipe()
         ra.name = "Aperol Spritz"
@@ -338,7 +371,6 @@ if __name__ == "__main__":
         ra.steps = i_steps
         ra.save()
 
-
     if len(dbmodels.Recipe.objects(name="Tequila Sunrise")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="white Tequila")[0])
@@ -347,12 +379,14 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="Crushed Ice")[0])
 
         i_steps = []
-        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="white Tequila")[0]))
-        i_steps.append(dbmodels.Step(amount=40, action="scale",ingredient=dbmodels.Ingredient.objects(name="Grenadine")[0]))
-        i_steps.append(dbmodels.Step(amount=110, action="scale", ingredient=dbmodels.Ingredient.objects(name="Orange-Juice")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="white Tequila")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Grenadine")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=110, action="scale", ingredient=dbmodels.Ingredient.objects(name="Orange-Juice")[0]))
         i_steps.append(dbmodels.Step(action="wait", text="MIX", amount=30))
         i_steps.append(dbmodels.Step(action="confirm", text="ADD ICE"))
-
 
         ra = dbmodels.Recipe()
         ra.name = "Tequila Sunrise"
@@ -365,8 +399,6 @@ if __name__ == "__main__":
         ra.steps = i_steps
         ra.save()
 
-
-
     if len(dbmodels.Recipe.objects(name="Strawberry Colada Lotte")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="Malibu-Coconut")[0])
@@ -375,10 +407,14 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="Cream")[0])
 
         i_steps = []
-        i_steps.append(dbmodels.Step(amount=50, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
-        i_steps.append(dbmodels.Step(amount=30, action="scale", ingredient=dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0]))
-        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
-        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=50, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
+        i_steps.append(dbmodels.Step(amount=30, action="scale",
+                                     ingredient=dbmodels.Ingredient.objects(name="Strawberry-Syrup")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
 
         rb = dbmodels.Recipe()
         rb.name = "Strawberry Colada Lotte"
@@ -391,7 +427,6 @@ if __name__ == "__main__":
         rb.steps = i_steps
         rb.save()
 
-
     if len(dbmodels.Recipe.objects(name="Pina Colada")) <= 0:
         i_list = []
         i_list.append(dbmodels.Ingredient.objects(name="Malibu-Coconut")[0])
@@ -400,10 +435,12 @@ if __name__ == "__main__":
         i_list.append(dbmodels.Ingredient.objects(name="Cream")[0])
 
         i_steps = []
-        i_steps.append(dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
-        i_steps.append(dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
-        i_steps.append(dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
-
+        i_steps.append(
+            dbmodels.Step(amount=40, action="scale", ingredient=dbmodels.Ingredient.objects(name="Malibu-Coconut")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=20, action="scale", ingredient=dbmodels.Ingredient.objects(name="Cream")[0]))
+        i_steps.append(
+            dbmodels.Step(amount=80, action="scale", ingredient=dbmodels.Ingredient.objects(name="Pineapple-Juice")[0]))
 
         rb = dbmodels.Recipe()
         rb.name = "Pina Colada"
@@ -416,6 +453,6 @@ if __name__ == "__main__":
         rb.steps = i_steps
         rb.save()
 
-
     # START FLASK
-    app.run(host=os.environ.get("API_SERVER_BIND_ADDR", '0.0.0.0'), port=os.environ.get("API_SERVER_PORT", 5500), debug=True)
+    app.run(host=os.environ.get("API_SERVER_BIND_ADDR", '0.0.0.0'), port=os.environ.get("API_SERVER_PORT", 5500),
+            debug=True)
