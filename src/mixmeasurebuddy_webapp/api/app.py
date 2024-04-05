@@ -103,10 +103,19 @@ def mmbd_register(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / r
 
 @generator.response(status_code=200, schema={'id': 10, 'name': 'test_object'})
 @blueprint.route('/api/recipes', methods=['GET'])
-def user_all_recipes():  # mixmeasurebuddy.com/api/ system_id / recipes.json
+def api_recipes():  # mixmeasurebuddy.com/api/ system_id / recipes.json
+
+    recipe_count: int = 100
+    try:
+        recipe_count = int(bleach.clean(request.args.get("max_items", "100")))
+    except Exception as e:
+        return make_response(jsonify([]), 200)
+
     recipes = []
-    for book in dbmodels.Recipe.objects:
-        recipes.append(book.tojson())
+    for book in dbmodels.Recipe.objects.limit(recipe_count):
+        r = book.tojson()
+        recipes.append(r)
+
     return make_response(jsonify(recipes), 200)
 
 
@@ -127,7 +136,6 @@ def mmbd_recipes(mmb_device_id: str):  # mixmeasurebuddy.com/api/ system_id / re
         ret.append(r.filename)
 
     return make_response(jsonify(ret), 200)
-
 
 
 

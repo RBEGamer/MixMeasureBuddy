@@ -85,6 +85,12 @@ paths:
       tags:
       - MixMeasureBuddy-API
       operationId: 'user_all_recipes'
+      parameters:
+        - in: query
+          name: max_items
+          schema:
+            type: integer
+            default: 100
       responses:
         '200':
           $ref: '#/components/responses/user_all_recipes_response'
@@ -129,6 +135,7 @@ paths:
       tags:
         - MixMeasureBuddy-API
       operationId: 'mmbd_recipe'
+
       parameters:
         - in: path
           name: mmb_device_id

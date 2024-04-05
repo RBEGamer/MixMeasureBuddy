@@ -71,7 +71,7 @@ class Recipe(Document):
         return self.name
 
     def tojson(self):
-        json: dict = {'name ': self.name, 'description ': self.description, 'author': self.author.name, 'id': self.id}
+        json: dict = {'name': self.name, 'description': self.description, 'author': self.author.name, 'id': str(self.id)}
         return json
 
 
