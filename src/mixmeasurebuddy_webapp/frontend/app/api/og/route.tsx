@@ -1,4 +1,4 @@
-ccimport { ImageResponse } from '@vercel/og';
+import { ImageResponse } from '@vercel/og';
 import { colors } from '@/data/config/colors';
 import { metadata } from '@/data/config/metadata';
 import { readFile } from 'fs/promises';
