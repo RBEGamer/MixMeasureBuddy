@@ -115,7 +115,7 @@ export const MMBRecipeList = async ({
     return (
         <MMBRecipeListVisual
             title="Online Recipe Database"
-            description="Discover a treasure trove of culinary creations! Here you will not only find a large selection of traditional recipes, but also a wealth of user-created delicacies. Dive in and be inspired by the variety! From hearty main courses to tempting desserts, our community has something for everyone. Don't miss the chance to expand your cooking skills and discover new flavors. Join our growing community and share your own recipes with the world!"
+            description={description}
             featureItems={items}
         />
     );

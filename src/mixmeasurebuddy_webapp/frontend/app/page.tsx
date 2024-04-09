@@ -41,7 +41,7 @@ export default function Home() {
         <MMBRecipeList
             className = ""
             title="Rising recipe satabase ready to use!"
-            description="Discover the advanced features that set MixMeasureBuddy apart from traditional kitchen scales."
+            description="Discover a treasure trove of culinary creations! Here you will not only find a selection of traditional recipes, but also a wealth of user-created delicacies. Dive in and be inspired by the variety! Join our growing community and share your own recipes with the world!"
             max_items={9}
         />
 
@@ -61,7 +61,7 @@ export default function Home() {
           {
             title: 'Connectivity Features',
             description:
-              'Enjoy seamless integration with a companion webapp for sharing personalized cocktail recipes.',
+              'Enjoy seamless integration with a companion webapp for sharing personalized cocktail recipes with other MixMeasureBuddy owners.',
             icon: <LineChartIcon />,
           },
           {
