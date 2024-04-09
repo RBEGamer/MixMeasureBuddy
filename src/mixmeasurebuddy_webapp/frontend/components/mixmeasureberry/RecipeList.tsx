@@ -11,6 +11,12 @@ import { cn } from '@/lib/utils';
 import clsx from 'clsx';
 import {alignments} from "@floating-ui/utils";
 
+export interface MMBRecipeListItem {
+    name: string;
+    description: string;
+    author: string;
+}
+
 /**
  * This component is meant to be used in the landing page, in the features list.
  *
@@ -56,7 +62,7 @@ export const MMBRecipeListVisual = ({
     className?: string;
     title: string | React.ReactNode;
     description: string | React.ReactNode;
-    featureItems: FeatureListItem[];
+    featureItems: MMBRecipeListItem[];
     withBackground?: boolean;
 }) => {
     return (

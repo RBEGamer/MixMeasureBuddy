@@ -80,6 +80,7 @@
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
+    "sharp": "^0.33.3",
     "shipixen-contentlayer": "1.0.2",
     "sonner": "^1.3.1",
     "tailwind-merge": "^1.14.0",
