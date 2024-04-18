@@ -2,14 +2,28 @@
 
 ![mixmeasurebuddy](./documentation/images/cropped_A003_11281139_S044.jpg)
 
+MixMeasureBuddy's smart cocktail scale revolutionizes home bartending by offering accurate ingredient measurements and a vast library of cocktail recipes personalized to your liquor collection. Enjoy the art of mixology with ease and precision.
+
+Discover the advanced features that set MixMeasureBuddy apart from traditional kitchen scales.
 
 
 
-# BOM
+## FEATURES
+
+Discover the advanced features that set MixMeasureBuddy apart from traditional kitchen scales:
+
+* **Open-Source** MixMeasureBuddy is 100% open-source and can be build using a few simple and cheap parts.
+* **Connectivity Features** Enjoy seamless integration with a companion webapp for sharing personalized cocktail recipes with other MixMeasureBuddy owners.
+* **Offline Usage** Recipes are stored offline and locally on the MixMeasureBerry and can be edited using a text editor
+* **User-Friendly Interface** Easily navigate the scale's intuitive interface for effortless cocktail making.
+* **Customizable Recipes** Access a plethora of cocktail recipes tailored to your liquor cabinet for endless mixing possibilities.
+* **Precision Measurements** Eliminate the guesswork and achieve consistent results with exact ingredient measurements every time.
 
 
+## BOM
 
-## 3D PRINTED PARTS
+
+### 3D PRINTED PARTS
 
 * 1x `ring.stl`
 * 1x `breadboard_mount.stl`
@@ -18,10 +32,12 @@
 
 ### FOR SSH1106 1.3" OlED DISPLAY
 * 1x `display_clamp_SSH1106`
-* 1x `display_mount_SSH1106`
+
+### FOR SSD1306 0.96" OlED DISPLAY
+* 1x `display_mount_SSD1306`
 
 
-## MECHANICAL
+### MECHANICAL
 
 * 8x `Heat Inserts M3`
 * 3x `M5 NUT`
@@ -30,12 +46,12 @@
 * 3x `M5x60 SHCS`
 * 8x `Cylindrical Magnet D5 H8`
 
-## ELECTRICAL
+### ELECTRICAL
 
 * 1x `Raspberry Pi Pico` or `Raspberry Pi Pico W`
 * 1x `LOAD CELL 5kg` or `LOAD CELL 10kg`
 * 1x `HX711`
-* 1x `1.3" I2C OLED SSH1306`, `0.96" I2C OLED SSD1306`
+* 1x `1.3" I2C OLED SSH1306` or `0.96" I2C OLED SSD1306`
 * 2x `T 250A RT Miniatur-Pushbutton`
 * 60cm `WS2812 Strip`
 * Jumperwires
