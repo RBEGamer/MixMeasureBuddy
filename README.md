@@ -1,5 +1,6 @@
 # CocktailScaler
-A smart low cost cocktail scale
+
+![mixmeasurebuddy](./documentation/images/cropped_A003_11281139_S044.jpg)
 
 
 
