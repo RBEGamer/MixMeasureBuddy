@@ -1,9 +1,26 @@
 FILE_DATA = ZLIBSTREAM
 
-def restore_filesystem(_basepath: str = "/", _override: bool = False):
+
+RESTORE_IGNORED_FILES_LIST = ['static_modules', 'thridparty_libs', 'boot.py', 'lib']
+
+def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bool = False):
     import ubinascii
     import os
 
+    if _erase:
+        print("erase enabled")
+        for f in os.listdir():
+            if f in __file__:
+                print("skipping {} to vaoid installer override".format(f))
+                continue 
+            
+            # UGLY REWORK
+            for n in RESTORE_IGNORED_FILES_LIST:
+                if n in f:
+                    print("skipping {} to vaoid installer override".format(f))
+                    continue
+
+            os.remove(f)
 
     for k in FILE_DATA:
 
@@ -20,5 +37,14 @@ def restore_filesystem(_basepath: str = "/", _override: bool = False):
     # CLEANUP
     del ubinascii
     del os
+
+
+if __name__ == "__main__":
+
+    import machine
+    push_button_restore = machine.Pin(14, machine.Pin.IN, machine.Pin.PULL_UP)
+    if push_button_restore:
+        restore_filesystem(_override=True, _erase=True)
+    del machine
 
 

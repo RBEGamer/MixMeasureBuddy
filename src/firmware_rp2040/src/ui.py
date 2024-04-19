@@ -80,7 +80,9 @@ class ui:
     def __init__(self):
         # CREATE A DISPLAY INSTANCE
         self.display = mmb_display.mmb_display.display_instance_creator()
-           
+
+        if self.display is None:
+            print("invalid display config")
 
          
         self.display.erase()
