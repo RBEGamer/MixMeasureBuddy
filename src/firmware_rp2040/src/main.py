@@ -116,6 +116,10 @@ if __name__ == "__main__":
     menu_manager.menu_manager().add_subentries(c)
 
 
+    # TODO UI WORKING
+
+    # TODO SCALE WORKING  + SINGLETON
+
     # INIT SCALE
     #scales = Scales.Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
     #scales.tare()
