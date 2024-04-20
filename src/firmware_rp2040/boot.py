@@ -1,6 +1,6 @@
 # LOAD FILES INTO THE FILESYSTEM
 import fsdatareconstructor
-fsdatareconstructor.restore_filesystem()
+fsdatareconstructor.restore()
 del fsdatareconstructor
 # ADD FURTHER INIT CODE HERE
 

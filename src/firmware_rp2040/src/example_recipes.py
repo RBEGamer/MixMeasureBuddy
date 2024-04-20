@@ -1,6 +1,6 @@
 EXAMPLE_RECIPES_COLLECTION: dict = {
     "example_recipe.recipe": {
-        "name": "EXAMPLE_ RECIPE",
+        "name": "EXAMPLE_RECIPE",
         "description": "A nice Example Cocktail",
         "version": "1.0.0",
         "ingredients": {"0": "A", "1": "B", "2": "C"},

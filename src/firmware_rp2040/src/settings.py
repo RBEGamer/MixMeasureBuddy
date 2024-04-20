@@ -1,34 +1,39 @@
 import sdcard
 import machine
 import uos
-
+import json
 import config
+import os
+from singleton import singleton
 
-class SETTINGS_ENTRIES:
-    SCALE_CALIBRATION_MIN_VALUE = "sc_min"
-    SCALE_CALIBRATION_MAX_VALUE = "sc_full"
-    SCALE_CALIBRATION_CALIBRATION_WEIGHT = "sc_weight"
+class SETTINGS_ENTRIES(object):
+    SCALE_CALIBRATION_MIN_VALUE = "scale_min"
+    SCALE_CALIBRATION_MAX_VALUE = "scale_full"
+    SCALE_CALIBRATION_CALIBRATION_WEIGHT = "scale_weight"
 
-    NETWORK_WIFI_SSID = "ssid"
-    NETWORK_WIFI_PSK = "psk"
-    NETWORK_API_ENPOINT = "mmb_api_enpoint"
-
-
+    NETWORK_WIFI_SSID = "wifi_ssid"
+    NETWORK_WIFI_PSK = "wifi_psk"
+    NETWORK_API_ENPOINT = "api_enpoint"
 
 
-class settings:
+
+@singleton
+class settings(object):
+
+   
 
     sd = None # sdcard class instance
 
     RECIPE_BASE_DIR: str = "/data" # FOLDER OF THE SETTINGS FILES STORAGE IF SD CARD FOUND SD CARD WILL BE MOUNTED THERE
     SETTINGS_FILENAME: str = "SETTINGS.json"
-    def __init__(_spi = None, _cs_pin = config.CFG_SDCARD_CS_PIN, _data_dir: str = "/data"):
+     
+    def __init__(self, _spi = None, _cs_pin = config.CFG_SDCARD_CS_PIN, _data_dir: str = "/data"):
         self.RECIPE_BASE_DIR = _data_dir
 
         if _spi is None:
             _spi = machine.SPI(config.CFG_SDCARD_SPIINSTANCE, baudrate=1000000, polarity=0, phase=0, bits=8, firstbit=machine.SPI.MSB, sck=machine.Pin(config.CFG_SDCARD_SCK_PIN), mosi=machine.Pin(config.CFG_SDCARD_MOSI_PIN), miso=machine.Pin(config.CFG_SDCARD_MISO_PIN))
         # Assign chip select (CS) pin (and start it high)
-        self.cs = machine.Pin(cs_pin, machine.Pin.OUT)
+        self.cs = machine.Pin(_cs_pin, machine.Pin.OUT)
 
         self.sd = None
         try:
@@ -50,17 +55,39 @@ class settings:
 
 
         self.create_settings_file()
+        self.create_initial_config()
 
-
-    def create_settings_file():
+    def create_settings_file(self):
         settings_dict = {}
         if not self.SETTINGS_FILENAME in self.list_files():
             with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "w") as file:
-            file.write(json.dumps(settings_dict))
+                file.write(json.dumps(settings_dict))
 
 
-    def get_settings_entry(_key: str) -> str:
-         settings_dict: dict = {}
+    def create_initial_config(self):
+        members = [attr for attr in dir(SETTINGS_ENTRIES) if not callable(getattr(SETTINGS_ENTRIES, attr)) and not attr.startswith("__")]
+        # POPULATE CONFIG FILE WITH ALL POSSIBLE KEYS
+        for m in members:
+            if self.get_settings_entry(m) is not None:
+                continue
+            self.set_settings_entry(m, None)  
+
+
+        # ADD SOME DEFAULT VALUES FROM CONFIG
+
+        if self.get_settings_entry(SETTINGS_ENTRIES.NETWORK_WIFI_SSID) is None:
+            self.set_settings_entry(SETTINGS_ENTRIES.NETWORK_WIFI_SSID, config.CFG_NETWORK_WIFI_SSID)
+
+        if self.get_settings_entry(SETTINGS_ENTRIES.NETWORK_WIFI_PSK) is None:
+            self.set_settings_entry(SETTINGS_ENTRIES.NETWORK_WIFI_PSK, config.CFG_NETWORK_WIFI_PSK)
+
+        if self.get_settings_entry(SETTINGS_ENTRIES.NETWORK_API_ENPOINT) is None:
+            self.set_settings_entry(SETTINGS_ENTRIES.NETWORK_API_ENPOINT, config.CFG_NETWORK_API_ENDPOINT)
+        
+
+
+    def get_settings_entry(self, _key: str) -> any:
+        settings_dict: dict = {}
         with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "r") as file:
             settings_dict = json.loads(file.read())
 
@@ -72,7 +99,7 @@ class settings:
     
 
 
-    def set_settings_entry(_key: str, _value: str):
+    def set_settings_entry(self, _key: str, _value: any):
         settings_dict: dict = {}
 
         with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "r") as file:
@@ -85,15 +112,15 @@ class settings:
 
 
 
-    def get_settings_base_folder_path() -> str:
+    def get_settings_base_folder_path(self) -> str:
         return self.RECIPE_BASE_DIR
 
-    def list_files() ->[str]:
+    def list_files(self) ->[str]:
         return os.listdir(self.RECIPE_BASE_DIR)
 
 
     
-    def write_json_file(_path:str, _dict_0content: dict):
+    def write_json_file(self, _path:str, _dict_0content: dict):
         # ADD SETTINGS STORAGE DIRECTORY IF REL PATH IS REQUESTED
         if not _path.startswith("/"):
             _path = self.RECIPE_BASE_DIR + "/" + _path
@@ -102,7 +129,7 @@ class settings:
             file.write(json.dumps( _dict_0content))
 
 
-    def load_json_file(_path: str) -> dict:
+    def load_json_file(self, _path: str) -> dict:
 
         if not _path.startswith("/"):
             _path = self.RECIPE_BASE_DIR + "/" + _path

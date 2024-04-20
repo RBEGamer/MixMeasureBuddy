@@ -1,5 +1,7 @@
 FILE_DATA = ZLIBSTREAM
 
+# FOR DEBUGGING
+ALWAYS_HARD_RESTORE: bool = False
 
 RESTORE_IGNORED_FILES_LIST = ['static_modules', 'thridparty_libs', 'boot.py', 'lib']
 
@@ -39,12 +41,40 @@ def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bo
     del os
 
 
-if __name__ == "__main__":
-
+def restore():
     import machine
-    push_button_restore = machine.Pin(14, machine.Pin.IN, machine.Pin.PULL_UP)
-    if push_button_restore:
+    import time
+    RESTORE_BUTTON_PIN: int = 14
+    RESTORE_LED_PIN: int = 25
+
+    push_button_restore = machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
+    led_onboard = machine.Pin(RESTORE_LED_PIN, machine.Pin.OUT)
+
+    if not push_button_restore.value() or ALWAYS_HARD_RESTORE:
+        led_onboard.on()
+        time.sleep(0.2)
+        led_onboard.off()
+        time.sleep(0.2)
+        led_onboard.on()
+        time.sleep(0.2)
+        led_onboard.on()
+        # RESTORE HARD OVERRIDE USER CHANGES
         restore_filesystem(_override=True, _erase=True)
+        led_onboard.off()
+
+    else:
+        led_onboard.on()
+        # RESTORE SOFT ONLY ADD MISSING FILES IN VIRTUAL FS
+        restore_filesystem()
+        led_onboard.off()
+
+    # RESTORE PIN STATE
+    machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.OPEN_DRAIN)
+    machine.Pin(RESTORE_LED_PIN, machine.Pin.IN)
+    
     del machine
 
+
+if __name__ == "__main__":
+    restore()
 

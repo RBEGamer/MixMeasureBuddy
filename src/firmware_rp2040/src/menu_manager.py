@@ -1,14 +1,15 @@
 import menu_entry
+import system_command
+from singleton import singleton
 
 
-class menu_command:
-    pass
-
+@singleton
 class menu_manager:
 
     menu_entires: [menu_entry.menu_entry] = []
 
     current_active_entry: menu_entry.menu_entry = None
+
     def __init__(self):
         pass
 
@@ -17,6 +18,8 @@ class menu_manager:
         pass
 
 
-
-    def process_menu_commands(self, _menu_command: menu_command):
+    def process_user_commands(self, _system_command: system_command):
+        pass
+    
+    def process_system_commands(self, _system_command: system_command):
         pass
