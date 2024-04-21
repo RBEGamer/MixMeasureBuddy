@@ -1,5 +1,6 @@
 import menu_entry
 import system_command
+import ledring
 from singleton import singleton
 
 
@@ -26,7 +27,7 @@ class menu_manager:
         # THE FIRST ENTRY ADDED IS THE STARTING ENTRY
         if self.current_active_entry_index < 0:
             self.current_active_entry_index = 0
-            self.get_menu_entry().preview()
+            self.display_preview()
             
     
 
@@ -51,6 +52,14 @@ class menu_manager:
 
         self.current_menu_state = self.MENU_STATE_INACTIVE
 
+
+    def display_preview(self):
+        self.get_menu_entry().preview()
+
+        # OPTIONAL DISPLAY LED STATE
+        percentage: float = (self.current_active_entry_index +1)/ (len(self.menu_entires)* 1.0)
+        ledring.ledring().set_neopixel_percentage(percentage, ledring.ledring().COLOR_PRESET_HSV_H__BLUE, ledring.ledring().COLOR_PRESET_HSV_H__PINK, ledring.ledring().COLOR_PRESET_HSV_H__BLACK, True)
+        
     def process_user_commands(self, _system_command: system_command.system_command):
         if self.get_menu_entry() is None:
             return
@@ -63,10 +72,10 @@ class menu_manager:
                 if _system_command.action == system_command.system_command.NAVIGATION_LEFT:
                     self.current_active_entry_index = (self.current_active_entry_index + 1) % len(self.menu_entires)
                     print(self.current_active_entry_index)
-                    self.get_menu_entry().preview()
+                    self.display_preview()
                 elif _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
                     self.current_active_entry_index = (self.current_active_entry_index - 1) % len(self.menu_entires)
-                    self.get_menu_entry().preview()
+                    self.display_preview()
                 # ENTER MENU
                 elif _system_command.action == system_command.system_command.NAVIGATION_ENTER:
                     self.get_menu_entry().activate()

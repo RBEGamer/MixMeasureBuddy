@@ -5,14 +5,22 @@ import neopixel
 import random
 import helper
 import math
+import time
 from singleton import singleton
 
 @singleton
 class ledring:
-    @staticmethod
+
+    COLOR_PRESET_HSV_H__BLUE: float = 0.66
+    COLOR_PRESET_HSV_H__PINK: float = 0.88
+    COLOR_PRESET_HSV_H__BLACK: float = -1.0
+
     def hsv_to_rgb(self, hsv_color):
         # https://github.com/Warringer/micropython-rgbled/blob/master/rgbled.py
         (h, s, v) = hsv_color
+
+        if h < 0.0:
+            return 0, 0, 0
         i = math.floor(h*6)
         f = h*6 - i
         p = v * (1-s)
@@ -32,6 +40,42 @@ class ledring:
         b = int(255 * b)
         return r, g, b
 
+    def rgb_to_hsv(self, rgb_color):
+        """Converts colors from the RGB color space to the HSV color space.
+
+        Parameters
+        ----------
+        rgb_color : tuple (r, g, b)
+            Color in the RGB color space
+
+        Returns
+        -------
+        tuple (h, s, v)
+            Color in the HSV color space
+
+        """
+        (r, g, b) = rgb_color
+        r = float(1 / 255 * r)
+        g = float(1 / 255 * g)
+        b = float(1 / 255 * b)
+        high = max(r, g, b)
+        low = min(r, g, b)
+        h, s, v = high, high, high
+
+        d = high - low
+        s = 0 if high == 0 else d/high
+
+        if high == low:
+            h = 0.0
+        else:
+            h = {
+                r: (g - b) / d + (6 if g < b else 0),
+                g: (b - r) / d + 2,
+                b: (r - g) / d + 4,
+            }[high]
+            h /= 6
+
+        return h, s, v
 
     neopixelring: neopixel.NeoPixel = None
    
@@ -39,34 +83,42 @@ class ledring:
         self.neopixelring = neopixel.NeoPixel(machine.Pin(config.CFG_NEOPIXEL_PIN), config.CFG_NEOPIXEL_LED_COUNT)
    
     def clear(self):
-        self.set_neopixel_full(0, 0, 0)
+        self.set_neopixel_full(
+            0, 0, 0)
 
 
-    def set_neopixel_percentage(self, _percentage: float, _start_color: float = 0.0, _target_color: float = 1.0, _off_color: tuple[int, int ,int] = (0, 0, 10)):
+    def set_neopixel_percentage(self, _percentage: float, _start_color: float = 0.0, _target_color: float = 0.4, _off_color: float = 0.6, _independent_coloring: bool = False):
         _percentage = min(_percentage, 1.0)
         
         disp_value: int = int(min([helper.imap(_percentage * 100, 0, 100, 0 , config.CFG_NEOPIXEL_LED_COUNT), config.CFG_NEOPIXEL_LED_COUNT]))
-        print(disp_value)
+        #print(disp_value)
+        
+
+        color_value: float = helper.fmap(disp_value, 0, config.CFG_NEOPIXEL_LED_COUNT, _start_color , _target_color)
+        
+        off_color = self.hsv_to_rgb([_off_color, config.CFG_NEOPIXEL_MAX_BRIGHTNESS, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])
+            
         
         for i in range(config.CFG_NEOPIXEL_LED_COUNT):
-            color_value = helper.fmap(i, 0, config.CFG_NEOPIXEL_LED_COUNT, _start_color , _target_color)
+            
+            if _independent_coloring:
+                color_value = helper.fmap(i, 0, config.CFG_NEOPIXEL_LED_COUNT, _start_color , _target_color)
         #    # APPLY START INDEX OFFSET
             led_index = int((i+config.CFG_NEOPIXEL_LED_START_OFFSET) % config.CFG_NEOPIXEL_LED_COUNT)
         #    # ABOVE TARGET PERCENTAGE SET OFF OR ON LOW COLOR
             if i > disp_value:
-                self.neopixelring[led_index] = _off_color
+                self.neopixelring[led_index] = (off_color[0], off_color[1], off_color[2])
                 continue
             
-            rgb = ledring.hsv_to_rgb([color_value, 255, 255])
+            rgb = self.hsv_to_rgb([color_value, 1.0, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])
             self.neopixelring[led_index] = (rgb[0], rgb[1], rgb[2])
-          
+        
+        
         self.neopixelring.write()
 
 
-    def set_neopixel_full(self, _r: int, _g: int, _b: int):
-        for i in range(config.CFG_NEOPIXEL_LED_COUNT):
-            self.neopixelring[i] = (min(_r, 255), min(_g, 255), min(_b, 255))
-        self.neopixelring.write()
+    def set_neopixel_full_hsv(self, _hsv_color: float = 0.0):
+        self.set_neopixel_percentage(1.0, _hsv_color, _hsv_color, _hsv_color)
 
     def set_neopixel_random(self, _er: bool = False, _eg: bool = False, _eb: bool = True):
         r: int = int(128* random.random()) * _er
@@ -75,11 +127,13 @@ class ledring:
         self.set_neopixel_full(r, g, b)
 
 
-    def set_neopixel_full_hsv(self, _h: float):
-        rgb = ledring.hsv_to_rgb([min(_h, 1.0), 255, 255])
-        self.set_neopixel_full(rgb[0], rgb[1], rgb[2])
-
+    def set_neopixel_full(self, _r: int, _g: int, _b: int):
+        h, _, _ = self.rgb_to_hsv([_r, _g, _b])
+        self.set_neopixel_full_hsv(h)
 
 if __name__ == "__main__":
-    ledring().clear()
-    ledring().set_neopixel_percentage(0.5)
+    while True:
+        for i in range(10):
+            ledring().set_neopixel_percentage(i/10, ledring().COLOR_PRESET_HSV_H__BLUE, ledring().COLOR_PRESET_HSV_H__PINK, ledring().COLOR_PRESET_HSV_H__BLACK, True)
+            time.sleep(0.1)
+

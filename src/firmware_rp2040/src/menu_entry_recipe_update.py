@@ -9,7 +9,7 @@ from menu_manager import menu_manager
 class menu_entry_recipe_update(menu_entry.menu_entry):
 
 
-   
+    update_ok: bool = False
 
     def __init__(self):
         super().__init__("RECIPE UPDATE", "Update recipes over MixMeasureBuddy API")
@@ -20,6 +20,8 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
 
 
     def activate(self):
+        self.update_ok = False
+        
         print("activate {}".format(self.name))
         ui().show_msg("CHECK FOR WIFI CONNECTION")
         if recipe_updater.check_update_url():
@@ -29,10 +31,11 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
             return
 
         ui().show_msg("RECIPE FETCHING STARTED")
-        recipe_updater.update_recipes()
-
-
-        ui().show_msg("DONE: EXIT WITH ANYKEY")
+        if recipe_updater.update_recipes():
+            self.update_ok = True
+            ui().show_msg("PLEASE POWERCYCLE THE DEVICE")
+        else:
+            ui().show_msg("UPDATE FAILED")
 
     def teardown(self):
         print("teardown {}".format(self.name))
@@ -42,4 +45,5 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
     def update(self, _system_command: system_command.system_command):
         if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
             # UPDATE DOES NOTHING EXCEPT GOING BACK TO MAIN MENU
-            menu_manager().exit_current_menu()
+            if not self.update_ok:
+                menu_manager().exit_current_menu()

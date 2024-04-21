@@ -21,12 +21,17 @@ import menu_entry_recipe_update
 import menu_entry_recipe_editor
 import menu_entry_scale
 import menu_entry_info
+import menu_entry_recipe
 import menu_entry_hardwaretest
 from ledring import ledring
 import system_command
+import recipe
+
+
 
 TIME_ELAPED_DIVIDOR: int = 2
 print("main: __entry__")
+
 
 
 
@@ -75,9 +80,9 @@ if __name__ == "__main__":
     # INIT RECIPE LOADER AND INIT SD CARD
     settings.settings().list_files()
     # RECIPE STORAGE
-    recipe = recipe_loader.recipe_loader()
+    recipe_loader.recipe_loader().list_recpies()
     # INIT LED RING
-    ledring().set_neopixel_full(0, 0, 100)
+    ledring().set_neopixel_full_hsv(ledring().COLOR_PRESET_HSV_H__BLUE)
     # INIT UI
     ui().clear()
     # INIT SCALE
@@ -101,28 +106,29 @@ if __name__ == "__main__":
 
 
 
-    
-    
-    
-   
-
-
-
-
-
-
-
+  
     # INIT MENU SYSTEM
+    
+    # ADD RECIPES
+    
+    for r in recipe_loader.recipe_loader().list_recpies(_include_description=True):
+        filename, name, description = r
+        print("adding recipe entry: {}".format(filename))
+        # name description are only used for menu entries, recipe will be loaded again by filename
+        menu_manager.menu_manager().add_subentries(menu_entry_recipe.menu_entry_recipe(filename, name, description))
+
+    # ADD OTHER MENUS
     menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
 
     if recipe_updater.recipe_update_helper.has_network_capabilities():
         menu_manager.menu_manager().add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
+        menu_manager.menu_manager().add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
 
-    menu_manager.menu_manager().add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
     menu_manager.menu_manager().add_subentries(menu_entry_info.menu_entry_info())
     menu_manager.menu_manager().add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
     
 
+    
     
 
   
