@@ -12,12 +12,18 @@ CFG_NEOPIXEL_MAX_BRIGHTNESS = 0.8 # 0 - 1.0
 
 # DEFAULT WIFI SETTINGS
 # CAN LATER BE CANGED IN THE SDCARD/SETTINGS.JSON FILE
-CFG_NETWORK_HOSTNAME = "mixandmeasureberry" # xXxX.local
+CFG_NETWORK_HOSTNAME = "mixandmeasurebuddy{}" # xXxX.local {} will be replacd with device id:  _<id>
 CFG_NETWORK_WIFICOUNTRY = "DE" # DE US
 CFG_NETWORK_WIFI_SSID = "Makerspace"
 CFG_NETWORK_WIFI_PSK = "MS8cCvpE"
 CFG_NETWORK_API_ENDPOINT = "mixmeasurebuddy.com/api/mmb"
 
+
+# SETTINGS FOR ACCESS POINT + LOCAL WEBEDITOR
+CFG_EDITOR_WIFI_STA_HOSTNAME = "mixandmeasurebuddy"
+CFG_EDITOR_WIFI_STA_SSID = "mixandmeasurebuddy{}" # {} will be replacd with device id:  _<id>
+CFG_EDITOR_WIFI_STA_PSK = "{}"  # {} will be replacd with device id:  _<id>
+CFG_EDITOR_HTTP_PORT = 80
 ############################
 ######## PIN CONFIG ########
 ############################
