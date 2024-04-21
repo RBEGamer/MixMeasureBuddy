@@ -9,15 +9,23 @@ import math
 
 import random
 import helper
-#import Scales
+from Scales import ScaleInterface
 import config
 import recipe_loader
-import ui
+import recipe_updater
+from ui import ui
 import settings
 import menu_manager
 import menu_entry
-import ledring
+import menu_entry_recipe_update
+import menu_entry_recipe_editor
+import menu_entry_scale
+import menu_entry_info
+import menu_entry_hardwaretest
+from ledring import ledring
 import system_command
+
+TIME_ELAPED_DIVIDOR: int = 2
 print("main: __entry__")
 
 
@@ -69,9 +77,11 @@ if __name__ == "__main__":
     # RECIPE STORAGE
     recipe = recipe_loader.recipe_loader()
     # INIT LED RING
-    ledring.ledring().set_neopixel_full(10, 10, 10)
-    
-    
+    ledring().set_neopixel_full(0, 0, 100)
+    # INIT UI
+    ui().clear()
+    # INIT SCALE
+    ScaleInterface().tare()
 
     # INIT USER INPUT BUTTONS
     left_button_pin: machine.Pin = machine.Pin(config.CFG_BUTTON_LEFT_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
@@ -102,39 +112,30 @@ if __name__ == "__main__":
 
 
 
-    # INIT DISPLAY / UI INSTANCE
-    #ui.ui.instance().show_titlescreen()
-    #time.sleep(2)
-
     # INIT MENU SYSTEM
-    a = menu_entry.menu_entry("a" , "aaa")
-    b = menu_entry.menu_entry("b" , "aaa")
-    c = menu_entry.menu_entry("c" , "aaa")
+    menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
 
-    menu_manager.menu_manager().add_subentries(a)
-    menu_manager.menu_manager().add_subentries(b)
-    menu_manager.menu_manager().add_subentries(c)
+    if recipe_updater.recipe_update_helper.has_network_capabilities():
+        menu_manager.menu_manager().add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
 
-
-    # TODO UI WORKING
-
-    # TODO SCALE WORKING  + SINGLETON
-
-    # INIT SCALE
-    #scales = Scales.Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
-    #scales.tare()
-    # LOAD SCALE CALIBTATION VALUES
-    #calibration_factor = settings_instance.get_scale_calibration_factor()
-    #print("calibration_factor {}".format(calibration_factor))
-    #scales.set_scale(calibration_factor)
-    #scales.tare()
+    menu_manager.menu_manager().add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
+    menu_manager.menu_manager().add_subentries(menu_entry_info.menu_entry_info())
+    menu_manager.menu_manager().add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
     
+
     
-    #system_state = SYSTATE_IDLE #SYSTEMSTATE_ENTER_MAINMENU #SYSTEMSTATE_UPDATE_MODE
-    #user_cmd: menu_manager.menu_command = menu_manager.menu_command()
 
-
+  
+    
     async def main_task():
+        
+        last_scale_update = helper.millis()
+        last_timer_update = helper.millis()
+
+        # DECLEARE SOME SYSTEM STATE MESSAGES IN ORDER TO ACVOID REALLOCATION
+        current_scale_cmd: system_command.system_command = system_command.system_command(system_command.system_command.COMMAND_TYPE_SCALE_VALUE, system_command.system_command.SCALE_CURRENT_VALUE)
+        current_timertick_cmd: system_command.system_command = system_command.system_command(system_command.system_command.COMMAND_TYPE_TIMER_IRQ, system_command.system_command.TIMER_TICK)
+
         # CREATE TASKS FOR USER INPUT
         task_left = aio.create_task(left_button.coro_check())
         task_right = aio.create_task(right_button.coro_check())
@@ -142,5 +143,18 @@ if __name__ == "__main__":
 
         while True:
             await aio.sleep_ms(1)
-    
+
+            # PERIODIC READ OF THE SCALE
+            if  abs(last_scale_update - helper.millis()) > (100/TIME_ELAPED_DIVIDOR):
+                last_scale_update = helper.millis()
+                # UPDATE SCALE VALUE AND SEND TO PROCESS
+                current_scale_cmd.value = ScaleInterface().get_current_weight()
+                menu_manager.menu_manager().process_system_commands(current_scale_cmd)
+
+            # SYSTEM TICK TO IMPLEMENT TIMERS SUCH AS WAITING FOR X SECONDS IN RECIPES
+            if  abs(last_timer_update - helper.millis()) > (1000/TIME_ELAPED_DIVIDOR):
+                current_timertick_cmd.value = abs(last_timer_update - helper.millis())
+                menu_manager.menu_manager().process_system_commands(current_timertick_cmd)
+                last_timer_update = helper.millis()
+
     aio.run(main_task())

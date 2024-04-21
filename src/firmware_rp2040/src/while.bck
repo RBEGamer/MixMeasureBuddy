@@ -1,54 +1,12 @@
  
 
 
-
-    #tare_value = scales.get_unit(True) # STABLE READ
-    #tare_value_initial = tare_value
-    #print("tare_value:{}".format(tare_value))
-    #scale_value = 0
-    #print("loaded scale calibration valued cal_w{} cal-fact{}".format(config.CFG_CALIBRATION_WEIGHT_WEIGHT, calibration_factor))
-    
-    
-
-
-    # CONFIGURE USER BUTTONS
-    #push_button_up = machine.Pin(config.CFG_BUTTON_UP_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
-    #push_button_down = machine.Pin(config.CFG_BUTTON_DOWN_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
-    
-    
-   
-    
-    #delay_value = None # FOR USER TIMER      
-           
-    #target_value = None
-    #scale_offset = 0.0
-    #scale_value_before_glass_added = 0
-    
-    
-    
-    
-    
     #last_display_update = helper.millis()
     #last_systate_update = helper.millis()
     #last_recipe_step_update = helper.millis()
     #last_recipe_ing_update = helper.millis()
     #last_userbutton_update = None
     
-    #ingredient_counter = 0
-    
-    
-    #last_button_pressed = None
-    #button_pressed = UB_NONE
-    #time_elapsed = 0
-    #load_next_step = False
-    
-    
-  
-
-    
-    #target_value = 0.0
-    #found_recipes = []
-    #mainmenu_recipe_index = 0
 
 
 
@@ -93,55 +51,10 @@
 
 
 
-        # READ USER_BUTTONS
-        if not push_button_up.value() and not push_button_down.value() and button_pressed is UB_RELEASE:
-            #print()
-            #last_userbutton_update = helper.millis()
-            #last_button_pressed = UB_DOWN
-            if last_userbutton_update is not None and(helper.millis() - last_userbutton_update) > 100:
-                button_pressed = UB_UPLONG
-            else:
-                last_userbutton_update = helper.millis()
-                
-        elif push_button_up.value() and not push_button_down.value() and button_pressed is UB_RELEASE:
-            
-            
-            if last_userbutton_update is not None and(helper.millis() - last_userbutton_update) > 500:
-                button_pressed = UB_UP
-            else:
-                last_userbutton_update = helper.millis()
-                
-            #last_button_pressed = UB_UP
-                #button_pressed = UB_UP
-        elif not push_button_up.value() and push_button_down.value() and button_pressed is UB_RELEASE:
-            if last_userbutton_update is not None and(helper.millis() - last_userbutton_update) > 500:
-                button_pressed = UB_DOWN
-            else:
-                last_userbutton_update = helper.millis()
-            
-
-            
-            
-            
-        elif push_button_up.value() and push_button_down.value() and button_pressed is UB_NONE:
-            if last_userbutton_update is not None and(helper.millis() - last_userbutton_update) > 100:
-                button_pressed = UB_RELEASE
-            else:
-                last_userbutton_update = helper.millis()
-            
-        
-
-        time.sleep(0.01)
+           
 
         
-        
-        # READ SCALE
-        if system_state >= SYSTATE_RECIPE_START or system_state == SYSTEMSTATE_SCALE_MODE or system_state == SYSTEMSTATE_RAW_MODE or system_state == SYSTEMSTATE_CALIBRATION_MODE_FULL or system_state == SYSTEMSTATE_CALIBRATION_MODE_ZERO:
-            scale_value_g = scales.get_unit(True) - tare_value
-
-            
-
-        
+      
             
             
             

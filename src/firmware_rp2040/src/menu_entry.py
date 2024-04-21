@@ -1,7 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import ui
 import system_command
-class menu_entry(ABC):
+
+
+class menu_entry():
     
 
 
@@ -16,7 +18,6 @@ class menu_entry(ABC):
     @abstractmethod
     def preview(self):
         print("preview {}".format(self.name))
-        #ui.ui.show_recipe_information(self.name, self.description)
 
     @abstractmethod
     def activate(self):

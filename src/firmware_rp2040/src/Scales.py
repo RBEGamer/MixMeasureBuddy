@@ -1,6 +1,11 @@
-import static_modules.hx711 as hx711
+from singleton import singleton
 import time
 import math
+
+import hx711
+import config
+import settings
+
 
 class Scales(hx711.HX711):
     def __init__(self, d_out = 5, pd_sck = 12):
@@ -49,6 +54,34 @@ class Scales(hx711.HX711):
         
         return self.stable_raw_value() / self.SCALE_FACTOR
         
-        
-        
- 
+
+@singleton        
+class ScaleInterface:
+
+    scale: Scales = None
+    calibration_factor: float = 1.0
+    current_tare_value: float = 0
+    def __init__(self):
+        self.scale = Scales(d_out=config.CFG_HX711_DOUT_PIN, pd_sck=config.CFG_HX711_SCK_PIN)
+
+        self.current_tare_value = 0.0
+        self.reload_calibration()
+        self.scale.tare() # HARDWARE TARE
+        self.tare()
+    
+    def tare(self):
+        self.current_tare_value = self.get_untared_weight()
+
+    def reload_calibration(self):
+        self.calibration_factor = settings.settings().get_scale_calibration_factor()
+        print("calibration_factor {}".format(self.calibration_factor))
+        self.scale.set_scale(self.calibration_factor)
+
+    def get_untared_weight(self) -> float:
+        try:
+            return self.scale.get_unit(True)
+        except Exception as e:
+            return 0.0
+
+    def get_current_weight(self):
+        return self.get_untared_weight() - self.current_tare_value

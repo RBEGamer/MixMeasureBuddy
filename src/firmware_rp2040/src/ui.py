@@ -1,18 +1,13 @@
+from singleton import singleton
 import config
 import mmb_display
 import uQR
 import helper
+
+@singleton
 class ui:
     
-    _instance = None
-
-    @classmethod
-    def __new__(cls):
-        if cls._instance is None:
-            print('Creating the ui object')
-            cls._instance = super(ui, cls).__new__(cls)
-            # Put any initialization here.
-        return cls._instance
+  
     
 
     display: mmb_display
@@ -101,7 +96,10 @@ class ui:
         self.last_display_source: int = -1
         self.last_display_content = "."
     
-  
+    
+    def clear(self):
+        self.display.erase()
+        self.set_full_refresh()
     
     def show_msg(self, _message: str = ""):
 
@@ -113,8 +111,24 @@ class ui:
 
             self.last_display_source = 0
  
+
+    def show_url(self, _url: str = ""):
         
-  
+        splitted_url: str = ""
+        index: int = 0
+        split_after_chars = int((config.SCR_WIDTH / config.CFG_DISPLAY_CHAR_WIDTH) * 0.95)
+        for w in _url:
+            index = index + 1
+
+            splitted_url = splitted_url + w
+
+            if index >= split_after_chars:
+                splitted_url = splitted_url + " "
+                index = 0
+        
+        self.display.erase()
+        self.display_text("{}".format(splitted_url), True, 0, 0)
+        
         
     def show_recipe_information(self, _name:str, _description: str = ""):
         full_refresh = False
@@ -122,6 +136,7 @@ class ui:
             full_refresh = True
         self.last_display_source = 1
         
+        full_refresh = True
         if full_refresh:
             self.display.erase()
 
@@ -139,6 +154,8 @@ class ui:
         if self.last_display_source != 2:
             full_refresh = True
         self.last_display_source = 2
+
+        full_refresh = True
         if full_refresh:
             self.display.erase()
 
@@ -160,6 +177,7 @@ class ui:
             full_refresh = True
         self.last_display_source = 3
         
+        full_refresh = True
         if full_refresh:
             self.display.erase()
             self.display_text("MIX", True, 25, 10)
@@ -174,6 +192,7 @@ class ui:
             full_refresh = True
         self.last_display_source = 4
         
+        full_refresh = True
         if full_refresh:
             self.display.erase()
             self.display_text("Ingredients", True, 0, 7)
@@ -187,11 +206,13 @@ class ui:
     
       
     def show_scale(self, _value: int):
+        _value = int(_value)
         full_refresh = False
         if self.last_display_source != 5:
             full_refresh = True
         self.last_display_source = 5
         
+        full_refresh = True
         if full_refresh:
             self.display.erase()
             self.display_text("SCALE MODE", True, 0, 7)
@@ -199,12 +220,14 @@ class ui:
         self.display_rect(25,50, 100, 60)
         self.display_text("{:04d}g".format(_value), True, 25, 50)
     
+
     def show_device_qr_code(self, _url:str = "", _offset_x:int = 0, _offset_y:int = 0):
         full_refresh = False
         if self.last_display_source != 6:
             full_refresh = True
         self.last_display_source = 6
         
+        full_refresh = True
         if full_refresh:
             self.display.erase()
             

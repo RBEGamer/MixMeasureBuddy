@@ -26,18 +26,33 @@ class menu_manager:
         # THE FIRST ENTRY ADDED IS THE STARTING ENTRY
         if self.current_active_entry_index < 0:
             self.current_active_entry_index = 0
-            _entry.preview()
+            self.get_menu_entry().preview()
             
     
 
 
 
     def get_menu_entry(self) -> menu_entry.menu_entry:
+        if self.current_active_entry_index < 0:
+            print("no menu_entries added ?")
+            return None
+        elif self.current_active_entry_index >= len(self.menu_entires):
+            self.current_active_entry_index = 0
+
         return self.menu_entires[self.current_active_entry_index]
 
 
+    def exit_current_menu(self):
+        if self.get_menu_entry() is not None:
+            self.get_menu_entry().teardown()
+            self.get_menu_entry().preview()
+        else:
+            self.current_active_entry_index = 0
+
+        self.current_menu_state = self.MENU_STATE_INACTIVE
+
     def process_user_commands(self, _system_command: system_command.system_command):
-        if self.current_active_entry_index is None or self.current_active_entry_index < 0:
+        if self.get_menu_entry() is None:
             return
         
         
@@ -47,6 +62,7 @@ class menu_manager:
                 # SCROL THOUGH MENUS
                 if _system_command.action == system_command.system_command.NAVIGATION_LEFT:
                     self.current_active_entry_index = (self.current_active_entry_index + 1) % len(self.menu_entires)
+                    print(self.current_active_entry_index)
                     self.get_menu_entry().preview()
                 elif _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
                     self.current_active_entry_index = (self.current_active_entry_index - 1) % len(self.menu_entires)
@@ -57,16 +73,16 @@ class menu_manager:
                     self.current_menu_state = self.MENU_STATE_ACTIVE
 
         elif self.current_menu_state == self.MENU_STATE_ACTIVE:
-            if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
+            if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_EXIT:
                 # LEAVE MENU
-                if _system_command.action == system_command.system_command.NAVIGATION_EXIT:
-                    self.get_menu_entry().teardown()
-                    self.get_menu_entry().preview()
-                    self.current_menu_state = self.MENU_STATE_INACTIVE
-                # ALL OTHER INPUT WILL BE PASSED TO THE MENU ENTRY ITSELF
-                else:
-                    self.get_menu_entry().update(_system_command)
-            
+                self.exit_current_menu()
+            # ALL OTHER INPUT WILL BE PASSED TO THE MENU ENTRY ITSELF
+            else:
+                self.get_menu_entry().update(_system_command)
+        else:
+            self.exit_current_menu()    
+
 
     def process_system_commands(self, _system_command: system_command):
-        pass
+        if self.current_menu_state == self.MENU_STATE_ACTIVE:
+            self.get_menu_entry().update(_system_command)
