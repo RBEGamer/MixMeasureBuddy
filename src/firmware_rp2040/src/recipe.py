@@ -10,11 +10,13 @@ class ingredient:
     name: str = ""
     amount: int = -1
     id: int = 0
+    unit: str = ""
 
-    def __init__(self, _name: str, _amount: int = -1, _id: int = 0):
+    def __init__(self, _name: str, _amount: int = -1, _id: int = 0, _unit: str = ""):
         self.name = _name
         self.amount = _amount
         self.id = _id
+        self.unit = _unit
 class recipe_step:
 
     action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN
@@ -160,15 +162,46 @@ class recipe:
             return
         self.current_step_index = 0
     
+
     def get_ingredients(self) -> list[ingredient]:
+        res: list[ingredient] = []
+        ingredient_dict: dict = {}
+        # DETERM THE TOTAL INGREDIENT AMOUNT OVER ALL STEPS
+        # TODO REWORK
         for s in self.steps:
-            pass
-        # GET SUMMED UP AMOUNTS OF ALL INGREDIENTS
+            # SKIP USER ACTIONS WITH NO PHYSICAL INGREDIENTS
+            if s.action == USER_INTERACTION_MODE.WAIT or s.action == USER_INTERACTION_MODE.UNKNOWN:
+                continue
+
+
+            if not s.ingredient_name in ingredient_dict:
+                ingredient_dict[s.ingredient_name] = {'amount': 0, 'unit': ''}
+                
+                if s.action == USER_INTERACTION_MODE.SCALE:
+                    ingredient_dict[s.ingredient_name]['unit'] = 'g'
+                elif s.action == USER_INTERACTION_MODE.CONFIRM:
+                    ingredient_dict[s.ingredient_name]['unit'] = 'x'
+
+            if s.target_value > 0:
+                ingredient_dict[s.ingredient_name]['amount'] = ingredient_dict[s.ingredient_name]['amount'] + s.target_value
+
+            
+        # REASSEMBLE DICT INTO ARRAY
+        index: int = 0
+        for k, v in ingredient_dict.items():
+            res.append(ingredient(k, v['amount'], index, v['unit']))
+            index = index +1
+
+        return res
+       
     
     def get_ingredients_as_names_list(self) -> list[str]:
         rt: list[str] = []
         for i in self.get_ingredients():
-            rt.append("{} - {}".format(i.amount, i.name))
+            if i.amount is None or i.amount <= 0:
+                rt.append("{}".format(i.name))
+            else:
+                rt.append("{}{} - {}".format(i.amount, i.unit, i.name))
     
         return rt
 
@@ -176,8 +209,11 @@ class recipe:
     def get_current_recipe_step(self) -> recipe_step: # (action, ingredient, current_step, max_steps, target_weight, finished)
         if len(self.steps) <= 0 or self.current_step_index < 0:
             return None
-        
-        return self.steps[self.current_step_index]
+        try:
+            return self.steps[self.current_step_index]
+        except Exception as e:
+            print(e)
+        return recipe_step()
         
     
 
@@ -189,18 +225,9 @@ class recipe:
 if __name__ == "__main__":
     import example_recipes
 
-    r = example_recipes.EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA()
-    c = r.get_categories()
-    n = r.get_description()
-    i1, i2 = r.get_recipe_information()
-
-
-
-    js = r.to_dict()
-
-    r1 = recipe()
-    r1.from_dict(js)
-    i3, i4 = r1.get_recipe_information()
-    t = 0
+    r = example_recipes.EXAMPLE_RECIPES_COLLECTION_TEST()
+    i = r.get_ingredients()
+    l = r.get_ingredients_as_names_list()
+    er = 0
 
     
