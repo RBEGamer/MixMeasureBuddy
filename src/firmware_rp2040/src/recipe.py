@@ -16,27 +16,36 @@ class ingredient:
         self.amount = _amount
         self.id = _id
 class recipe_step:
-    step_valid: bool = False
+
     action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN
     ingredient_name: str = ""
     current_step_text: str = "---"
-    max_step: int = -1
     target_value: int = 0
 
 
-    def __init__(self, _step_valid: bool = False, _action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN, ingredient_name: str = "", _current_step_text: str = "---", _max_step: int = -1, _target_value: int = 0):
-        self.step_valid = _step_valid
+    def __init__(self, _action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN, _ingredient_name: str = "", _current_step_text: str = "---", _target_value: int = 0):
         self.action = _action
-        self.ingredient_name = ingredient_name
+        self.ingredient_name = _ingredient_name
         self.current_step_text = _current_step_text
-        self.max_step = _max_step
         self.target_value = _target_value
 
-    def to_dict() -> dict:
-        return {}
+    def to_dict(self) -> dict:
+        return {
+            'action': self.action,
+            'ingredient' : self.ingredient_name,
+            'amount': self.target_value,
+            'text': self.current_step_text
+            }
     
-    def from_dict():
-        pass
+    def from_dict(self, _step_dict: dict):
+        if 'action' in _step_dict:
+            self.action = _step_dict['action']
+        if 'ingredient' in _step_dict:
+            self.ingredient_name = _step_dict['ingredient']
+        if 'amount' in _step_dict:
+            self.target_value = _step_dict['amount']
+        if 'text' in _step_dict:
+            self.current_step_text = _step_dict['text']
 
 
 class recipe:
@@ -49,8 +58,9 @@ class recipe:
     categories: list[str] = ["everything"]
     valid: bool = False
 
+    current_step_index: int = -1
 
-    def __init__(self, _name: str, _description:str = "A nice cocktail", _version: str = "1.0.0", _categories: list[str] = ["everything"]) -> None:
+    def __init__(self, _name: str = "Recipe", _description:str = "A nice cocktail", _version: str = "1.0.0", _categories: list[str] = ["everything"]) -> None:
         self.name = _name
         self.description = _description
         self.version = _version
@@ -64,7 +74,7 @@ class recipe:
 
        
         self.steps = []
-
+        self.reset_steps()
 
    
 
@@ -86,7 +96,9 @@ class recipe:
             self.steps = []
             if len(steps) > 0:
                 for s in steps:
-                    self.add_step(recipe_step().from_dict(s))
+                    step: recipe_step = recipe_step()
+                    step.from_dict(s)
+                    self.add_step(step)
         
       
         self.filename = self.name.replace(" ", "_").replace(".recipe", "")
@@ -104,7 +116,7 @@ class recipe:
         # ADD STEPS
         ret[self.filename]['steps'] = []
         for s in self.steps:
-            ret[self.filename].append(s.to_dict)
+            ret[self.filename]['steps'].append(s.to_dict())
 
     
         if _add_filename_as_root_key:
@@ -124,21 +136,29 @@ class recipe:
         return self.categories
 
     
-   
 
 
     def get_recipe_information(self) -> tuple[str, str]:
-        if self.loaded_recipe is None:
-            return ("invalid", "---")
-        return (self.loaded_recipe['name'], self.loaded_recipe['description'])
+        return (self.name, self.description)
     
 
     def switch_next_step(self):
-        pass
+        if len(self.steps) < 0:
+            self.current_step_index = -1
+            return
+        self.current_step_index = (self.current_step_index + 1) % len(self.steps)
                   
     def switch_prev_step(self):
-        pass
+        if len(self.steps) < 0:
+            self.current_step_index = -1
+            return
+        self.current_step_index = (self.current_step_index - 1) % len(self.steps)
 
+    def reset_steps(self):
+        if len(self.steps) < 0:
+            self.current_step_index = -1
+            return
+        self.current_step_index = 0
     
     def get_ingredients(self) -> list[ingredient]:
         for s in self.steps:
@@ -154,7 +174,33 @@ class recipe:
 
 
     def get_current_recipe_step(self) -> recipe_step: # (action, ingredient, current_step, max_steps, target_weight, finished)
-        if self.loaded_recipe is None:
-            return recipe_step()
+        if len(self.steps) <= 0 or self.current_step_index < 0:
+            return None
         
-        return recipe_step()
+        return self.steps[self.current_step_index]
+        
+    
+
+
+
+
+
+
+if __name__ == "__main__":
+    import example_recipes
+
+    r = example_recipes.EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA()
+    c = r.get_categories()
+    n = r.get_description()
+    i1, i2 = r.get_recipe_information()
+
+
+
+    js = r.to_dict()
+
+    r1 = recipe()
+    r1.from_dict(js)
+    i3, i4 = r1.get_recipe_information()
+    t = 0
+
+    
