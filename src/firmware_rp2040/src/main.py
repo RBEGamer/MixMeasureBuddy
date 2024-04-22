@@ -1,13 +1,7 @@
 from utime import sleep_us
 import uasyncio as aio
 from aiobutton import AIOButton
-
-
 import machine
-import time
-import math
-
-import random
 import helper
 from Scales import ScaleInterface
 import config
@@ -16,7 +10,6 @@ import recipe_updater
 from ui import ui
 import settings
 import menu_manager
-import menu_entry
 import menu_entry_recipe_update
 import menu_entry_recipe_editor
 import menu_entry_scale
@@ -27,15 +20,9 @@ import menu_entry_calibration
 import menu_entry_restore
 from ledring import ledring
 import system_command
-import recipe
-
-
 
 TIME_ELAPED_DIVIDOR: int = 2
 print("main: __entry__")
-
-
-
 
 BUTTON_INDEX_LEFT = 0
 BUTTON_INDEX_RIGHT = 1
@@ -46,8 +33,6 @@ BUTTON_RELEASED = 2
 
 last_left_button_state: int = 0
 button_state_dict: list = [-1, -1]
-
-
 
 # GENERATED SYSTEM EVENTS DEPENING ON THE PRESSED BUTTON TO NAVIGATE THOUGHT MENUS
 def generate_button_state(_button_index: int, _button_event: int, _button_state: bool):
@@ -108,9 +93,6 @@ if __name__ == "__main__":
     right_button.set_release_handler(lambda btn: generate_button_state(BUTTON_INDEX_RIGHT, BUTTON_RELEASED, btn.get_debounced())) 
     
 
-
-
-  
     # INIT MENU SYSTEM
     
     # ADD RECIPES
@@ -136,11 +118,6 @@ if __name__ == "__main__":
     menu_manager.menu_manager().add_subentries(menu_entry_restore.menu_entry_restore())
     
 
-    
-    
-
-  
-    
     async def main_task():
         
         last_scale_update = helper.millis()

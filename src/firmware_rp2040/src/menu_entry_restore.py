@@ -7,9 +7,6 @@ from recipe_updater import recipe_updater
 from menu_manager import menu_manager
 class menu_entry_restore(menu_entry.menu_entry):
 
-
-   
-
     def __init__(self):
         super().__init__("RESTORE FIRMWARE", "Restore system firmware")
 

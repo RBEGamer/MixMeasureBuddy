@@ -42,19 +42,6 @@ class ledring:
         return r, g, b
 
     def rgb_to_hsv(self, rgb_color):
-        """Converts colors from the RGB color space to the HSV color space.
-
-        Parameters
-        ----------
-        rgb_color : tuple (r, g, b)
-            Color in the RGB color space
-
-        Returns
-        -------
-        tuple (h, s, v)
-            Color in the HSV color space
-
-        """
         (r, g, b) = rgb_color
         r = float(1 / 255 * r)
         g = float(1 / 255 * g)
@@ -97,8 +84,6 @@ class ledring:
             
         
         leds_per_segment: int = config.CFG_NEOPIXEL_LED_COUNT / _no_segment
-        
-        #print(_no_segment, leds_per_segment, _no_segment)
         
         on_color = self.hsv_to_rgb([_on_color, config.CFG_NEOPIXEL_MAX_BRIGHTNESS, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])
         off_color = self.hsv_to_rgb([_off_color, config.CFG_NEOPIXEL_MAX_BRIGHTNESS, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])

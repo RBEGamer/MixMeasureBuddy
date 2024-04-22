@@ -1,15 +1,5 @@
 import recipe
 
-def EXAMPLE_RECIPES_COLLECTION_TEST() -> recipe.recipe:
-    ts: recipe.recipe = recipe.recipe("Test Recipe", "To test the system", "1.0.0", ["test"])
-    ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="White Tequila", _current_step_text="", _target_value = 10))
-    ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="White Tequila", _current_step_text="", _target_value = 10))
-    ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Orange Juice", _current_step_text="", _target_value = 120))
-    ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Orange Juice", _current_step_text="", _target_value = 120))
-
-    ts.valid = True
-    return ts
-
 def EXAMPLE_RECIPES_COLLECTION_TEQUILA_SUNRISE() -> recipe.recipe:
     ts: recipe.recipe = recipe.recipe("Tequila Sunrise", "A nice Tequila Sunrise Cocktail", "1.0.0", ["Tequila"])
     ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="White Tequila", _current_step_text="", _target_value = 10))
@@ -19,7 +9,6 @@ def EXAMPLE_RECIPES_COLLECTION_TEQUILA_SUNRISE() -> recipe.recipe:
     ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.WAIT, _ingredient_name="", _current_step_text="Wait for settle down", _target_value = 10))
     ts.valid = True
     return ts
-
 
 def EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA() -> recipe.recipe:
     sc: recipe.recipe = recipe.recipe("Strawberry Colada", "Fruity strawberries, coconut and cream", "1.0.0", ["Cream", "Rum"])

@@ -2,10 +2,7 @@ from abc import abstractmethod
 import ui
 import system_command
 
-
 class menu_entry():
-    
-
 
     name: str = ""
     description: str = ""
