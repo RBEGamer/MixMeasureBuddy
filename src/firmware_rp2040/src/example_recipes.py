@@ -22,7 +22,7 @@ def EXAMPLE_RECIPES_COLLECTION_TEQUILA_SUNRISE() -> recipe.recipe:
 
 
 def EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA() -> recipe.recipe:
-    sc: recipe.recipe = recipe.recipe("Strawberry Colada", "A fruity strawberry cocktail with coconut and cream", "1.0.0", ["Cream", "Rum"])
+    sc: recipe.recipe = recipe.recipe("Strawberry Colada", "Fruity strawberries, coconut and cream", "1.0.0", ["Cream", "Rum"])
 
     sc.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.CONFIRM, _ingredient_name="Strawberries", _current_step_text="Puree and add strawberries", _target_value = 10))
     sc.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Coconut Juice", _current_step_text="", _target_value = 80))

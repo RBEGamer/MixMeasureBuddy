@@ -195,13 +195,13 @@ class recipe:
         return res
        
     
-    def get_ingredients_as_names_list(self) -> list[str]:
+    def get_ingredients_as_names_list(self, _without_amount: bool = True) -> list[str]:
         rt: list[str] = []
         for i in self.get_ingredients():
-            if i.amount is None or i.amount <= 0:
+            if i.amount is None or i.amount <= 0 or _without_amount:
                 rt.append("{}".format(i.name))
             else:
-                rt.append("{}{} - {}".format(i.amount, i.unit, i.name))
+                rt.append("{}{} {}".format(i.amount, i.unit, i.name))
     
         return rt
 

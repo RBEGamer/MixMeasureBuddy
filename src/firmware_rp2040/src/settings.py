@@ -120,13 +120,13 @@ class settings(object):
 
 
     
-    def write_json_file(self, _path:str, _dict_0content: dict):
+    def write_json_file(self, _path:str, _dict_content: dict):
         # ADD SETTINGS STORAGE DIRECTORY IF REL PATH IS REQUESTED
         if not _path.startswith("/"):
             _path = self.RECIPE_BASE_DIR + "/" + _path
 
         with open(_path, "w") as file:
-            file.write(json.dumps( _dict_0content))
+            file.write(json.dumps(_dict_content))
 
 
     def load_json_file(self, _path: str) -> dict:
@@ -137,7 +137,7 @@ class settings(object):
         # TODO ADD CHECK FOR FILE EXSITS
         try:
             settings_dict: dict = {}
-            with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "r") as file:
+            with open(_path, "r") as file:
                 settings_dict = json.loads(file.read())
             return settings_dict
         except Exception as e:

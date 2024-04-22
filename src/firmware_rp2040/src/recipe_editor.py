@@ -4,7 +4,6 @@ import time
 import helper
 import json
 import recipe_loader
-from micropyserver import MicroPyServer
 
 
 try:
@@ -95,7 +94,7 @@ try:
 
 except Exception as e:
         
-    class recipe_updater:
+    class recipe_editor:
         
         def __init__():
             pass

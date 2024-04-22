@@ -64,7 +64,7 @@ class menu_entry_recipe(menu_entry.menu_entry):
             self.loaded_recipe = None
 
 
-    def tare_scale():
+    def tare_scale(self):
             ScaleInterface().tare()
             time.sleep(1)
             ui().show_msg("-- TARE SCALE --")

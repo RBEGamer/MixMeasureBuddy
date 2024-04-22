@@ -61,18 +61,19 @@ class recipe_loader:
         return json_recipe
     
 
-    def get_recipe_by_filename(self, _filename: str) -> recipe:
+    def get_recipe_by_filename(self, _filename: str) -> recipe.recipe:
         # LOAD JSON CONTENT OF RECIPE FILE 
         json_recipe: dict = self.get_recipe_file_content(_filename)
 
         # CREATE RECIPE
         r: recipe.recipe = recipe.recipe()
 
-        if json_recipe is None:        
+        if json_recipe is None or not json_recipe:        
             return r
         
         # PARSE JSON TO RECIPE
-        return r.from_dict(json_recipe)
+        r.from_dict(json_recipe)
+        return r
         
 
     

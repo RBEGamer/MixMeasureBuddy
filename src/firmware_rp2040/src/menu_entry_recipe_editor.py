@@ -7,6 +7,8 @@ from menu_manager import menu_manager
 from recipe_editor import recipe_editor
 import helper
 import config
+
+
 class menu_entry_recipe_editor(menu_entry.menu_entry):
 
     editor: recipe_editor = None
