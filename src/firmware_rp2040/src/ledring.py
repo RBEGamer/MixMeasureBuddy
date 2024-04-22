@@ -13,6 +13,7 @@ class ledring:
 
     COLOR_PRESET_HSV_H__BLUE: float = 0.66
     COLOR_PRESET_HSV_H__PINK: float = 0.88
+    COLOR_PRESET_HSV_H__GREEN: float = 0.36
     COLOR_PRESET_HSV_H__BLACK: float = -1.0
 
     def hsv_to_rgb(self, hsv_color):

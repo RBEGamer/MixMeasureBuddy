@@ -149,7 +149,7 @@ class ui:
         self.last_display_source = -1
         
      
-    def show_recipe_step(self, _action: str, _ingredient: str, _current_step: int, _max_steps: int):
+    def show_recipe_step(self, _action: str, _ingredient: str):
         full_refresh = False
         if self.last_display_source != 2:
             full_refresh = True
@@ -163,7 +163,7 @@ class ui:
            
             self.display_text("{}".format(_ingredient), True, 0, 27)    
             # SHOW STEPS
-            self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 90)
+            #self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 90)
 
 
              

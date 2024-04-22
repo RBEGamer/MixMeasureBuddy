@@ -24,6 +24,7 @@ import menu_entry_info
 import menu_entry_recipe
 import menu_entry_hardwaretest
 import menu_entry_calibration
+import menu_entry_restore
 from ledring import ledring
 import system_command
 import recipe
@@ -92,6 +93,7 @@ if __name__ == "__main__":
     # INIT USER INPUT BUTTONS
     left_button_pin: machine.Pin = machine.Pin(config.CFG_BUTTON_LEFT_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
     left_button = AIOButton(lambda btn: not left_button_pin.value())
+    left_button.set_hold_ms(config.CFG_USER_LONG_BUTTON_PRESS_TIME)
     # Register button event handlers
     left_button.set_hold_handler(lambda btn: generate_button_state(BUTTON_INDEX_LEFT, BUTTON_HOLD, btn.get_debounced()))   
     left_button.set_press_handler(lambda btn: generate_button_state(BUTTON_INDEX_LEFT, BUTTON_PRESSED, btn.get_debounced()))
@@ -99,6 +101,7 @@ if __name__ == "__main__":
     
     right_button_pin: machine.Pin = machine.Pin(config.CFG_BUTTON_RIGHT_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
     right_button = AIOButton(lambda btn: not right_button_pin.value())
+    right_button.set_hold_ms(config.CFG_USER_LONG_BUTTON_PRESS_TIME)
     # Register button event handlers
     right_button.set_hold_handler(lambda btn: generate_button_state(BUTTON_INDEX_RIGHT, BUTTON_HOLD, btn.get_debounced()))   
     right_button.set_press_handler(lambda btn: generate_button_state(BUTTON_INDEX_RIGHT, BUTTON_PRESSED, btn.get_debounced()))
@@ -111,7 +114,6 @@ if __name__ == "__main__":
     # INIT MENU SYSTEM
     
     # ADD RECIPES
-    
     for r in recipe_loader.recipe_loader().list_recpies(_include_description=True):
         filename, name, description = r
         print("adding recipe entry: {}".format(filename))
@@ -131,6 +133,7 @@ if __name__ == "__main__":
     menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
     menu_manager.menu_manager().add_subentries(menu_entry_info.menu_entry_info())
     menu_manager.menu_manager().add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
+    menu_manager.menu_manager().add_subentries(menu_entry_restore.menu_entry_restore())
     
 
     
@@ -156,7 +159,7 @@ if __name__ == "__main__":
             await aio.sleep_ms(1)
 
             # PERIODIC READ OF THE SCALE
-            if  abs(last_scale_update - helper.millis()) > (100/TIME_ELAPED_DIVIDOR):
+            if  abs(last_scale_update - helper.millis()) > (50/TIME_ELAPED_DIVIDOR):
                 last_scale_update = helper.millis()
                 # UPDATE SCALE VALUE AND SEND TO PROCESS
                 current_scale_cmd.value = ScaleInterface().get_current_weight()

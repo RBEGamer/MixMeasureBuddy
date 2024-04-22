@@ -10,9 +10,11 @@ import settings
 class Scales(hx711.HX711):
 
     SCALE_FACTOR: float = 1.0
+    offset: float = 0.0
+
     def __init__(self, d_out = 5, pd_sck = 12):
         super(Scales, self).__init__(d_out, pd_sck)
-        self.offset = 0
+        self.offset = 0.0
 
     def reset(self):
         self.power_off()
@@ -22,26 +24,25 @@ class Scales(hx711.HX711):
         self.offset = _offset
 
     def tare(self):
-        self.offset = self.read()
+        self.offset = (self.read() * 1.0)
 
-    def raw_value(self):
-        return self.read() - self.offset
+    def raw_value(self) -> float:
+        return (self.read() * 1.0) - self.offset
 
-    def stable_raw_value(self, without_offset: bool = False, reads=10, delay_us=10):     
-        stable_values = []
+    def stable_raw_value(self, without_offset: bool = False, reads=10, delay_us=10) -> float:     
+        stable_values: list[float] = []
         for i in range(reads):
             if without_offset:
-                stable_values.append(self.read())
-            else:   
-                
+                stable_values.append((self.read() * 1.0))
+            else:    
                 stable_values.append(self.raw_value())
-            time.sleep_ms(10)
+            time.sleep_ms(delay_us/100.0)
         
         tare_value = 0.0
         for v in stable_values:
             tare_value = tare_value + v
         
-        return tare_value / reads
+        return tare_value / (reads * 1.0)
     
  
     def set_scale(self, _scale_factor: float):
@@ -88,9 +89,16 @@ class ScaleInterface:
 
     def get_untared_weight(self) -> float:
         try:
-            return self.scale.get_unit(True)
+            return self.scale.get_unit(True) * config.CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE
         except Exception as e:
             return 0.0
 
     def get_current_weight(self):
         return self.get_untared_weight() - self.current_tare_value
+
+
+if __name__ == "__main__":
+    ScaleInterface().tare()
+    while True:
+        
+        print(ScaleInterface().get_current_weight())

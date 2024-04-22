@@ -59,6 +59,9 @@ class AIOButton(object):
     def get_debounced(self):
         return self.para_list[S_DEBOUNCED]
 
+    def set_hold_ms(self, _hold_time: int):
+        self.hold_ms = _hold_time
+
     async def coro_check(self):
         while True:
             await aio.sleep_ms(self.check_ms)

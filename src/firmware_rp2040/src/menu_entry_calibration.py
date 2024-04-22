@@ -66,7 +66,7 @@ class menu_entry_calibration(menu_entry.menu_entry):
                 
                 for i in range(self.MEASUREMENT_AVERAGING_POINTS):
                     ledring().set_neopixel_percentage(i/(self.MEASUREMENT_AVERAGING_POINTS*1.0))
-                    self.calibration_value_empty += ScaleInterface().get_untared_weight()
+                    self.calibration_value_empty += ScaleInterface().get_current_weight()
                     ui().show_recipe_information("PLEASE WAIT", "MEASURING: {}/{}".format(i, self.MEASUREMENT_AVERAGING_POINTS))
                     time.sleep(0.5)
 
@@ -122,7 +122,14 @@ class menu_entry_calibration(menu_entry.menu_entry):
                     ledring().set_neopixel_full(0, 0, 10)
 
                     # SAVE CALIBRATION TO FILE
+                    if self.calibration_value_empty > self.calibration_value_full:
+                       t: float = self.calibration_value_empty
+                       self.calibration_value_empty = self.calibration_value_full
+                       self.calibration_value_full = t
+
                     settings.settings().save_scale_calibration_values(self.calibration_value_empty, self.calibration_value_full, self.calibration_weight_weight)
+                    #LOAD NEW CALIBRAION FACTOR IN
+                    ScaleInterface().reload_calibration()
                     # LEAVE MENU
                     menu_manager.menu_manager().exit_current_menu()
 

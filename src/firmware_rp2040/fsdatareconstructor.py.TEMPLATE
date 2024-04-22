@@ -41,7 +41,7 @@ def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bo
     del os
 
 
-def restore():
+def restore(_hard_restore: bool = False):
     import machine
     import time
     RESTORE_BUTTON_PIN: int = 15
@@ -50,7 +50,7 @@ def restore():
     push_button_restore = machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
     led_onboard = machine.Pin(RESTORE_LED_PIN, machine.Pin.OUT)
 
-    if not push_button_restore.value() or ALWAYS_HARD_RESTORE:
+    if not push_button_restore.value() or ALWAYS_HARD_RESTORE or _hard_restore:
         led_onboard.on()
         time.sleep(0.2)
         led_onboard.off()

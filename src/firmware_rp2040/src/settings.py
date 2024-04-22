@@ -58,11 +58,9 @@ class settings(object):
         self.create_initial_config()
 
     def create_settings_file(self):
-        settings_dict = {}
+        settings_dict: dict = {}
         if not self.SETTINGS_FILENAME in self.list_files():
-            with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "w") as file:
-                file.write(json.dumps(settings_dict))
-
+            self.write_json_file(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, settings_dict)
 
     def create_initial_config(self):
         members = [attr for attr in dir(SETTINGS_ENTRIES) if not callable(getattr(SETTINGS_ENTRIES, attr)) and not attr.startswith("__")]
@@ -87,9 +85,7 @@ class settings(object):
 
 
     def get_settings_entry(self, _key: str) -> any:
-        settings_dict: dict = {}
-        with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "r") as file:
-            settings_dict = json.loads(file.read())
+        settings_dict: dict = self.load_json_file(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME)
 
         if _key in settings_dict:
             return settings_dict[_key]
@@ -100,15 +96,11 @@ class settings(object):
 
 
     def set_settings_entry(self, _key: str, _value: any):
-        settings_dict: dict = {}
-
-        with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "r") as file:
-            settings_dict = json.loads(file.read())
+        settings_dict: dict = self.load_json_file(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME)
 
         settings_dict[str(_key)] = _value
 
-        with open(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, "w") as file:
-            file.write(json.dumps(settings_dict))
+        self.write_json_file(self.RECIPE_BASE_DIR + "/" + self.SETTINGS_FILENAME, settings_dict)
 
 
 
@@ -143,13 +135,14 @@ class settings(object):
         except Exception as e:
             print(e)
             return {}
+
     ################ SPECIFIC SETTINGS LOADING FUCTIONS ####################################################
 
 
     def save_scale_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float, _scale_calibration_weight_weight: float = config.CFG_CALIBRATION_WEIGHT_WEIGHT):
-        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MIN_VALUE, str(_scale_calibration_0g))
-        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MAX_VALUE, str(_scale_calibration_50g))
-        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT, str(_scale_calibration_weight_weight))
+        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MIN_VALUE, _scale_calibration_0g)
+        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MAX_VALUE, _scale_calibration_50g)
+        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT, _scale_calibration_weight_weight)
 
         print("save_scale_calibration_values ({}-{}) / {}".format(_scale_calibration_0g, _scale_calibration_50g, _scale_calibration_weight_weight))
 
@@ -167,6 +160,6 @@ class settings(object):
             self.save_scale_calibration_values(sc_min, sc_full)
 
 
-        calibration_factor =  (sc_min-sc_full) / sc_weight
+        calibration_factor =  (sc_min - sc_full) / sc_weight
         print("get_scale_calibration_factor using ({}-{}) / {} = {}".format(sc_min, sc_full, sc_weight, calibration_factor))
         return calibration_factor

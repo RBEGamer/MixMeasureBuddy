@@ -206,14 +206,20 @@ class recipe:
         return rt
 
 
-    def get_current_recipe_step(self) -> recipe_step: # (action, ingredient, current_step, max_steps, target_weight, finished)
+    def get_current_recipe_step(self) -> tuple[recipe_step, bool]: 
         if len(self.steps) <= 0 or self.current_step_index < 0:
-            return None
+            print("self.current_step_index is invalid / out of range")
+            return recipe_step(), True
         try:
-            return self.steps[self.current_step_index]
+            is_endstep: bool = False
+            if self.current_step_index >= len(self.steps):
+                is_endstep = True
+                
+            return self.steps[self.current_step_index], is_endstep
         except Exception as e:
             print(e)
-        return recipe_step()
+
+        return recipe_step(), True
         
     
 
