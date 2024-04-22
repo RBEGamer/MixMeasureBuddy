@@ -5,108 +5,156 @@ class USER_INTERACTION_MODE:
     CONFIRM = 1
     WAIT = 2
 
+class ingredient:
 
+    name: str = ""
+    amount: int = -1
+    id: int = 0
+
+    def __init__(self, _name: str, _amount: int = -1, _id: int = 0):
+        self.name = _name
+        self.amount = _amount
+        self.id = _id
 class recipe_step:
     step_valid: bool = False
     action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN
-    ingredient_name: str = "..."
+    ingredient_name: str = ""
     current_step_text: str = "---"
     max_step: int = -1
     target_value: int = 0
-    recipe_finished: bool = True
 
 
-    def __init__(self, _step_valid: bool = False, _action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN, _ingredient_name: str = "...", _current_step_text:str = "---", _max_step: int = -1, _target_value: int = 0, _recipe_finished: boo = False):
+    def __init__(self, _step_valid: bool = False, _action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN, ingredient_name: str = "", _current_step_text: str = "---", _max_step: int = -1, _target_value: int = 0):
         self.step_valid = _step_valid
         self.action = _action
-        self.ingredient_name = _ingredient_name
+        self.ingredient_name = ingredient_name
         self.current_step_text = _current_step_text
         self.max_step = _max_step
         self.target_value = _target_value
-        self.recipe_finished = _recipe_finished
 
-    # (action, ingredient, current_step, max_steps, target_weight, finished)
+    def to_dict() -> dict:
+        return {}
+    
+    def from_dict():
+        pass
+
 
 class recipe:
     
+    name: str = ""
+    description: str = ""
+    version: str = "1.0.0"
+    filename: str = ""
+    steps: list[recipe_step] = []
+    categories: list[str] = ["everything"]
+    valid: bool = False
 
-    def __init__(self) -> None:
-        pass
+
+    def __init__(self, _name: str, _description:str = "A nice cocktail", _version: str = "1.0.0", _categories: list[str] = ["everything"]) -> None:
+        self.name = _name
+        self.description = _description
+        self.version = _version
+
+        self.filename = self.name.replace(" ", "_").replace(".recipe", "")
+        self.filename = self.filename + ".recipe"
+
+        self.categories = _categories
+        if len(self.categories) <= 0:
+            self.categories.append("everything")
+
+       
+        self.steps = []
+
+
+   
+
+    def add_step(self, _step: recipe_step):
+        self.steps.append(_step)
+           
+
+    
+    def from_dict(self, _json_dict: dict) -> bool:
+        if 'name' in _json_dict:
+            self.name = _json_dict['name']
+        if 'description' in _json_dict:
+            self.description = _json_dict['description']
+        if 'version' in _json_dict:
+            self.version = _json_dict['version']
+
+        if 'steps' in _json_dict:
+            steps = _json_dict['steps']
+            self.steps = []
+            if len(steps) > 0:
+                for s in steps:
+                    self.add_step(recipe_step().from_dict(s))
+        
+      
+        self.filename = self.name.replace(" ", "_").replace(".recipe", "")
+        self.filename = self.filename + ".recipe"
+        self.valid = True
+        
+    def to_dict(self, _add_filename_as_root_key: bool = False) -> dict:
+        ret: dict = {}
+        ret[self.filename] = {
+            'name': self.name,
+            'description': self.description,
+            'version': self.version,
+            'filename': self.filename
+        }
+        # ADD STEPS
+        ret[self.filename]['steps'] = []
+        for s in self.steps:
+            ret[self.filename].append(s.to_dict)
+
+    
+        if _add_filename_as_root_key:
+            return ret
+
+        return ret[self.filename]
+
 
     def is_valid(self) -> bool:
-        return False
+        return self.valid
 
 
     def get_description(self) -> str:
-        return ""
+        return self.description
 
     def get_categories(self) -> list[str]:
-        return []
+        return self.categories
 
     
+   
 
 
     def get_recipe_information(self) -> tuple[str, str]:
         if self.loaded_recipe is None:
             return ("invalid", "---")
-        
         return (self.loaded_recipe['name'], self.loaded_recipe['description'])
     
+
     def switch_next_step(self):
-        if self.loaded_recipe is None:
-            return
-        if self.current_recipe_step is None:
-            self.current_recipe_step = 0
-        steps = self.loaded_recipe['steps']
-        n_steps = len(steps)
-        if self.current_recipe_step < n_steps:
-            self.current_recipe_step = self.current_recipe_step + 1
+        pass
                   
     def switch_prev_step(self):
         pass
 
-
-    def get_ingredient_list(self) -> list[str]:
-        if self.loaded_recipe is None:
-            return []
-        rt = []
-        ing = self.loaded_recipe['ingredients']
-        if ing is None:
-            return []
-        for k in ing:
-            rt.append(ing[k])
-        return rt
     
-    def get_ingredient_str(self) -> str:
-        rt = ""
-        for item in self.get_ingredient_list():
-            rt = rt + item + "\n"
+    def get_ingredients(self) -> list[ingredient]:
+        for s in self.steps:
+            pass
+        # GET SUMMED UP AMOUNTS OF ALL INGREDIENTS
+    
+    def get_ingredients_as_names_list(self) -> list[str]:
+        rt: list[str] = []
+        for i in self.get_ingredients():
+            rt.append("{} - {}".format(i.amount, i.name))
+    
         return rt
 
 
     def get_current_recipe_step(self) -> recipe_step: # (action, ingredient, current_step, max_steps, target_weight, finished)
         if self.loaded_recipe is None:
             return recipe_step()
-
-
-        steps = self.loaded_recipe['steps']
-        n_steps = len(steps)
-        if self.current_recipe_step is None:
-            self.current_recipe_step = 0
         
-        # TODO JSON TO RECIPE IN RECIPE LOADER
-        if self.current_recipe_step >= n_steps:
-             return recipe_step(_recipe_finished = True)
-            
-        step = steps[self.current_recipe_step]
-        if step['action'] == 'scale':
-            ingredient_name = self.loaded_recipe['ingredients'][step['ingredient']]
-            #return (USER_INTERACTION_MODE.SCALE, step['action'], ingredient_name, self.current_recipe_step+1, n_steps, step['amount'], False)
-        elif step['action'] == 'confirm':
-            pass     
-            #return (USER_INTERACTION_MODE.CONFIRM, step['action'], step['text'], self.current_recipe_step+1, n_steps, 0, False)
-        elif step['action'] == 'wait':     
-            pass
-            #return (USER_INTERACTION_MODE.WAIT, step['action'], step['text'], self.current_recipe_step+1, n_steps, step['amount'], False)
-        else:
-            return recipe_step()
+        return recipe_step()

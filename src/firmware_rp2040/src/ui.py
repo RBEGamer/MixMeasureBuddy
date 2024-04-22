@@ -186,7 +186,7 @@ class ui:
             self.display_text("{}".format(helper.get_system_id()), True, 7, 70)
     
     
-    def show_recipe_ingredients(self, _ingredients: [str], _force_refresh: bool = True):
+    def show_recipe_ingredients(self, _ingredients: list[str], _force_refresh: bool = True):
         full_refresh = False
         if self.last_display_source != 4 or _force_refresh:
             full_refresh = True

@@ -115,7 +115,7 @@ class settings(object):
     def get_settings_base_folder_path(self) -> str:
         return self.RECIPE_BASE_DIR
 
-    def list_files(self) ->[str]:
+    def list_files(self) ->list[str]:
         return os.listdir(self.RECIPE_BASE_DIR)
 
 
@@ -141,7 +141,8 @@ class settings(object):
                 settings_dict = json.loads(file.read())
             return settings_dict
         except Exception as e:
-            return None
+            print(e)
+            return {}
     ################ SPECIFIC SETTINGS LOADING FUCTIONS ####################################################
 
 

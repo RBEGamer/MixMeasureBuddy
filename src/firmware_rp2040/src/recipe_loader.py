@@ -26,8 +26,9 @@ class recipe_loader:
    
      
     def create_initial_recipe(self):
-        for k in example_recipes.EXAMPLE_RECIPES_COLLECTION:
-            settings.settings().write_json_file(k + ".recipe", example_recipes.EXAMPLE_RECIPES_COLLECTION[k])
+        r: recipe.recipe
+        for r in example_recipes.GET_EXAMPLE_RECIPES_COLLECTION():
+            settings.settings().write_json_file(r.filename, r.to_dict())
             
 
     def list_recpies(self, _include_description: bool = False) -> tuple[str, str, str]:
@@ -48,23 +49,31 @@ class recipe_loader:
         return res
     
 
-
-    def get_recipe_by_filename(self, _filename: str) -> recipe:
-         
-        if '.recipe' not in _filename:
+    def get_recipe_file_content(self, _filename: str) -> dict:
+        # CHECK FOR EXTENTION
+        if not _filename.endswith('.recipe'):
             _filename = _filename + ".recipe"
-            
+        # CHECK FILE EXISTS
         if _filename not in settings.settings().list_files():
             return recipe.recipe()
-        
+        # LOAD CONTENT AS JSON
         json_recipe = settings.settings().load_json_file(_filename)
+        return json_recipe
+    
+
+    def get_recipe_by_filename(self, _filename: str) -> recipe:
+        # LOAD JSON CONTENT OF RECIPE FILE 
+        json_recipe: dict = self.get_recipe_file_content(_filename)
+
+        # CREATE RECIPE
+        r: recipe.recipe = recipe.recipe()
+
+        if json_recipe is None:        
+            return r
+        
+        # PARSE JSON TO RECIPE
+        return r.from_dict(json_recipe)
         
 
-
-        # TODO IMPLEMENT LOADER
-        if json_recipe:
-            pass
-        
-        return recipe.recipe()
     
     

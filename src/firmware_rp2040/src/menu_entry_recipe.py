@@ -38,6 +38,11 @@ class menu_entry_recipe(menu_entry.menu_entry):
 
 
 
+        # SHOW RECIPE OVERVIEW PAGE
+        ui().show_recipe_ingredients(self.loaded_recipe.get_ingredients_as_names_list(), True)
+
+
+
 
     def teardown(self):
         print("teardown {}".format(self.name))

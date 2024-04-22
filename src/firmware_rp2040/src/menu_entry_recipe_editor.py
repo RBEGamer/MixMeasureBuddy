@@ -9,8 +9,6 @@ import helper
 import config
 class menu_entry_recipe_editor(menu_entry.menu_entry):
 
-
-    
     editor: recipe_editor = None
     init_success: bool = False
     def __init__(self):
@@ -38,7 +36,7 @@ class menu_entry_recipe_editor(menu_entry.menu_entry):
         psk: str =  config.CFG_EDITOR_WIFI_STA_PSK.format(helper.get_system_id())
 
         ip: str= self.editor.open_accesspoint(ssid, psk)    
-        ui().show_recipe_information(self.name, ip)
+        ui().show_recipe_information("Please connect using :", "IP:{}\nSSID:{}\nPSK:{}".format(ip, ssid, psk))
 
         self.editor.setup_webserver()
 
