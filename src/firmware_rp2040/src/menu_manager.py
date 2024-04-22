@@ -57,8 +57,7 @@ class menu_manager:
         self.get_menu_entry().preview()
 
         # OPTIONAL DISPLAY LED STATE
-        percentage: float = (self.current_active_entry_index +1)/ (len(self.menu_entires)* 1.0)
-        ledring.ledring().set_neopixel_percentage(percentage, ledring.ledring().COLOR_PRESET_HSV_H__BLUE, ledring.ledring().COLOR_PRESET_HSV_H__PINK, ledring.ledring().COLOR_PRESET_HSV_H__BLACK, True)
+        ledring.ledring().set_neopixel_spinner(self.current_active_entry_index, len(self.menu_entires), ledring.ledring().COLOR_PRESET_HSV_H__PINK, ledring.ledring().COLOR_PRESET_HSV_H__BLUE)
         
     def process_user_commands(self, _system_command: system_command.system_command):
         if self.get_menu_entry() is None:

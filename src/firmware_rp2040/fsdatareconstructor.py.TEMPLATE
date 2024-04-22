@@ -44,7 +44,7 @@ def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bo
 def restore():
     import machine
     import time
-    RESTORE_BUTTON_PIN: int = 14
+    RESTORE_BUTTON_PIN: int = 15
     RESTORE_LED_PIN: int = 25
 
     push_button_restore = machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)

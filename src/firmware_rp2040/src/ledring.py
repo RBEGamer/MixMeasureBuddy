@@ -87,6 +87,32 @@ class ledring:
             0, 0, 0)
 
 
+    def set_neopixel_spinner(self, _current_segment: int, _no_segment: int, _on_color: float = 0.0, _off_color: float = 0.6):
+        if _current_segment < 0:
+            _current_segment = 0
+        
+        if _no_segment <= 0:
+            _no_segment = config.CFG_NEOPIXEL_LED_COUNT / 6
+            
+        
+        leds_per_segment: int = config.CFG_NEOPIXEL_LED_COUNT / _no_segment
+        
+        #print(_no_segment, leds_per_segment, _no_segment)
+        
+        on_color = self.hsv_to_rgb([_on_color, config.CFG_NEOPIXEL_MAX_BRIGHTNESS, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])
+        off_color = self.hsv_to_rgb([_off_color, config.CFG_NEOPIXEL_MAX_BRIGHTNESS, config.CFG_NEOPIXEL_MAX_BRIGHTNESS])
+
+        for i in range(config.CFG_NEOPIXEL_LED_COUNT):
+            
+            if i > _current_segment*leds_per_segment and i < (_current_segment+1)*leds_per_segment:
+                self.neopixelring[i] = (on_color[0], on_color[1], on_color[2])
+            else:
+                self.neopixelring[i] = (off_color[0], off_color[1], off_color[2])
+            
+        self.neopixelring.write()
+
+
+
     def set_neopixel_percentage(self, _percentage: float, _start_color: float = 0.0, _target_color: float = 0.4, _off_color: float = 0.6, _independent_coloring: bool = False):
         _percentage = min(_percentage, 1.0)
         
@@ -133,7 +159,9 @@ class ledring:
 
 if __name__ == "__main__":
     while True:
-        for i in range(10):
-            ledring().set_neopixel_percentage(i/10, ledring().COLOR_PRESET_HSV_H__BLUE, ledring().COLOR_PRESET_HSV_H__PINK, ledring().COLOR_PRESET_HSV_H__BLACK, True)
+        segments: int = config.CFG_NEOPIXEL_LED_COUNT / 5
+        for i in range(segments):
+            ledring().set_neopixel_spinner(i, segments, ledring().COLOR_PRESET_HSV_H__BLUE, ledring().COLOR_PRESET_HSV_H__PINK)
             time.sleep(0.1)
+
 

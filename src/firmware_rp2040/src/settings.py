@@ -146,12 +146,12 @@ class settings(object):
     ################ SPECIFIC SETTINGS LOADING FUCTIONS ####################################################
 
 
-    def save_scale_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float):
+    def save_scale_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float, _scale_calibration_weight_weight: float = config.CFG_CALIBRATION_WEIGHT_WEIGHT):
         self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MIN_VALUE, str(_scale_calibration_0g))
         self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MAX_VALUE, str(_scale_calibration_50g))
-        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT, str(config.CFG_CALIBRATION_WEIGHT_WEIGHT))
+        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT, str(_scale_calibration_weight_weight))
 
-        print("save_scale_calibration_values ({}-{}) / {}".format(_scale_calibration_0g, _scale_calibration_50g, config.CFG_CALIBRATION_WEIGHT_WEIGHT))
+        print("save_scale_calibration_values ({}-{}) / {}".format(_scale_calibration_0g, _scale_calibration_50g, _scale_calibration_weight_weight))
 
 
     

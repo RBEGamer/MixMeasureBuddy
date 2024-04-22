@@ -8,6 +8,8 @@ import settings
 
 
 class Scales(hx711.HX711):
+
+    SCALE_FACTOR: float = 1.0
     def __init__(self, d_out = 5, pd_sck = 12):
         super(Scales, self).__init__(d_out, pd_sck)
         self.offset = 0
@@ -15,6 +17,9 @@ class Scales(hx711.HX711):
     def reset(self):
         self.power_off()
         self.power_on()
+
+    def set_tare_value(self, _offset: float = 0.0):
+        self.offset = _offset
 
     def tare(self):
         self.offset = self.read()
@@ -71,6 +76,10 @@ class ScaleInterface:
     
     def tare(self):
         self.current_tare_value = self.get_untared_weight()
+
+    def reset_calibration(self):
+        self.scale.set_scale(1.0)
+        self.scale.set_tare_value(0.0)
 
     def reload_calibration(self):
         self.calibration_factor = settings.settings().get_scale_calibration_factor()

@@ -23,6 +23,7 @@ import menu_entry_scale
 import menu_entry_info
 import menu_entry_recipe
 import menu_entry_hardwaretest
+import menu_entry_calibration
 from ledring import ledring
 import system_command
 import recipe
@@ -118,12 +119,16 @@ if __name__ == "__main__":
         menu_manager.menu_manager().add_subentries(menu_entry_recipe.menu_entry_recipe(filename, name, description))
 
     # ADD OTHER MENUS
-    menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
+    menu_manager.menu_manager().add_subentries(menu_entry_calibration.menu_entry_calibration())
 
+    
+    # ADD EACH RECIPE AS SEPARATE MENU
     if recipe_updater.recipe_update_helper.has_network_capabilities():
         menu_manager.menu_manager().add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
         menu_manager.menu_manager().add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
 
+    # ADD FURTHER SYSTEM MENUS
+    menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
     menu_manager.menu_manager().add_subentries(menu_entry_info.menu_entry_info())
     menu_manager.menu_manager().add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
     
