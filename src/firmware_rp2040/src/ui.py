@@ -159,9 +159,9 @@ class ui:
         if full_refresh:
             self.display.erase()
 
-            self.display_text("{}".format(_action), True, 31, 7)
+            self.display_text("{}".format(_action), True, 0, 7)
            
-            self.display_text("{}".format(_ingredient), True, 0, 27)    
+            self.display_text("{}".format(_ingredient), True, 0, 35)    
             # SHOW STEPS
             #self.display_text("{} / {}".format(_current_step, _max_steps), True, 37, 90)
 

@@ -211,10 +211,11 @@ class recipe:
             print("self.current_step_index is invalid / out of range")
             return recipe_step(), True
         try:
+            #DETERM IF THIS IS THE LAST STEP
             is_endstep: bool = False
-            if self.current_step_index >= len(self.steps):
+            if self.current_step_index >= len(self.steps) -1:
                 is_endstep = True
-                
+
             return self.steps[self.current_step_index], is_endstep
         except Exception as e:
             print(e)

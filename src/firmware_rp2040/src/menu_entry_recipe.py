@@ -147,9 +147,14 @@ class menu_entry_recipe(menu_entry.menu_entry):
         elif self.recipe_state == self.RECIPE_RUNNING:
             
             if self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.SCALE:
-                if _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
+                if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_ENTER:
+                    self.recipe_state = self.RECIPE_END_CHECK
+                elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
                     # UPDAT LED RING
-                    ledring().set_neopixel_percentage(_system_command.value / (self.current_recipe_step.target_value*1.0),_independent_coloring = True)
+                    if _system_command.value > (self.current_recipe_step.target_value * 0.9):
+                        ledring().set_neopixel_percentage(_system_command.value / (self.current_recipe_step.target_value*1.0),_independent_coloring = False)
+                    else:
+                        ledring().set_neopixel_percentage(_system_command.value / (self.current_recipe_step.target_value*1.0),_independent_coloring = True)
                     # IF TARGET VALUE REACHED GOTO NEXT STEP
                     if _system_command.value > self.current_recipe_step.target_value:
                         self.recipe_state = self.RECIPE_END_CHECK

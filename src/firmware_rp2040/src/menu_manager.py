@@ -46,7 +46,7 @@ class menu_manager:
     def exit_current_menu(self):
         if self.get_menu_entry() is not None:
             self.get_menu_entry().teardown()
-            self.get_menu_entry().preview()
+            self.display_preview()
         else:
             self.current_active_entry_index = 0
 
@@ -55,7 +55,6 @@ class menu_manager:
 
     def display_preview(self):
         self.get_menu_entry().preview()
-
         # OPTIONAL DISPLAY LED STATE
         ledring.ledring().set_neopixel_spinner(self.current_active_entry_index, len(self.menu_entires), ledring.ledring().COLOR_PRESET_HSV_H__PINK, ledring.ledring().COLOR_PRESET_HSV_H__BLUE)
         
