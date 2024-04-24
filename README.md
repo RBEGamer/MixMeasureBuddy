@@ -30,7 +30,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `cellplate.stl`
 * 1x `bottom.stl`
 
-### FOR SSH1106 1.3" OlED DISPLAY
+### FOR SSH1106 1.3" OLED DISPLAY
 * 1x `display_clamp_SSH1106`
 
 ### FOR SSD1306 0.96" OlED DISPLAY
@@ -49,30 +49,34 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 ### ELECTRICAL
 
 * 1x `Raspberry Pi Pico` or `Raspberry Pi Pico W`
-* 1x `LOAD CELL 5kg` or `LOAD CELL 10kg`
+* 1x `LOAD CELL` with dimensions of `60x12x12mm` and at least `2kg`, for example `YZC-131`
 * 1x `HX711`
 * 1x `1.3" I2C OLED SSH1306` or `0.96" I2C OLED SSD1306`
-* 2x `T 250A RT Miniatur-Pushbutton`
+* 1x `Encoder` e.g. `KY-040`
 * 60cm `WS2812 Strip`
 * Jumperwires
-
-
-## MISC
-
-* `Superglue`
-* `small cable ties`
+* 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
 
 
 
 
 
 
-# REST API DEFINITION
+# HARDWARE BUILD
+
+
+## NOTES
+
+To fix accuarcy issues on several `HX711` board, there are two addional resistors needed.
+Please refer to (HX711 – Auswahl und Beschaltung)[https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.]
+
+
+# SOFTWARE BUILD
+
+Please check the `Releases` page of this repository for prebuild firmware archives.
 
 
 
-* SCALE PING `mixmeasurebuddy.com/api/{scale_id}` -> should redirect to user interface, used for qr code generation
-* LIST RECIPES FOR SCALE `mixmeasurebuddy.com/api/{scale_id}/recipes` -> ["recipe_filename_link_relative"]
-* FETCH RECIPE FOR SCALE `mixmeasurebuddy.com/api/{scale_id}/recipe/{recipe_filename_link_relative}}` -> [{filename_without_ending, recipe_as_json}]
-* 
+## 
+
 
