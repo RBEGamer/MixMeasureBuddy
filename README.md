@@ -28,7 +28,16 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `ring.stl`
 * 1x `breadboard_mount.stl`
 * 1x `cellplate.stl`
+* 1x `hinge.stl`
 * 1x `bottom.stl`
+
+#### 3D PRINT SETTINGS
+
+* Layer height: `0.2` - `0.3`mm
+* Support: None for most printers. if the printer has problems with bridges then activate `Support on buildplate only`
+
+
+![3D printed parts orientation on bed](documentation/images/3d_print_orientation.png)
 
 ### FOR SSH1106 1.3" OLED DISPLAY
 * 1x `display_clamp_SSH1106`
