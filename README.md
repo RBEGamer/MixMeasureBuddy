@@ -66,7 +66,18 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 ## SCHEMATIC
 
+The following diagram shows the internal wiring of the individual components of the `MixMeasureBuddy`.
+Only the `Raspberry Pi Pico`, button and the `HX711` are placed on the small breadboard.
+The display, `LEDs` and the encoder(-module) are connected with longer cables so that they can be attached to the 3D printed parts at the intended mounting locations.
+
 ![MixMeasureBuddy Schematic](documentation/schematic/mmb_schematic_encoder_Steckplatine.png)
+
+The circuit diagram was created in the Fritzing software. The project can be found under `documenation/schematic/`.
+After the function of all parts has been tested, the connections on the breadboard should be fixed with hot glue so that they do not come loose during transportation.
+
+## MECHANICAL BUILD
+
+
 
 ## NOTES
 
@@ -78,8 +89,15 @@ Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogge
 
 Please check the `Releases` page of this repository for prebuild firmware archives.
 
+To initially flash the software to the `Raspberry Pi Pico`, the `BOOT` button must first be held down when plugging in the `USB` cable.
+A new removable disk will then appear on the `PC`. The `firmware.uf2` is then copied to this.
+The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
 
 
-## 
+## DEVELOPMENT
+
+The microcontroller firmware of the `Raspberry Pi Pico` was created in micropython and is automatically created with the pre-built image. 
+The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
+The program `Thonny` can be used to adapt the software directly on the scale.
 
 
