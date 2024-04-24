@@ -64,11 +64,14 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 # HARDWARE BUILD
 
+## SCHEMATIC
+
+![MixMeasureBuddy Schematic](documentation/schematic/mmb_schematic_encoder_Steckplatine.png)
 
 ## NOTES
 
-To fix accuarcy issues on several `HX711` board, there are two addional resistors needed.
-Please refer to [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
+To fix accuracy issues on several `HX711` boards, two addional resistors are needed.
+Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
 
 
 # SOFTWARE BUILD
