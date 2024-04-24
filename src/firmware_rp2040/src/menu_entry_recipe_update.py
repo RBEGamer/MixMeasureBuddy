@@ -5,7 +5,7 @@ from ui import ui
 from ledring import ledring
 from recipe_updater import recipe_updater
 from menu_manager import menu_manager
-
+import time
 class menu_entry_recipe_update(menu_entry.menu_entry):
 
 
@@ -23,26 +23,38 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
         self.update_ok = False
         
         print("activate {}".format(self.name))
-        ui().show_msg("CHECK FOR WIFI CONNECTION")
-        if recipe_updater.check_update_url():
-            ui().show_msg("WIFI SUCCESS")
-        else:
-            ui().show_msg("ERROR: CHECK CREDENTIALS")
-            return
+        try:
+            ui().show_msg("CHECK FOR WIFI CONNECTION")
+            if recipe_updater.check_update_url():
+                ui().show_msg("WIFI SUCCESS")
+            else:
+                ui().show_msg("ERROR: CHECK CREDENTIALS")
+                time.sleep(2)
+                menu_manager().exit_current_menu()
 
-        ui().show_msg("RECIPE FETCHING STARTED")
-        self.update_ok = recipe_updater.update_recipes()
-        if self.update_ok:
-            ui().show_recipe_information("PLEASE POWERCYCLE THE DEVICE", "Press NEXT/PREV to show QR Code or URL")
-        else:
-           ui().show_recipe_information("UPDATE FAILED", "Press NEXT/PREV to show QR Code or URL")
+            ui().show_msg("RECIPE FETCHING STARTED")
+            self.update_ok = recipe_updater.update_recipes()
+            if self.update_ok:
+                ui().show_recipe_information("PLEASE POWERCYCLE THE DEVICE", "Press NEXT/PREV to show QR Code or URL")
+            else:
+                ui().show_recipe_information("UPDATE FAILED", "Press NEXT/PREV to show QR Code or URL")
+
+        except Exception as e:
+            print(e)
+            ui().show_msg("ERROR: UPDATE ERROR")
+            time.sleep(2)
+            menu_manager().exit_current_menu()
 
 
         
 
     def teardown(self):
         print("teardown {}".format(self.name))
-        recipe_updater.disable_wifi()
+        try:
+            recipe_updater.disable_wifi()
+        except Exception as e:
+            print(e)
+
 
 
     def update(self, _system_command: system_command.system_command):

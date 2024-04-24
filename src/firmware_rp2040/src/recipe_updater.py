@@ -56,7 +56,7 @@ try:
         @staticmethod
         def connect_wifi() -> bool:
             network.country(config.CFG_NETWORK_WIFICOUNTRY)
-            network.hostname(config.CFG_NETWORK_HOSTNAME.format(helper.get_system_id()))
+            network.hostname(config.CFG_NETWORK_HOSTNAME) #.format(helper.get_system_id()))
 
             wlan = network.WLAN(network.STA_IF)
             wlan.active(True)

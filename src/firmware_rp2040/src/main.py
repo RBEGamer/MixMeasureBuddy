@@ -4,12 +4,25 @@ from aiobutton import AIOButton
 import machine
 import helper
 from Scales import ScaleInterface
+from ledring import ledring
+import system_command
+# NEEDED FOR ENCODER
+from sys import platform
+if 'esp' in platform: 
+    from rotary_irq_esp import RotaryIRQ
+elif 'rp' in platform:
+    from rotary_irq_rp2 import RotaryIRQ
+else:
+    from rotary_irq_pyb import RotaryIRQ
+
+
 import config
 import recipe_loader
 import recipe_updater
 from ui import ui
 import settings
 import menu_manager
+# PLUGINS
 import menu_entry_recipe_update
 import menu_entry_recipe_editor
 import menu_entry_scale
@@ -18,50 +31,55 @@ import menu_entry_recipe
 import menu_entry_hardwaretest
 import menu_entry_calibration
 import menu_entry_restore
-from ledring import ledring
-import system_command
+
 
 TIME_ELAPED_DIVIDOR: int = 2
 print("main: __entry__")
 
 BUTTON_INDEX_LEFT = 0
 BUTTON_INDEX_RIGHT = 1
+BUTTON_INDEX_MENU = 2
 
 BUTTON_PRESSED = 0
 BUTTON_HOLD = 1
 BUTTON_RELEASED = 2
 
 last_left_button_state: int = 0
-button_state_dict: list = [-1, -1]
-
+button_state_dict: list = [-1, -1, -1]
+encoder_middle_point: int = 1
+current_button_cmd: system_command.system_command = system_command.system_command()
+current_button_cmd.type = system_command.system_command.COMMAND_TYPE_NAVIGATION
 # GENERATED SYSTEM EVENTS DEPENING ON THE PRESSED BUTTON TO NAVIGATE THOUGHT MENUS
 def generate_button_state(_button_index: int, _button_event: int, _button_state: bool):
-    #print("Button {} type {} state {}".format(_button_index,_button_event,_button_state))
-    
+
     if button_state_dict[_button_index] == BUTTON_PRESSED and _button_event == BUTTON_RELEASED:
-        #print("short press")
-        cmd: system_command.system_command = system_command.system_command()
         if _button_index == BUTTON_INDEX_LEFT:
-            cmd.action = system_command.system_command.NAVIGATION_LEFT
+            current_button_cmd.action = system_command.system_command.NAVIGATION_LEFT
         elif _button_index == BUTTON_INDEX_RIGHT:
-            cmd.action = system_command.system_command.NAVIGATION_RIGHT
-        cmd.type = system_command.system_command.COMMAND_TYPE_NAVIGATION
-        menu_manager.menu_manager().process_user_commands(cmd)
+            current_button_cmd.action = system_command.system_command.NAVIGATION_RIGHT
+        elif _button_index == BUTTON_INDEX_MENU:
+            current_button_cmd.action = system_command.system_command.NAVIGATION_ENTER
+
+        menu_manager.menu_manager().process_user_commands(current_button_cmd)
 
     elif _button_event == BUTTON_HOLD:
-        #print("short press")
-        cmd: system_command.system_command = system_command.system_command()
         if _button_index == BUTTON_INDEX_LEFT:
-            cmd.action = system_command.system_command.NAVIGATION_EXIT
+            current_button_cmd.action = system_command.system_command.NAVIGATION_EXIT
         elif _button_index == BUTTON_INDEX_RIGHT:
-            cmd.action = system_command.system_command.NAVIGATION_ENTER
-        cmd.type = system_command.system_command.COMMAND_TYPE_NAVIGATION
-        menu_manager.menu_manager().process_user_commands(cmd)
+            current_button_cmd.action = system_command.system_command.NAVIGATION_ENTER
+        elif _button_index == BUTTON_INDEX_MENU:
+            current_button_cmd.action = system_command.system_command.NAVIGATION_EXIT
+
+        
+        menu_manager.menu_manager().process_user_commands(current_button_cmd)
     
     button_state_dict[_button_index] = _button_event
    
    
    
+
+
+
 if __name__ == "__main__":
     
     # INIT RECIPE LOADER AND INIT SD CARD
@@ -93,6 +111,20 @@ if __name__ == "__main__":
     right_button.set_release_handler(lambda btn: generate_button_state(BUTTON_INDEX_RIGHT, BUTTON_RELEASED, btn.get_debounced())) 
     
 
+    
+    ## REGISTER ENCODER BUTTON EVENTS BY REMAPPING THE ENCODER SWITCH 
+    encoder_button_pin: machine.Pin = machine.Pin(config.CFG_ENCODER_SW_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
+    #while True:
+    #    print(encoder_button_pin.value())
+    
+    encoder_button = AIOButton(lambda btn: not encoder_button_pin.value())
+    encoder_button.set_hold_handler(lambda btn: generate_button_state(BUTTON_INDEX_MENU, BUTTON_HOLD, btn.get_debounced()))   
+    encoder_button.set_press_handler(lambda btn: generate_button_state(BUTTON_INDEX_MENU, BUTTON_PRESSED, btn.get_debounced()))
+    encoder_button.set_release_handler(lambda btn: generate_button_state(BUTTON_INDEX_MENU, BUTTON_RELEASED, btn.get_debounced())) 
+    
+    # CONFIGURE ENCODER
+    encoder: RotaryIRQ = RotaryIRQ(pin_num_clk=config.CFG_ENCODER_CLK_PIN, pin_num_dt=config.CFG_ENCODER_DT_PIN, min_val=encoder_middle_point-encoder_middle_point, max_val=encoder_middle_point*2, reverse=config.CFG_ENCODER_INVERT, range_mode=RotaryIRQ.RANGE_WRAP)
+    encoder.set_current_value(encoder_middle_point)
     # INIT MENU SYSTEM
     
     # ADD RECIPES
@@ -130,10 +162,29 @@ if __name__ == "__main__":
         # CREATE TASKS FOR USER INPUT
         task_left = aio.create_task(left_button.coro_check())
         task_right = aio.create_task(right_button.coro_check())
-
-
+        task_menu = aio.create_task(encoder_button.coro_check())
+        
+        current_encoder_cmd: system_command.system_command = system_command.system_command()
+        current_encoder_cmd.type = system_command.system_command.COMMAND_TYPE_NAVIGATION
+       
         while True:
             await aio.sleep_ms(1)
+
+
+            # QUERY ENCODER AND DETERM USER INTPUT STATE
+            current_encoder_value = encoder.value()
+            if current_encoder_value != encoder_middle_point:
+                current_encoder_cmd.value = current_encoder_value
+                
+                if current_encoder_value > encoder_middle_point:
+                    encoder.set_current_value(encoder_middle_point)
+                    current_encoder_cmd.action = system_command.system_command.NAVIGATION_LEFT
+                    menu_manager.menu_manager().process_user_commands(current_encoder_cmd)
+                elif current_encoder_value < encoder_middle_point:
+                    encoder.set_current_value(encoder_middle_point)
+                    current_encoder_cmd.action = system_command.system_command.NAVIGATION_RIGHT
+                    menu_manager.menu_manager().process_user_commands(current_encoder_cmd)
+              
 
             # PERIODIC READ OF THE SCALE
             if  abs(last_scale_update - helper.millis()) > (50/TIME_ELAPED_DIVIDOR):
@@ -149,3 +200,4 @@ if __name__ == "__main__":
                 last_timer_update = helper.millis()
 
     aio.run(main_task())
+

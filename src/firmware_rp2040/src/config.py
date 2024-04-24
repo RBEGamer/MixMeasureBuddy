@@ -13,7 +13,7 @@ CFG_NEOPIXEL_MAX_BRIGHTNESS: float = 0.8 # max led brighness modifier 0.0 - 1.0
 
 # DEFAULT WIFI SETTINGS
 # CAN LATER BE CANGED IN THE SDCARD/SETTINGS.JSON FILE
-CFG_NETWORK_HOSTNAME: str = "mixandmeasurebuddy{}" # xXxX.local {} will be replacd with device id:  _<id>
+CFG_NETWORK_HOSTNAME: str = "mixandmeasurebuddy" # xXxX.local
 CFG_NETWORK_WIFICOUNTRY: str = "DE" # DE US
 CFG_NETWORK_WIFI_SSID: str = "Makerspace"
 CFG_NETWORK_WIFI_PSK: str = "MS8cCvpE"
@@ -22,8 +22,8 @@ CFG_NETWORK_API_ENDPOINT: str = "mixmeasurebuddy.com/api/mmb"
 
 # SETTINGS FOR ACCESS POINT + LOCAL WEBEDITOR
 CFG_EDITOR_WIFI_STA_HOSTNAME: str = "mixandmeasurebuddy"
-CFG_EDITOR_WIFI_STA_SSID: str = "mixandmeasurebuddy{}" # {} will be replacd with device id:  _<id>
-CFG_EDITOR_WIFI_STA_PSK: str = "{}"  # {} will be replacd with device id:  _<id>
+CFG_EDITOR_WIFI_STA_SSID: str = "mixandmeasurebuddy"
+CFG_EDITOR_WIFI_STA_PSK: str = "{}"  #
 CFG_EDITOR_HTTP_PORT: int = 80 # WEBSERVER PORT FOR THE ONLINE EDITOR
 ############################
 ######## PIN CONFIG ########
@@ -33,6 +33,12 @@ CFG_NEOPIXEL_PIN: int = 28
 # BUTTONS
 CFG_BUTTON_LEFT_PIN: int = 3 #22
 CFG_BUTTON_RIGHT_PIN: int = 2
+
+#ENCODER
+CFG_ENCODER_INVERT: bool = False
+CFG_ENCODER_CLK_PIN: int = 20
+CFG_ENCODER_DT_PIN: int = 19
+CFG_ENCODER_SW_PIN: int = 18
 # HX711 MODULE
 CFG_HX711_DOUT_PIN: int = 5
 CFG_HX711_SCK_PIN: int = 4

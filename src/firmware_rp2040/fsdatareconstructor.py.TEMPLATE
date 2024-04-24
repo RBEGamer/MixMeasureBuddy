@@ -3,7 +3,7 @@ FILE_DATA = ZLIBSTREAM
 # FOR DEBUGGING
 ALWAYS_HARD_RESTORE: bool = False
 
-RESTORE_IGNORED_FILES_LIST = ['static_modules', 'thridparty_libs', 'boot.py', 'lib']
+RESTORE_IGNORED_FILES_LIST = ['static_modules', 'thridparty_libs', 'boot.py', 'lib', 'fsdatareconstructor']
 
 def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bool = False):
     import ubinascii
