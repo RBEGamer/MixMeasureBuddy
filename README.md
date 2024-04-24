@@ -31,16 +31,9 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `cellplate.stl`
 * 1x `hinge.stl`
 * 1x `bottom.stl`
-
-#### FOR SH1106 1.3" OLED DISPLAY
-
 * 1x `display_clamp_SH1106`
 * 1x `display_mount_SH1106`
   
-#### FOR SSD1306 0.96" OlED DISPLAY
-
-* 1x `display_clamp_SSD1306`
-* 1x `display_mount_SSD1306`
 
 
 #### 3D PRINT SETTINGS
@@ -56,22 +49,28 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 ### MECHANICAL
 
-* 8x `Heat Inserts M3`
-* 3x `M5 NUT`
-* 4x `M4x10 BHCS`
-* 4x `M3x10 BHCS`
-* 3x `M5x60 SHCS`
-* 8x `Cylindrical Magnet D5 H8`
+* 3x `Heat Inserts M3` - connects `display_clamp` and `display_mount`
+* 3x `M3x10 BHCS`
+
+* 3x `Heat Inserts M3`, `Heat Inserts M4` or `Heat Inserts M5` - connects `ring` and `bottom`
+* 3x `M3x10 SHCS`, `M4x10 SHCS` or `M5x10 SHCS`
+  
+* 8x `Cylindrical Magnet D5mm H8mm`
+
+### MISC
+
+* `Super Glue` - to glue magnets into `inner_cellplate` and `cellplate`
+
 
 ### ELECTRICAL
 
 * 1x `Raspberry Pi Pico` or `Raspberry Pi Pico W`
 * 1x `LOAD CELL` with dimensions of `60x12x12mm` and at least `2kg`, for example `YZC-131`
 * 1x `HX711`
-* 1x `1.3" I2C OLED SSH1306` or `0.96" I2C OLED SSD1306`
+* 1x `1.3" I2C OLED SSH1306`
 * 1x `Encoder` e.g. `KY-040`
-* 60cm `WS2812 Strip`
-* Jumperwires
+* 50cm `WS2812` strip
+* Jumperwires - > 12x `male-male`, > 10x `male-female`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
 
 
