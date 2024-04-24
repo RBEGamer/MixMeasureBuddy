@@ -7,7 +7,7 @@ CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE: float = -1.0 # if the scale measurement 
 CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT:float = 50.0 # Xg more on scale to trigger next step in recipe => 1/3 weight of a typical glass
 CFG_USER_LONG_BUTTON_PRESS_TIME: int = 700 # time to regsiter a long button press in ms
 
-CFG_NEOPIXEL_LED_COUNT: int = 32 #60 how many leds for the ring are used
+CFG_NEOPIXEL_LED_COUNT: int = 26 #32 #60 how many leds for the ring are used
 CFG_NEOPIXEL_LED_START_OFFSET: int = (CFG_NEOPIXEL_LED_COUNT/2) # MAX CFG_NEOPIXEL_LED_COUNT TO ROTATE THE STARTPOINT
 CFG_NEOPIXEL_MAX_BRIGHTNESS: float = 0.8 # max led brighness modifier 0.0 - 1.0
 
@@ -31,7 +31,7 @@ CFG_EDITOR_HTTP_PORT: int = 80 # WEBSERVER PORT FOR THE ONLINE EDITOR
 # NEOPIXEL RING
 CFG_NEOPIXEL_PIN: int = 28
 # BUTTONS
-CFG_BUTTON_LEFT_PIN: int = 6 #22
+CFG_BUTTON_LEFT_PIN: int = 3 #22
 CFG_BUTTON_RIGHT_PIN: int = 2
 # HX711 MODULE
 CFG_HX711_DOUT_PIN: int = 5
