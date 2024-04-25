@@ -72,7 +72,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 50cm `WS2812` strip
 * Jumperwires - > 12x `male-male`, > 10x `male-female`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
-* [OPTIONAL] `SPI Reader Micro Speicher SD TF Karte Memory Card Shield Modul`
+* [OPTIONAL] `SPI SD TF Karte Memory Card Shield Modul`
 
 
 
@@ -138,11 +138,36 @@ If you want to build the software yourself from source or add modifications, ple
 
 # USAGE
 
+Once the hardware has been set up and the software has been flashed to the microcontroller, the system can be set up for the first time.
+The basic operation and calibration of the system is described below.
+
 ## MENU NAVIGATION
+
+After switching on the power supply, e.g. via a power bank, the main menu appears on the display immediately after the logo screen.
+Navigation in the system is very easy thanks to the rotary encoder. 
+The right and left rotation of the encoder can be used to scroll through the separate menu entries.
+If you want to enter / activate a menu item, simply press the button on the encoder.
+To exit a menu/recipe, the encoder button must be held down for at least half a second.
 
 ## CALIBRATION
 
+If the scales menu or a recipe is now called up. The weighing results can deviate significantly from reality.
+This is due to the installation direction of the load cell, its mounting and other factors.
+The menu item `CALIBRATION` is provided for this purpose.
+For this process, the scale is measured with and without weight and the corresponding correction factors are determined.
 
+A known weight is therefore required. This can be a glass of water, for example, which has previously been measured with a kitchen scale.
+
+After starting the calibration routine, the user is guided through the following steps one after the other:
+
+* Measure empty scale
+* User enters weight of calibration object
+* User places calibration object on scale
+* User removes calibration object if shown by display
+
+**NOTE** If the scales light up red, please do not move them.
+
+## RUN A RECIPE
 
 
 ## ADDING CUSTOM RECIPES
