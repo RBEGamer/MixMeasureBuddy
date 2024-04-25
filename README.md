@@ -1,4 +1,4 @@
-# CocktailScaler
+# MixMeasureBuddy
 
 ![mixmeasurebuddy](./documentation/images/cropped_A003_11281139_S044.jpg)
 
