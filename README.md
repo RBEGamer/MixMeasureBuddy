@@ -167,6 +167,8 @@ After starting the calibration routine, the user is guided through the following
 
 **NOTE** If the scales light up red, please do not move them.
 
+**NOTE** The IKEA POKAL glass has a weight of 390g (empty)
+
 ## RUN A RECIPE
 
 
