@@ -72,7 +72,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 50cm `WS2812` strip
 * Jumperwires - > 12x `male-male`, > 10x `male-female`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
-
+* [OPTIONAL] `SPI Reader Micro Speicher SD TF Karte Memory Card Shield Modul`
 
 
 
@@ -90,6 +90,20 @@ The display, `LEDs` and the encoder(-module) are connected with longer cables so
 
 The circuit diagram was created in the Fritzing software. The project can be found under `documenation/schematic/`.
 After the function of all parts has been tested, the connections on the breadboard should be fixed with hot glue so that they do not come loose during transportation.
+
+### [OPTIONAL] SD CARD READER
+
+It is possible to connect an additional SD card reader. This makes it possible to save the recipes on an SD card.  
+Please connect the SD card reader to the following pins on the `Raspberry Pi Pico`:
+
+| Raspberry Pi Pico GPIO | SD CARD MODULE GPIO |
+|------------------------|---------------------|
+| VCC (Pin 36)           | 3v3 OUT / VCC       |
+| GND (Pin 18)           | GND                 |
+| 10                     | SCK                 |
+| 8                      | MISO                |
+| 11                     | MOSI                |
+| 9                      | CS                  |
 
 ## MECHANICAL BUILD
 
