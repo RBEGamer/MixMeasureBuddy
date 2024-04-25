@@ -116,7 +116,72 @@ The microcontroller firmware of the `Raspberry Pi Pico` was created in micropyth
 The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
 The program `Thonny` can be used to adapt the software directly on the scale.
 
-## BUILD FIRMWARE IMAGE
+### STRUCTURE
+
+The entry point of the software is in the `main.py`, which is called by the custom pre-boot script `boot.py`. The general configuration of the hardware (e.g. which pins the buttons are connected to) is done in the `config.py` file.
+
+The control of the hardware components is done in the files:
+
+* `ui.py` - UI system + display control
+* `ledring.py` - LED effects for the LED ring
+* `Scales.py` - readout of the HX711
+* `settings.py`- filesystem access for writing/reading recipe files and settings
+
+All these classes can be easily called from all other scripts using the singleton pattern. This makes integration very simple and uniform:
+
+```python
+import ledring
+import ui
+import Scale
+# CLEAR DISPLAY
+ui().clear()
+# SET LED RING
+ledring().set_neopixel_full_hsv(ledring().COLOR_PRESET_HSV_H__BLUE)
+# GET CURRENT SCALE MEASUREMENT
+ScaleInterface().get_current_weight()
+```
+
+The individual menus are designed as a plug-in system. This allows you to quickly create your own extensions.
+The plugins are designated in the system with the prefix `menu_entry_*.py` and the functions are derived from the base class `menu_entry.py`.
+This consists of an `activate`, `teardown` and `update` function, which are called accordingly when the corresponding menu entry is called.
+
+```python
+class menu_entry_MyPlugin(menu_entry.menu_entry):
+
+    def __init__(self):
+        super().__init__("INFO", "Have a nice day :)")
+
+    def preview(self):
+        print("preview {}".format(self.name))
+        ui().show_recipe_information(self.name, self.description)
+
+
+    def activate(self):
+        print("activate {}".format(self.name))
+        ui().show_titlescreen()
+
+
+    def teardown(self):
+        print("teardown {}".format(self.name))
+
+
+    def update(self, _system_command: system_command.system_command):
+    # REACT TO SYSTEM EVENTS, SEE system_commands.py
+        if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
+                menu_manager().exit_current_menu()
+           
+```
+
+
+To add the plugin, import the module in `main.py` and add the class into the menu tree:
+
+```python
+from menu_entry_MyPlugin import menu_entry_MyPlugin
+menu_manager.menu_manager().add_subentries(menu_entry_MyPlugin.menu_entry_MyPlugin())
+```
+
+
+### BUILD FIRMWARE IMAGE
 
 To create a finished and complete firmware image, the folder `src/firmware_rp2040` contains a bash script which creates the images using `Docker` for the `Raspberry Pi Pico` and `Raspberry Pi Pico W` and the required boot configurations.
 
