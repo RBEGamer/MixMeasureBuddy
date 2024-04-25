@@ -117,6 +117,75 @@ A new removable disk will then appear on the `PC`. The `firmware.uf2` is then co
 The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
 
 
+## ADDING CUSTOM RECIPES
+
+There are two ways to create a new recipe manually:
+
+### BY USING recipe.py CLASS
+
+```python
+# SEE example_recipes.py FOR FURTHER / DETAILED EXAMPLES
+import recipe
+
+ts: recipe.recipe = recipe.recipe("Tequila Sunrise", "A nice Tequila Sunrise Cocktail", "1.0.0", ["Tequila"])
+# ADD A SCALE STEP: ADD x g TO THE GLASS
+ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="White Tequila", _current_step_text="", _target_value = 10))
+# ADD A SCALE STEP: ADD x g TO THE GLASS
+ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Orange Juice", _current_step_text="", _target_value = 120))
+# ADD CONFIRM STEP: ADD ICE AND CONFIRM WITH A BUTTON PRESS
+ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.CONFIRM, _ingredient_name="Ice", _current_step_text="Add Ice", _target_value = -1))
+# ADD A SCALE STEP: ADD x g TO THE GLASS
+ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Grenadine", _current_step_text="", _target_value = 40))
+# ADD A WAIT STEP:  WAIT x SECONDS
+ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.WAIT, _ingredient_name="", _current_step_text="Wait for settle down", _target_value = 10))
+
+
+# EXPORT THE RECIPES AS JSON BASE .RECIPE FILE
+
+# THEN ITS POSSIBLE TO COPY OVER THE .RECIPE FILE TO THE SCALE
+
+```
+
+
+
+### CREATEING A JSON BASED .recipe FILE
+
+```json
+{
+    "filename": "Tequila_Sunrise.recipe",
+    "name": "Tequila Sunrise",
+    "steps": [{
+        "text": "",
+        "ingredient": "White Tequila",
+        "amount": 10,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Orange Juice",
+        "amount": 120,
+        "action": 0
+    }, {
+        "text": "Add Ice",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Grenadine",
+        "amount": 40,
+        "action": 0
+    }, {
+        "text": "Wait for settle down",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+    }],
+    "description": "A nice Tequila Sunrise Cocktail",
+    "version": "1.0.0"
+}
+
+```
+
 ## DEVELOPMENT
 
 The microcontroller firmware of the `Raspberry Pi Pico` was created in micropython and is automatically created with the pre-built image. 
