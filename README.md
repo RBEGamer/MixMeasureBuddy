@@ -123,13 +123,26 @@ To fix accuracy issues on several `HX711` boards, two addional resistors are nee
 Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
 
 
-# SOFTWARE BUILD
+# SOFTWARE INSTALLATION
 
 Please check the `Releases` page of this repository for prebuild firmware archives.
 
 To initially flash the software to the `Raspberry Pi Pico`, the `BOOT` button must first be held down when plugging in the `USB` cable.
 A new removable disk will then appear on the `PC`. The `firmware.uf2` is then copied to this.
 The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
+
+If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
+
+
+
+
+# USAGE
+
+## MENU NAVIGATION
+
+## CALIBRATION
+
+
 
 
 ## ADDING CUSTOM RECIPES
@@ -163,7 +176,7 @@ example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.
 
 
 # EXPORT THE RECIPES AS JSON BASE .RECIPE FILE
-with open("recipe_folder/recipe.recipe, "w") as file:
+with open("recipe.recipe, "w") as file:
   file.write(json.dumps(example_recipe.to_dict()))
 # THEN ITS POSSIBLE TO COPY OVER THE .RECIPE FILE TO THE SCALE
 
@@ -210,13 +223,20 @@ with open("recipe_folder/recipe.recipe, "w") as file:
 
 The created `.recipe` file can be transferred using `Thonny`
 
-## DEVELOPMENT
+
+
+
+
+
+
+
+# SOFTWARE DEVELOPMENT
 
 The microcontroller firmware of the `Raspberry Pi Pico` was created in micropython and is automatically created with the pre-built image. 
 The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
 The program `Thonny` can be used to adapt the software directly on the scale.
 
-### STRUCTURE
+## STRUCTURE
 
 The entry point of the software is in the `main.py`, which is called by the custom pre-boot script `boot.py`. The general configuration of the hardware (e.g. which pins the buttons are connected to) is done in the `config.py` file.
 
@@ -294,7 +314,7 @@ menu_manager.menu_manager().add_subentries(menu_entry_MyPlugin.menu_entry_MyPlug
 ```
 
 
-### FIRMWARE IMAGE
+## FIRMWARE IMAGE
 
 To create a finished and complete firmware image, the folder `src/firmware_rp2040` contains a bash script which creates the images using `Docker` for the `Raspberry Pi Pico` and `Raspberry Pi Pico W` and the required boot configurations.
 
@@ -305,7 +325,7 @@ $ bash ./build_firmware_docker.sh
 # RESULTS ARE LOCATED IN THE build FOLDER
 ```
 
-### BUILD SYSTEM BACKGROUND
+## BUILD SYSTEM BACKGROUND
 
 One problem was how to build and distribute the Micropython images automatically via e.g. GitHub.
 The way documented by Micropython does not allow the user to change the code and data after building the u2f, because they are permanently written to the flash (static/lib) fodlers.
