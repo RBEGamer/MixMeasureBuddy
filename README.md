@@ -119,6 +119,13 @@ The microcontroller will then restart and the MixMeasureBuddy logo should appear
 
 ## ADDING CUSTOM RECIPES
 
+A recipe in the context of the MixMeasureBuddy consists of a JSON object in a .recipe file. This contains meta data such as the name and description of the recipe as well as a series of instructions that the user should execute to complete the recipe. The following instruction types can be used for this purpose:
+
+* SCALE - Weigh until x grams reached
+* WAIT - Wait x seconds
+* CONFIRM - Confirm that it has been done.
+
+
 There are two ways to create a new recipe manually:
 
 ### BY USING recipe.py CLASS
