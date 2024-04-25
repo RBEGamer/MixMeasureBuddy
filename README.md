@@ -116,4 +116,20 @@ The microcontroller firmware of the `Raspberry Pi Pico` was created in micropyth
 The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
 The program `Thonny` can be used to adapt the software directly on the scale.
 
+## BUILD FIRMWARE IMAGE
 
+To create a finished and complete firmware image, the folder `src/firmware_rp2040` contains a bash script which creates the images using `Docker` for the `Raspberry Pi Pico` and `Raspberry Pi Pico W` and the required boot configurations.
+
+```bash
+# INSTALL AND RUN DOCKER https://docs.docker.com/engine/install/
+$ cd src/firmware_rp2040
+$ bash ./build_firmware_docker.sh
+# RESULTS ARE LOCATED IN THE build FOLDER
+```
+
+### BUILD SYSTEM BACKGROUND
+
+One problem was how to build and distribute the Micropython images automatically via e.g. GitHub.
+The way documented by Micropython does not allow the user to change the code and data after building the u2f, because they are permanently written to the flash (static/lib) fodlers.
+That's why the complicated build process was created using a Docker image that installs a pre application boot procedure, so that the user source code to the Python file system during the first boot.
+This way, functions can be easily added/modified by the user and at the same time the finished software can be easily distributed.
