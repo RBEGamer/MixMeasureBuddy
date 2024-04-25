@@ -183,8 +183,9 @@ ts.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.WAIT, _ingre
     "description": "A nice Tequila Sunrise Cocktail",
     "version": "1.0.0"
 }
-
 ```
+
+The created `.recipe` file can be transferred using `Thonny`
 
 ## DEVELOPMENT
 
