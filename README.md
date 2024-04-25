@@ -106,6 +106,11 @@ Please connect the SD card reader to the following pins on the `Raspberry Pi Pic
 | 9                      | CS                  |
 
 No further software changes are needed later on. The systems firmware detects the connected SD card automatically.
+
+### [OPTIONAL] BATTERY EXPANSION
+
+The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on. In oder 
+
 ## MECHANICAL BUILD
 
 ### DISPLAY MOUNT
