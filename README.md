@@ -93,7 +93,14 @@ After the function of all parts has been tested, the connections on the breadboa
 
 ## MECHANICAL BUILD
 
+### DISPLAY MOUNT
 
+
+### ELECTRONICS BAY
+
+### LOAD CELL
+
+### FINAL ASSEMBLY
 
 ## NOTES
 
@@ -181,7 +188,7 @@ menu_manager.menu_manager().add_subentries(menu_entry_MyPlugin.menu_entry_MyPlug
 ```
 
 
-### BUILD FIRMWARE IMAGE
+### FIRMWARE IMAGE
 
 To create a finished and complete firmware image, the folder `src/firmware_rp2040` contains a bash script which creates the images using `Docker` for the `Raspberry Pi Pico` and `Raspberry Pi Pico W` and the required boot configurations.
 
