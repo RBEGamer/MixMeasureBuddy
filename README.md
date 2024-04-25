@@ -105,6 +105,7 @@ Please connect the SD card reader to the following pins on the `Raspberry Pi Pic
 | 11                     | MOSI                |
 | 9                      | CS                  |
 
+No further software changes are needed later on. The systems firmware detects the connected SD card automatically.
 ## MECHANICAL BUILD
 
 ### DISPLAY MOUNT
