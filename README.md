@@ -156,26 +156,39 @@ This consists of an `activate`, `teardown` and `update` function, which are call
 class menu_entry_MyPlugin(menu_entry.menu_entry):
 
     def __init__(self):
-        super().__init__("INFO", "Have a nice day :)")
-
+        super().__init__("MyPlugin", "My nice plugin")
+    # WILL BE CALLED IF USER SELECTS PLUGIN
     def preview(self):
         print("preview {}".format(self.name))
         ui().show_recipe_information(self.name, self.description)
-
-
+    
+    # WILL BE CALLED IF USER ACTIVATES PLUGIN
+    # E.G. DO SETUP STUFF
     def activate(self):
         print("activate {}".format(self.name))
         ui().show_titlescreen()
 
-
+    # WILL BE CALLED IF USER EXISTS PLUGIN
+    # E.G. DELETE RESOURCES
     def teardown(self):
         print("teardown {}".format(self.name))
 
-
+    # WILL BE CALLED IF A USER PRESSES A BUTTON, EVERY SECOND OR IF THE WEIGHT ON LOAD CELL CHANGES
     def update(self, _system_command: system_command.system_command):
-    # REACT TO SYSTEM EVENTS, SEE system_commands.py
+        
         if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
-                menu_manager().exit_current_menu()
+            if _system_command.action == system_command.system_command.NAVIGATION_ENTER: #  OK BUTTON
+                pass
+            elif _system_command.action == system_command.system_command.NAVIGATION_LEFT: # NEXT BUTTON
+                pass
+            elif _system_command.action == system_command.system_command.NAVIGATION_RIGHT: # PREV BUTTON
+                pass
+
+      elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE:
+            print("CURRENT WEIGHT: {}".format(_system_command.value))
+
+      elif _system_command.type == system_command.system_command.COMMAND_TYPE_TIMER_IRQ:
+            print("ELAPSED TIME SINCE LAST CALL: {}".format(_system_command.value))
            
 ```
 
