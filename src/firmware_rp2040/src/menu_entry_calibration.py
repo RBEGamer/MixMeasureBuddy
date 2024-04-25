@@ -26,7 +26,8 @@ class menu_entry_calibration(menu_entry.menu_entry):
 
     calibration_value_empty: float = 0.0
     calibration_value_full: float = 0.0
-    calibration_weight_weight: float = min(config.CFG_CALIBRATION_WEIGHT_WEIGHT, MIN_CALIBRATION_WEIGHT)
+    calibration_value_invert: float = 1.0
+    calibration_weight_weight: float = max(config.CFG_CALIBRATION_WEIGHT_WEIGHT, MIN_CALIBRATION_WEIGHT)
 
     def __init__(self):
         super().__init__("CALIBRATION", "Calibrate system scale")
@@ -48,7 +49,8 @@ class menu_entry_calibration(menu_entry.menu_entry):
         # RESET MEASURED VALUES
         self.calibration_value_empty = 0.0
         self.calibration_value_full = 0.0
-        self.calibration_weight_weight = min(config.CFG_CALIBRATION_WEIGHT_WEIGHT, self.MIN_CALIBRATION_WEIGHT)
+        self.calibration_value_invert = 1.0
+        self.calibration_weight_weight = max(config.CFG_CALIBRATION_WEIGHT_WEIGHT, self.MIN_CALIBRATION_WEIGHT)
 
 
     def teardown(self):
@@ -72,9 +74,11 @@ class menu_entry_calibration(menu_entry.menu_entry):
 
                 self.calibration_value_empty = self.calibration_value_empty /self.MEASUREMENT_AVERAGING_POINTS
                 ui().show_recipe_information("FIRST RUN DONE", "RAW_VALUE:{}".format(self.calibration_value_empty))
-                time.sleep(2)
+                time.sleep(1)
                 self.menu_state = self.MENU_STATE_FULL_PLATE_INIT
-                ui().show_msg("Press ok to enter calibration weight weight")
+                ui().clear()
+                ui().show_recipe_information("SET REFERENCE WEIGHT", "\n\n {}g".format(self.calibration_weight_weight))
+
                 ledring().set_neopixel_full(0, 0, 10)
 
 
@@ -115,19 +119,48 @@ class menu_entry_calibration(menu_entry.menu_entry):
                         time.sleep(0.5)
 
                     self.calibration_value_full = self.calibration_value_full /self.MEASUREMENT_AVERAGING_POINTS
-                    ui().show_recipe_information("SECOND RUN DONE", "RAW_VALUE:{}/{}".format(self.calibration_value_empty, self.calibration_value_full))
+                    ui().show_recipe_information("SECOND RUN", "RAW_VALUE:{}/{}".format(self.calibration_value_empty, self.calibration_value_full))
                     time.sleep(2)
                     self.menu_state = self.MENU_STATE_FULL_PLATE_INIT
+                    # DETERM THE LOADCELL ORIENTATION
+                    
+                    self.calibration_value_invert = 1.0
+                    settings.settings().save_scale_calibration_values(self.calibration_value_empty, self.calibration_value_full, self.calibration_weight_weight, self.calibration_value_invert)
+                    ScaleInterface().reload_calibration()
+                    calibrated_measurement: float = 0.0
+                    # FIRST READ x DUMMY READS THEN USE THE LEFT OVER TO CALCULATE FINAL ADDITIONAL OFFSET
+                    for i in range(self.MEASUREMENT_AVERAGING_POINTS):
+                        ledring().set_neopixel_percentage(i/(self.MEASUREMENT_AVERAGING_POINTS))
+                        ScaleInterface().get_untared_weight()
+
+                    ledring().set_neopixel_full(50, 0, 0)
+                    time.sleep(1.0)
+                    cw: float = 0.0
+                    for i in range(self.MEASUREMENT_AVERAGING_POINTS):
+                        ledring().set_neopixel_percentage(i/(self.MEASUREMENT_AVERAGING_POINTS*1.0))        
+                        cw = ScaleInterface().get_untared_weight()
+                        ui().show_recipe_information("THRID RUN", "CURRENT WEIGHT: {} {}".format(cw, calibrated_measurement))     
+                        calibrated_measurement += cw 
+
+
+                    calibrated_measurement = (calibrated_measurement / self.MEASUREMENT_AVERAGING_POINTS)
+                    if calibrated_measurement <= 0.0:
+                        self.calibration_value_invert = -1.0
+                    else:
+                        self.calibration_value_invert = 1.0
+                    #self.calibration_value_invert = self.calibration_weight_weight / calibrated_measurement
+                    ui().show_recipe_information("THRID RUN", "INVERT_FACTOR: {} - {}".format(self.calibration_value_invert, calibrated_measurement))
+                    time.sleep(2)
                     ui().show_msg("SAVE CALIBRATION")
                     ledring().set_neopixel_full(0, 0, 10)
 
                     # SAVE CALIBRATION TO FILE
-                    if self.calibration_value_empty > self.calibration_value_full:
-                       t: float = self.calibration_value_empty
-                       self.calibration_value_empty = self.calibration_value_full
-                       self.calibration_value_full = t
+                    #if self.calibration_value_empty > self.calibration_value_full:
+                    #   t: float = self.calibration_value_empty
+                    #   self.calibration_value_empty = self.calibration_value_full
+                    #   self.calibration_value_full = t
 
-                    settings.settings().save_scale_calibration_values(self.calibration_value_empty, self.calibration_value_full, self.calibration_weight_weight)
+                    settings.settings().save_scale_calibration_values(self.calibration_value_empty, self.calibration_value_full, self.calibration_weight_weight, self.calibration_value_invert)
                     #LOAD NEW CALIBRAION FACTOR IN
                     ScaleInterface().reload_calibration()
                     # LEAVE MENU

@@ -22,5 +22,12 @@ def EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA() -> recipe.recipe:
     sc.valid = True
     return sc
 
+def EXAMPLE_RECIPES_COLLECTION_WINE() -> recipe.recipe:
+    sc: recipe.recipe = recipe.recipe("Wine", "Just a bottle of wine", "1.0.0", ["Wine"])
+
+    sc.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Wine", _current_step_text="Add", _target_value = 120))
+    sc.valid = True
+    return sc
+
 def GET_EXAMPLE_RECIPES_COLLECTION() -> list[recipe.recipe]:
-    return [EXAMPLE_RECIPES_COLLECTION_TEQUILA_SUNRISE(), EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA()]
+    return [EXAMPLE_RECIPES_COLLECTION_TEQUILA_SUNRISE(), EXAMPLE_RECIPES_COLLECTION_STRAWBERRY_COLADA(), EXAMPLE_RECIPES_COLLECTION_WINE()]

@@ -129,10 +129,6 @@ class menu_entry_recipe(menu_entry.menu_entry):
             self.tare_scale()
             self.current_recipe_step, self.is_end_step = self.loaded_recipe.get_current_recipe_step()
 
-            # CHECK IF LAST STEP
-            if self.is_end_step:
-                self.recipe_state = self.RECIPE_END
-                return
             self.recipe_state = self.RECIPE_RUNNING
 
             if self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.SCALE:

@@ -7,13 +7,14 @@ import os
 from singleton import singleton
 
 class SETTINGS_ENTRIES(object):
-    SCALE_CALIBRATION_MIN_VALUE = "scale_min"
-    SCALE_CALIBRATION_MAX_VALUE = "scale_full"
-    SCALE_CALIBRATION_CALIBRATION_WEIGHT = "scale_weight"
-
-    NETWORK_WIFI_SSID = "wifi_ssid"
-    NETWORK_WIFI_PSK = "wifi_psk"
-    NETWORK_API_ENPOINT = "api_enpoint"
+    SCALE_CALIBRATION_MIN_VALUE: str = "scale_min"
+    SCALE_CALIBRATION_MAX_VALUE: str = "scale_full"
+    SCALE_CALIBRATION_CALIBRATION_WEIGHT: str = "scale_weight"
+    SCALE_CALIBRATION_CALIBRATION_WEIGHT: str = "scale_weight"
+    SCALE_CALIBRATION_CALIBRATION_INVERT: str = "scale_invert_factor"
+    NETWORK_WIFI_SSID: str = "wifi_ssid"
+    NETWORK_WIFI_PSK: str = "wifi_psk"
+    NETWORK_API_ENPOINT: str = "api_enpoint"
 
 
 
@@ -81,6 +82,13 @@ class settings(object):
 
         if self.get_settings_entry(SETTINGS_ENTRIES.NETWORK_API_ENPOINT) is None:
             self.set_settings_entry(SETTINGS_ENTRIES.NETWORK_API_ENPOINT, config.CFG_NETWORK_API_ENDPOINT)
+
+
+        if self.get_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_INVERT) is None:
+            self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_INVERT, config.CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE)
+        
+
+
         
 
 
@@ -139,27 +147,31 @@ class settings(object):
     ################ SPECIFIC SETTINGS LOADING FUCTIONS ####################################################
 
 
-    def save_scale_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float, _scale_calibration_weight_weight: float = config.CFG_CALIBRATION_WEIGHT_WEIGHT):
+    def save_scale_calibration_values(self, _scale_calibration_0g: float, _scale_calibration_50g: float, _scale_calibration_weight_weight: float = config.CFG_CALIBRATION_WEIGHT_WEIGHT, _scale_invert_factor: float = config.CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE):
         self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MIN_VALUE, _scale_calibration_0g)
         self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MAX_VALUE, _scale_calibration_50g)
         self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT, _scale_calibration_weight_weight)
+        self.set_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_INVERT, _scale_invert_factor)
 
-        print("save_scale_calibration_values ({}-{}) / {}".format(_scale_calibration_0g, _scale_calibration_50g, _scale_calibration_weight_weight))
+    
+        print("save_scale_calibration_values ({}-{}) / {} with invert factor of: {}".format(_scale_calibration_0g, _scale_calibration_50g, _scale_calibration_weight_weight, _scale_invert_factor))
 
 
     
     def get_scale_calibration_factor(self):
-        sc_min = 0.0
+        sc_min = 3000.0
         sc_full = 5000.0
         sc_weight = config.CFG_CALIBRATION_WEIGHT_WEIGHT
+        sc_invert = config.CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE
         try:
             sc_min = float(self.get_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MIN_VALUE))
             sc_full = float(self.get_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_MAX_VALUE))
             sc_weight = float(self.get_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_WEIGHT))
+            sc_invert = float(self.get_settings_entry(SETTINGS_ENTRIES.SCALE_CALIBRATION_CALIBRATION_INVERT))
         except Exception as e:
             self.save_scale_calibration_values(sc_min, sc_full)
 
 
         calibration_factor =  (sc_min - sc_full) / sc_weight
-        print("get_scale_calibration_factor using ({}-{}) / {} = {}".format(sc_min, sc_full, sc_weight, calibration_factor))
-        return calibration_factor
+        print("get_scale_calibration_factor using ({}-{}) / {} = {} with invert factor of: {}".format(sc_min, sc_full, sc_weight, calibration_factor, sc_invert))
+        return calibration_factor * sc_invert

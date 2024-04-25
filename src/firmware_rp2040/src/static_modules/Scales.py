@@ -82,10 +82,14 @@ class ScaleInterface:
         self.scale.set_scale(1.0)
         self.scale.set_tare_value(0.0)
 
+    def set_calibration_factor(self, _factor: float):
+            self.calibration_factor: _factor
+            self.scale.set_scale(self.calibration_factor)
+
     def reload_calibration(self):
         self.calibration_factor = settings.settings().get_scale_calibration_factor()
-        print("calibration_factor {}".format(self.calibration_factor))
-        self.scale.set_scale(self.calibration_factor)
+        print("reload_calibration.calibration_factor {}".format(self.calibration_factor))
+        self.set_calibration_factor(self.calibration_factor)
 
     def get_untared_weight(self) -> float:
         try:
