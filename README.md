@@ -184,11 +184,11 @@ class menu_entry_MyPlugin(menu_entry.menu_entry):
             elif _system_command.action == system_command.system_command.NAVIGATION_RIGHT: # PREV BUTTON
                 pass
 
-      elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE:
-            print("CURRENT WEIGHT: {}".format(_system_command.value))
-
-      elif _system_command.type == system_command.system_command.COMMAND_TYPE_TIMER_IRQ:
-            print("ELAPSED TIME SINCE LAST CALL: {}".format(_system_command.value))
+        elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE:
+              print("CURRENT WEIGHT: {}".format(_system_command.value))
+  
+        elif _system_command.type == system_command.system_command.COMMAND_TYPE_TIMER_IRQ:
+              print("ELAPSED TIME SINCE LAST CALL: {}".format(_system_command.value))
            
 ```
 
