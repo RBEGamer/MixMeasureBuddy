@@ -73,7 +73,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * Jumperwires - > 12x `male-male`, > 10x `male-female`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
 * [OPTIONAL] `SPI SD TF Karte Memory Card Shield Modul`
-
+* [OPTIONAL] `Battery Expansion Shield 18650 V3`
 
 
 
