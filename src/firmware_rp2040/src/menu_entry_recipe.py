@@ -13,13 +13,14 @@ import config
 class menu_entry_recipe(menu_entry.menu_entry):
     RECIPE_STATE_INIT = 0
     RECIPE_STATE_OVERVIEW = 1
-    RECIPE_STATE_INITIAL_TARE = 2
-    RECIPE_RUNNING_INIT = 3
-    RECIPE_RUNNING_GET_CURRENT_STEP = 4
-    RECIPE_RUNNING_GET_NEXT_STEP = 5
-    RECIPE_RUNNING = 6
-    RECIPE_END_CHECK = 7
-    RECIPE_END = 8
+    RECIPES_STATE_DRINK_MULTIPLIER = 2
+    RECIPE_STATE_INITIAL_TARE = 3
+    RECIPE_RUNNING_INIT = 4
+    RECIPE_RUNNING_GET_CURRENT_STEP = 5
+    RECIPE_RUNNING_GET_NEXT_STEP = 6
+    RECIPE_RUNNING = 7
+    RECIPE_END_CHECK = 8
+    RECIPE_END = 9
 
 
    
@@ -30,6 +31,7 @@ class menu_entry_recipe(menu_entry.menu_entry):
     recipe_state: int = RECIPE_STATE_OVERVIEW
     current_recipe_step: recipe.recipe_step = None
     is_end_step: bool = False
+    drink_multiplier: int = 1
 
     def __init__(self, _recipe_filename: str, _recipe_name: str, _recipe_desciption: str):
         super().__init__(_recipe_name, _recipe_desciption)
@@ -97,9 +99,29 @@ class menu_entry_recipe(menu_entry.menu_entry):
         # IF USER IS IN OVERVIEW SCREEN SWITCH TO FIRST RECIPE STEP IF USER PRESSED OK
         elif self.recipe_state == self.RECIPE_STATE_OVERVIEW:
             if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
-                ui().show_msg("Please place glass and press ok to begin")
-                self.recipe_state = self.RECIPE_STATE_INITIAL_TARE
+                ui().show_recipe_ingredients("DRINK QUANTITY","{}x".format(self.drink_multiplier))
+                self.recipe_state = self.RECIPES_STATE_DRINK_MULTIPLIER
             
+            elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
+                self.last_scale_value = _system_command.value
+
+        elif self.recipe_state == self.RECIPES_STATE_DRINK_MULTIPLIER:
+
+            
+            if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
+                if _system_command.action == system_command.system_command.NAVIGATION_ENTER:
+                    ui().show_msg("Please place glass and press ok to begin")
+                    self.drink_multiplier = max(1, self.drink_multiplier)
+                    self.recipe_state = self.RECIPE_STATE_INITIAL_TARE
+
+                elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_LEFT:
+                    self.drink_multiplier = self.drink_multiplier - 1
+                    self.drink_multiplier = max(1, self.drink_multiplier)
+
+                elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
+                    self.drink_multiplier = self.drink_multiplier + 1
+
+                ui().show_recipe_ingredients("DRINK QUANTITY","{}x".format(self.drink_multiplier))
             elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
                 self.last_scale_value = _system_command.value
 
@@ -128,11 +150,14 @@ class menu_entry_recipe(menu_entry.menu_entry):
         
             self.tare_scale()
             self.current_recipe_step, self.is_end_step = self.loaded_recipe.get_current_recipe_step()
-
+            
             self.recipe_state = self.RECIPE_RUNNING
 
             if self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.SCALE:
                 ui().show_recipe_step("ADD", self.current_recipe_step.ingredient_name)
+                self.current_recipe_step.target_value = self.current_recipe_step * self.drink_multiplier
+            elif self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.CONFIRM:
+                self.current_recipe_step.target_value = self.current_recipe_step * self.drink_multiplier
             elif self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.WAIT or self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.CONFIRM:
                 ui().show_recipe_step(self.current_recipe_step.current_step_text, self.current_recipe_step.ingredient_name)
             else:
@@ -176,11 +201,10 @@ class menu_entry_recipe(menu_entry.menu_entry):
         # TODO REWORK
         elif self.recipe_state == self.RECIPE_END_CHECK:
             self.recipe_state = self.RECIPE_RUNNING_GET_NEXT_STEP
-
             # CHECK IF LAST STEP
             if self.is_end_step:
                 self.recipe_state = self.RECIPE_END
-
+        # SHOW END SCREEN
         elif self.recipe_state == self.RECIPE_END:
             ui().show_msg("ENJOY")
             ledring().set_neopixel_full_hsv(ledring().COLOR_PRESET_HSV_H__GREEN)

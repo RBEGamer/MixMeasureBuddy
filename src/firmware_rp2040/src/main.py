@@ -23,17 +23,18 @@ from ui import ui
 import settings
 import menu_manager
 # PLUGINS
+import menu_entry_submenu
 import menu_entry_recipe_update
 import menu_entry_recipe_editor
 import menu_entry_scale
-import menu_entry_info
+import static_modules.menu_entry_info as menu_entry_info
 import menu_entry_recipe
 import menu_entry_hardwaretest
 import menu_entry_calibration
-import menu_entry_restore
+import static_modules.menu_entry_restore as menu_entry_restore
 
 
-TIME_ELAPED_DIVIDOR: int = 2
+TIME_ELAPSED_DIVIDER: int = 2
 print("main: __entry__")
 
 BUTTON_INDEX_LEFT = 0
@@ -134,21 +135,26 @@ if __name__ == "__main__":
         # name description are only used for menu entries, recipe will be loaded again by filename
         menu_manager.menu_manager().add_subentries(menu_entry_recipe.menu_entry_recipe(filename, name, description))
 
-    # ADD OTHER MENUS
-    menu_manager.menu_manager().add_subentries(menu_entry_calibration.menu_entry_calibration())
-
     
-    # ADD EACH RECIPE AS SEPARATE MENU
-    if recipe_updater.recipe_update_helper.has_network_capabilities():
-        menu_manager.menu_manager().add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
-        menu_manager.menu_manager().add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
-
+    
     # ADD FURTHER SYSTEM MENUS
     menu_manager.menu_manager().add_subentries(menu_entry_scale.menu_entry_scale())
-    menu_manager.menu_manager().add_subentries(menu_entry_info.menu_entry_info())
-    menu_manager.menu_manager().add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
-    menu_manager.menu_manager().add_subentries(menu_entry_restore.menu_entry_restore())
+
+    # ADD SYSTEM MENUS
+    system_menu: menu_entry_submenu.menu_entry_submenu = menu_entry_submenu.menu_entry_submenu("SYSTEM", "ACCESS SYSTEM SETTINGS")
+    system_menu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+    system_menu.add_subentries(menu_entry_info.menu_entry_info())
+    system_menu.add_subentries(menu_entry_restore.menu_entry_restore())
+    if config.CFG_DEBUG:
+        system_menu.add_subentries(menu_entry_hardwaretest.menu_entry_hardwaretest())
     
+    # ADD RECIPE UPDATE FUNCTIONS
+    if recipe_updater.recipe_update_helper.has_network_capabilities():
+        system_menu.add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
+        system_menu.add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
+
+
+    menu_manager.menu_manager().add_subentries(system_menu)
 
     async def main_task():
         
@@ -187,14 +193,14 @@ if __name__ == "__main__":
               
 
             # PERIODIC READ OF THE SCALE
-            if  abs(last_scale_update - helper.millis()) > (50/TIME_ELAPED_DIVIDOR):
+            if  abs(last_scale_update - helper.millis()) > (50/TIME_ELAPSED_DIVIDER):
                 last_scale_update = helper.millis()
                 # UPDATE SCALE VALUE AND SEND TO PROCESS
                 current_scale_cmd.value = ScaleInterface().get_current_weight()
                 menu_manager.menu_manager().process_system_commands(current_scale_cmd)
 
             # SYSTEM TICK TO IMPLEMENT TIMERS SUCH AS WAITING FOR X SECONDS IN RECIPES
-            if  abs(last_timer_update - helper.millis()) > (1000/TIME_ELAPED_DIVIDOR):
+            if  abs(last_timer_update - helper.millis()) > (1000/TIME_ELAPSED_DIVIDER):
                 current_timertick_cmd.value = abs(last_timer_update - helper.millis())
                 menu_manager.menu_manager().process_system_commands(current_timertick_cmd)
                 last_timer_update = helper.millis()

@@ -1,3 +1,4 @@
+CFG_DEBUG: bool = False
 # HARDWARE CONFIG STARTS HERE
 # ssd1306 = 128x64 olded with ssd1306 controller
 # sh1106 = 128x64 olded with ssh1106 controller

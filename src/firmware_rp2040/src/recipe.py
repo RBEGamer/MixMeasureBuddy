@@ -31,6 +31,9 @@ class recipe_step:
         self.current_step_text = _current_step_text
         self.target_value = _target_value
 
+        if self.target_value is None:
+            self.target_value = 0
+
     def to_dict(self) -> dict:
         return {
             'action': self.action,
@@ -46,10 +49,12 @@ class recipe_step:
             self.ingredient_name = _step_dict['ingredient']
         if 'amount' in _step_dict:
             self.target_value = _step_dict['amount']
+            
         if 'text' in _step_dict:
             self.current_step_text = _step_dict['text']
 
-
+        if self.target_value is None:
+            self.target_value = 0
 class recipe:
     
     name: str = ""
