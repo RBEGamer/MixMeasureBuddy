@@ -278,8 +278,9 @@ For installation, please refer to the installation guid on the website [INSTALL_
 
 The image shows the steps in order to connect the `MixMeasureBuddy` and access its files:
 
-* select the board
-* 
+1. Select the connected board
+2. Connect to Python REPL
+3. Add, edit, remove files using the `Files` window
 
 #### RSHELL
 
