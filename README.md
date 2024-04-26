@@ -131,6 +131,11 @@ The microcontroller will then restart and the MixMeasureBuddy logo should appear
 
 If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
 
+## SOFTWARE UPGRADE
+
+If a old version of the firmwre was already installed on the `Raspberry Pi Pico`, please flash the [flash_nuke.uf2](https://github.com/dwelch67/raspberrypi-pico/blob/main/flash_nuke.uf2) first! This clears all user settings!
+
+**NOTE** Please backup all your stored recipes first!
 
 
 ## MECHANICAL BUILD
