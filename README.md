@@ -123,12 +123,31 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 
 ### DISPLAY MOUNT
 
+![Display_Assembly](documentation/images/build_images/IMG_7374.png)
+
 The first step is to assemble the display mount. For this step the following parts are needed:
 
+* 1x `display_clamp_SH1106`
+* 1x `display_mount_SH1106`
+* 1x `Heat Inserts M3`
+* 1x `M3x10 SHCS`
 
 
-![Display_Assembly](documentation/images/build_images/IMG_7374.JPG)
 
+
+
+#### INSTRUCTIONS
+
+![Display_Assembly](documentation/images/build_images/IMG_7375.png)
+
+* Insert the `Heat Inserts M3` into the `display_mount_SH1106`
+
+![Display_Assembly](documentation/images/build_images/IMG_7376.png)
+
+* Insert the `1.3" I2C OLED SSH1306` into the `display_mount_SH1106`
+* Clamp the display into the mount using `display_clamp_SH1106`  togehter with `M3x10 SHCS`
+* Connect four `male-female` jumperwires to the display headers
+* 
 ### ELECTRONICS BAY
 
 ### LOAD CELL
