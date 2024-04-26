@@ -245,7 +245,10 @@ For this part the following parts are needed:
 
 ![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0425.png)
 
+
+**NOTE** Please connect all remaining components (`Encoder`, `Display`, ...) to the breadboard. See chapter `SCHEMATIC` again.
 **NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter.
+
 
 ### FINAL ASSEMBLY
 
@@ -261,7 +264,7 @@ The last assembly step is to add the led ring and prepare the top scale plate.
 
 #### INSTRUCTIONS
 
-**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the ``
+**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the `ring.stl`
 
 1. Solder the three `male-male` jumperwires on the `WS2812` strip
 2. Remove the protective film from the `WS2812` strip and place them into the notch of the `ring.stl`
