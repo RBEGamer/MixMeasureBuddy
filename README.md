@@ -137,7 +137,7 @@ If you want to build the software yourself from source or add modifications, ple
 
 ![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0426.png)
 
-### DISPLAY MOUNT
+### 1. DISPLAY MOUNT
 
 ![DISPLAY_MOUNT_ASSEMBLY](documentation/images/build_images/IMG_7374.png)
 
@@ -156,7 +156,7 @@ The first step is to assemble the display and its mounting together. For this st
 
  1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
 
-### PREPARE BODY
+### 2. PREPARE BODY
 
 The next step is to prepare the body parts with needed heat inserts and mount the display assembly.
 For this part the following parts are needed:
@@ -182,7 +182,7 @@ For this part the following parts are needed:
 ![BASE_WITH_DISPLAY_ASSEMBLY](documentation/images/build_images/IMG_7382.png)
 
 
-### ELECTRONICS BAY
+### 3. ELECTRONICS BAY
 
 ![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383.JPG)
 
@@ -209,7 +209,7 @@ For this part the following parts are needed:
 
 
 
-### LOAD CELL
+### 4. LOAD CELL
 
 * 2x `M3x10 BHCS`
 * 4x `M4x10 BHCS` - depends on load cell screw threads
@@ -250,7 +250,7 @@ For this part the following parts are needed:
 **NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter.
 
 
-### FINAL ASSEMBLY
+### 6. FINAL ASSEMBLY
 
 ![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0426.png)
 
