@@ -74,7 +74,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
 * [OPTIONAL] `SPI SD TF Karte Memory Card Shield Modul`
 * [OPTIONAL] `Battery Expansion Shield 18650 V3`
-
+* some small `cable ties`
 ### TOOLS
 
 * `Soldering iron`
@@ -143,6 +143,12 @@ The first step is to assemble the display and its mounting together. For this st
 
  1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
 
+![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7376.png)
+
+2. Place the `1.3" I2C OLED SSH1306 Display` into the `display_mount_SH1106` as shown in the image.
+3. Clamp the display down using the  `display_clamp_SH1106` and the `M3x10 BHCS` screw.
+4. Connect the four jumperwires `male-female` to the display headers and fix them with a bit of hotglue
+5. [OPTIONAL] Strap the jumperwires using a small cable tie
 
 
 ### ELECTRONICS BAY
