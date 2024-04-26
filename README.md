@@ -161,7 +161,7 @@ This is due to the installation direction of the load cell, its mounting and oth
 The menu item `CALIBRATION` is provided for this purpose.
 For this process, the scale is measured with and without weight and the corresponding correction factors are determined.
 
-A known weight is therefore required. This can be a glass of water, for example, which has previously been measured with a kitchen scale.
+A known weight with at least `50g` is therefore required. This can be a glass of water, for example, which has previously been measured with a kitchen scale.
 
 After starting the calibration routine, the user is guided through the following steps one after the other:
 
