@@ -123,6 +123,11 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 
 ### DISPLAY MOUNT
 
+The first step is to assemble the display mount. For this step the following parts are needed:
+
+
+
+![Display_Assembly](documentation/images/build_images/IMG_7374.JPG)
 
 ### ELECTRONICS BAY
 
