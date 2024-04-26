@@ -75,7 +75,10 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * [OPTIONAL] `SPI SD TF Karte Memory Card Shield Modul`
 * [OPTIONAL] `Battery Expansion Shield 18650 V3`
 
+### TOOLS
 
+* `Soldering iron`
+* `Hotglue`
 
 
 # HARDWARE BUILD
@@ -122,6 +125,24 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 ## MECHANICAL BUILD
 
 ### DISPLAY MOUNT
+
+![DISPLAY_MOUNT_ASSEMBLY](documentation/build_images/IMG_7374.png)
+
+The first step is to assemble the display and its mounting together. For this step the following parts are needed:
+
+* 1x `Heat Inserts M3`
+* 1x `M3x10 BHCS`
+* 1x `1.3" I2C OLED SSH1306`
+* 4x Jumperwires `male-female`
+* 1x `display_clamp_SH1106`
+* 1x `display_mount_SH1106`
+
+#### INSTRUCTIONS
+
+![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/build_images/IMG_7375.png)
+
+ 1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
+
 
 
 ### ELECTRONICS BAY
