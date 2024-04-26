@@ -49,12 +49,10 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 ### MECHANICAL
 
-* 3x `Heat Inserts M3` - connects `display_clamp` and `display_mount`
-* 3x `M3x10 BHCS`
-
-* 3x `Heat Inserts M3`, `Heat Inserts M4` or `Heat Inserts M5` - connects `ring` and `bottom`
-* 3x `M3x10 SHCS`, `M4x10 SHCS` or `M5x10 SHCS`
-  
+* 6x `Heat Inserts M3`
+* 6x `M3x10 BHCS`
+* 3x `Heat Inserts M5`
+* 3x `M5x10 SHCS`
 * 8x `Cylindrical Magnet D5mm H8mm`
 
 ### MISC
@@ -143,9 +141,58 @@ The first step is to assemble the display and its mounting together. For this st
 
  1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
 
+### PREPARE BODY
+
+The next step is to prepare the body parts with needed heat inserts and mount the display assembly.
+For this part the following parts are needed:
+
+* 1x `Heat Insert M3`
+* 1x `M3x10 BHCS`
+* 3x `Heat Insert M5`
+* 1x `DISPLAY ASSEMBLY` from previous step
+* 1x `bottom.stl`
+* 1x `hinge.stl`
+
+#### INSTRUCTIONS
+
+1. Insert the 1x `M3 Heat Insert`, 3x `M5 Heat Insert` using a soldering iron into `bottom`
+
+![BASE_WITH_HEAT_INSERTS](documentation/images/build_images/IMG_7378.png)
+
+![BASE_WITH_HEAT_INSERT_2](documentation/images/build_images/IMG_7379.png)
+
+2. Insert the `DISPLAY ASSEMBLY` as shown in picture below.
+3. Fix the `DISPLAY ASSEMBLY` using the `hinge.stl` and `M3x10 BHCS` screw into the `M3 Heat Insert`
+
+![BASE_WITH_DISPLAY_ASSEMBLY](documentation/images/build_images/IMG_7382.png)
 
 
 ### ELECTRONICS BAY
+
+![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383.JPG)
+
+* 4x `Heat Insert M3`
+* 4x `M3x10 BHCS`
+* 1x `breadboard_mount.stl`
+* [OPTIONAL] `Battery Expansion Shield 18650 V3`
+* 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
+
+#### INSTRUCTIONS
+
+1. Insert the 2x `M3 Heat Insert` into the side of the `breadboard_mount.stl`
+2. [OPTIONAL] Screw the `Battery Expansion Shield 18650 V3` into the side
+
+![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7385.png)
+
+3. Insert the 2x `M3 Heat Insert` into the top of the `breadboard_mount.stl`
+
+![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383_copped.png)
+
+3. Remove the protective film from the breadboard bottom side and place it ontop `breadboard_mount.stl`
+
+![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7401.png)
+
+
 
 ### LOAD CELL
 
