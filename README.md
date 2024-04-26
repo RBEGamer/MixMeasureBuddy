@@ -27,15 +27,13 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 * 1x `ring.stl`
 * 1x `breadboard_mount.stl`
-* * 1x `inner_cellplate.stl`
+* 1x `inner_cellplate.stl`
 * 1x `cellplate.stl`
 * 1x `hinge.stl`
 * 1x `bottom.stl`
 * 1x `display_clamp_SH1106`
 * 1x `display_mount_SH1106`
   
-
-
 #### 3D PRINT SETTINGS
 
 * Layer height: `0.2` - `0.3`mm
@@ -51,6 +49,7 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 * 6x `Heat Inserts M3`
 * 6x `M3x10 BHCS`
+* 4x `M4x10 BHCS` - depends on load cell screw threads
 * 3x `Heat Inserts M5`
 * 3x `M5x10 SHCS`
 * 8x `Cylindrical Magnet D5mm H8mm`
@@ -58,7 +57,6 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 ### MISC
 
 * `Super Glue` - to glue magnets into `inner_cellplate` and `cellplate`
-
 
 ### ELECTRICAL
 
@@ -68,16 +66,15 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `1.3" I2C OLED SSH1306`
 * 1x `Encoder` e.g. `KY-040`
 * 50cm `WS2812` strip
-* Jumperwires - > 12x `male-male`, > 10x `male-female`
+* Jumperwires  >12x `male-male`, >10x `male-female`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
 * [OPTIONAL] `SPI SD TF Karte Memory Card Shield Modul`
 * [OPTIONAL] `Battery Expansion Shield 18650 V3`
 
 ### TOOLS
 
-* `Soldering iron`
+* `Soldering Iron`
 * `Hotglue`
-
 
 # HARDWARE BUILD
 
@@ -91,6 +88,11 @@ The display, `LEDs` and the encoder(-module) are connected with longer cables so
 
 The circuit diagram was created in the Fritzing software. The project can be found under `documenation/schematic/`.
 After the function of all parts has been tested, the connections on the breadboard should be fixed with hot glue so that they do not come loose during transportation.
+
+## NOTES
+
+To fix accuracy issues on several `HX711` boards, two addional resistors are needed.
+Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
 
 ### [OPTIONAL] SD CARD READER
 
@@ -119,8 +121,21 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 | GND                    | GND               |
 
 
+# SOFTWARE INSTALLATION
+
+Please check the `Releases` page of this repository for prebuild firmware archives.
+
+To initially flash the software to the `Raspberry Pi Pico`, the `BOOT` button must first be held down when plugging in the `USB` cable.
+A new removable disk will then appear on the `PC`. The `firmware.uf2` is then copied to this.
+The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
+
+If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
+
+
 
 ## MECHANICAL BUILD
+
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0426.png)
 
 ### DISPLAY MOUNT
 
@@ -172,7 +187,7 @@ For this part the following parts are needed:
 ![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383.JPG)
 
 * 4x `Heat Insert M3`
-* 4x `M3x10 BHCS`
+* 2x `M3x10 BHCS`
 * 1x `breadboard_mount.stl`
 * [OPTIONAL] `Battery Expansion Shield 18650 V3`
 * 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
@@ -196,23 +211,79 @@ For this part the following parts are needed:
 
 ### LOAD CELL
 
+* 2x `M3x10 BHCS`
+* 4x `M4x10 BHCS` - depends on load cell screw threads
+* 1x `inner_cellplate.stl`
+* 4x `Cylindrical Magnet D5mm H8mm`
+* 1x `LOAD CELL`
+* 1x `Enoder`
+
+* 1x `PREPARED BODY` ASSEMBLY
+* 1x `PREPARED ELECTRONICS BAY` ASSEMBLY
+
+#### INSTRUCTIONS
+
+1. Scre the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
+**NOTE** The cables from the load cell are facing towards the shell of the `bottom.stl`
+
+![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7394.png)
+
+2. Screw the `Encoder` into one of the holes next to the display assembly.
+3. Connect five jumperwires `male-female`to the headers
+
+![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7400.png)
+
+4. Place the `PREPARED ELECTRONICS BAY` assembly onto of the load cell.
+
+![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0423.png)
+
+5. Use two `M3x10 BHCS` screws to secure the `PREPARED ELECTRONICS BAY` assembly from the other side (top) of the `bottom.stl`
+
+![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0425.png)
+
+6. Use the remaining `M4x10 BHCS` screws to mount the `inner_cellplate.stl` on the load cell arm, in the center of the `bottom.stl` cutout
+
+![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0425.png)
+
+**NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter.
+
 ### FINAL ASSEMBLY
 
-## NOTES
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0426.png)
 
-To fix accuracy issues on several `HX711` boards, two addional resistors are needed.
-Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
+The last assembly step is to add the led ring and prepare the top scale plate.
+
+* 1x `ring.stl`
+* 50cm `WS2812` strip
+* 3x `M5x10 SHCS`
+* 8x `Cylindrical Magnet D5mm H8mm`
+* 3x  Jumperwire `male-male`
+
+#### INSTRUCTIONS
+
+**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the ``
+
+1. Solder the three `male-male` jumperwires on the `WS2812` strip
+2. Remove the protective film from the `WS2812` strip and place them into the notch of the `ring.stl`
+
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0428.png)
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0429.png)
+
+2. Glue four magnets into `inner_cellplate.stl`
+
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0424_magnets.png)
+
+3. Glue four magnets into the `cellplate.stl` with opposite orientation as in the `inner_cellplate.stl`
+
+![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0427.png)
+
+4. Screw the `ring.stl` using the three `M5x10 SHCS` screws onto `bottom.stl` assembly.
+**NOTE** Make sure that the `Micro USB` is going thought opening between `bottom.stl`  and `ring.stl`
+
+5. Place the `cellplate.stl` ontop of the  `inner_cellplate.stl`
 
 
-# SOFTWARE INSTALLATION
 
-Please check the `Releases` page of this repository for prebuild firmware archives.
-
-To initially flash the software to the `Raspberry Pi Pico`, the `BOOT` button must first be held down when plugging in the `USB` cable.
-A new removable disk will then appear on the `PC`. The `firmware.uf2` is then copied to this.
-The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
-
-If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
 
 
 
