@@ -154,7 +154,15 @@ The first step is to assemble the display and its mounting together. For this st
 
 ![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7375.png)
 
- 1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
+1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
+2. Place the `1.3" I2C OLED SSH1306` display inside `display_mount_SH1106`.
+3. Press the display into the frame using the `display_clamp_SH1106` and one `M3x10 BHCS`
+4. Connect four `male-female` jumperwires onto the display header
+5. Glue the jumperwire ends and the header together using a drop of hotgleue
+6. [OPTIONAL] Lock down the jumperwires using a small zip-tie
+
+![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7376.png)
+
 
 ### 2. PREPARE BODY
 
