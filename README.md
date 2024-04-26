@@ -126,7 +126,7 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 
 ### DISPLAY MOUNT
 
-![DISPLAY_MOUNT_ASSEMBLY](documentation/build_images/IMG_7374.png)
+![DISPLAY_MOUNT_ASSEMBLY](documentation/images/build_images/IMG_7374.png)
 
 The first step is to assemble the display and its mounting together. For this step the following parts are needed:
 
@@ -139,7 +139,7 @@ The first step is to assemble the display and its mounting together. For this st
 
 #### INSTRUCTIONS
 
-![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/build_images/IMG_7375.png)
+![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7375.png)
 
  1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
 
