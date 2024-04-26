@@ -109,7 +109,15 @@ No further software changes are needed later on. The systems firmware detects th
 
 ### [OPTIONAL] BATTERY EXPANSION
 
-The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on. In oder 
+The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on.
+In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` please follow the wiring table below:
+
+| Raspberry Pi Pico GPIO | Battery Expansion |
+|------------------------|-------------------|
+| VBUS (Pin 40)          | 5V OUT            |
+| GND                    | GND               |
+
+
 
 ## MECHANICAL BUILD
 
