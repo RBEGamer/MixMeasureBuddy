@@ -215,7 +215,6 @@ with open("recipe.recipe, "w") as file:
 ```
 
 
-
 ### CREATEING A JSON BASED .recipe FILE
 
 ```json
@@ -253,9 +252,36 @@ with open("recipe.recipe, "w") as file:
 }
 ```
 
-The created `.recipe` file can be transferred using `Thonny`
+### COPY RECIPES TO SCALE
+
+To access the files and the Micropython environment on the scale directly, its possible to use these two example programs below:
+
+* [Thonny](https://github.com/thonny/thonny/)
+* [rshell](https://github.com/dhylands/rshell)
+
+In this example, a previously created recipe file is to be copied to the `MixMeasureBuddy` so that it can be used.
+After connecting the flashed `MixMeasureBuddy` to a host PC using a USB cable, run the following commands in order to transfer the `.recipe` file.
+
+#### THONNY
+
+For installation, please refer to the installation guid on the website [INSTALL_THONNY](https://thonny.org).
+
+#### RSHELL
 
 
+```bash
+# INSTALL RSHELL
+$ sudo pip3 install rshell
+
+#TEST CONNECTION
+$ rshell
+# OR
+$ rshell -p /dev/ttyUSB0
+# COPY
+$ rshell cp MyRecipe.recipe /data/MyRecipe.recipe
+```
+
+The recipe is now stored on the `MixMeasureBuddy`. Powercycle the device to load the new recipes!
 
 
 
