@@ -274,7 +274,7 @@ After connecting the flashed `MixMeasureBuddy` to a host PC using a USB cable, r
 
 For installation, please refer to the installation guid on the website [INSTALL_THONNY](https://thonny.org).
 
-![Thonny_Files_Access](documentation/schematic/thonny_setup.png)
+![Thonny_Files_Access](documentation/images/thonny_setup.png)
 
 The image shows the steps in order to connect the `MixMeasureBuddy` and access its files:
 
