@@ -109,7 +109,15 @@ No further software changes are needed later on. The systems firmware detects th
 
 ### [OPTIONAL] BATTERY EXPANSION
 
-The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on. In oder 
+The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on.
+In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` please follow the wiring table below:
+
+| Raspberry Pi Pico GPIO | Battery Expansion |
+|------------------------|-------------------|
+| VBUS (Pin 40)          | 5V OUT            |
+| GND                    | GND               |
+
+
 
 ## MECHANICAL BUILD
 
@@ -161,7 +169,7 @@ This is due to the installation direction of the load cell, its mounting and oth
 The menu item `CALIBRATION` is provided for this purpose.
 For this process, the scale is measured with and without weight and the corresponding correction factors are determined.
 
-A known weight is therefore required. This can be a glass of water, for example, which has previously been measured with a kitchen scale.
+A known weight with at least `50g` is therefore required. This can be a glass of water, for example, which has previously been measured with a kitchen scale.
 
 After starting the calibration routine, the user is guided through the following steps one after the other:
 
@@ -215,7 +223,6 @@ with open("recipe.recipe, "w") as file:
 ```
 
 
-
 ### CREATEING A JSON BASED .recipe FILE
 
 ```json
@@ -253,9 +260,36 @@ with open("recipe.recipe, "w") as file:
 }
 ```
 
-The created `.recipe` file can be transferred using `Thonny`
+### COPY RECIPES TO SCALE
+
+To access the files and the Micropython environment on the scale directly, its possible to use these two example programs below:
+
+* [Thonny](https://github.com/thonny/thonny/)
+* [rshell](https://github.com/dhylands/rshell)
+
+In this example, a previously created recipe file is to be copied to the `MixMeasureBuddy` so that it can be used.
+After connecting the flashed `MixMeasureBuddy` to a host PC using a USB cable, run the following commands in order to transfer the `.recipe` file.
+
+#### THONNY
+
+For installation, please refer to the installation guid on the website [INSTALL_THONNY](https://thonny.org).
+
+#### RSHELL
 
 
+```bash
+# INSTALL RSHELL
+$ sudo pip3 install rshell
+
+#TEST CONNECTION
+$ rshell
+# OR
+$ rshell -p /dev/ttyUSB0
+# COPY
+$ rshell cp MyRecipe.recipe /data/MyRecipe.recipe
+```
+
+The recipe is now stored on the `MixMeasureBuddy`. Powercycle the device to load the new recipes!
 
 
 
