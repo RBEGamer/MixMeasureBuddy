@@ -433,8 +433,9 @@ For installation, please refer to the installation guid on the website [INSTALL_
 
 The image shows the steps in order to connect the `MixMeasureBuddy` and access its files:
 
-* select the board
-* 
+1. Select the board
+2. Connect to python repl running on the board
+3. Use the file explorer to add/edit/remove files 
 
 #### RSHELL
 
@@ -463,6 +464,13 @@ The recipe is now stored on the `MixMeasureBuddy`. Powercycle the device to load
 The microcontroller firmware of the `Raspberry Pi Pico` was created in micropython and is automatically created with the pre-built image. 
 The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
 The program `Thonny` can be used to adapt the software directly on the scale.
+
+
+## DIFFERENT HARDWARE CONFIG
+
+The global hardware configuration (used display type, pin definitions and other settings) are stored in the `Config.py` loacted in the virtual filesystem.
+Its possbile to modify this file using the `REPL` or` Thonny` as described above.
+
 
 ## STRUCTURE
 
