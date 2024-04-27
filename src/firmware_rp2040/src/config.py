@@ -1,17 +1,8 @@
 CFG_DEBUG: bool = False
-# HARDWARE CONFIG STARTS HERE
-# ssd1306 = 128x64 olded with ssd1306 controller
-# sh1106 = 128x64 olded with ssh1106 controller
-CFG_DISPLAY_TYPE: str = "sh1106" # sh1106 ssd1306
 CFG_CALIBRATION_WEIGHT_WEIGHT:float = 390.0
 CFG_SCALE_INVERT_WEIGHT_MEASURED_VALUE: float = -1.0 # if the scale measurement is negative set this to 1.0 or -1.0
 CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT:float = 50.0 # Xg more on scale to trigger next step in recipe => 1/3 weight of a typical glass
 CFG_USER_LONG_BUTTON_PRESS_TIME: int = 700 # time to regsiter a long button press in ms
-
-CFG_NEOPIXEL_LED_COUNT: int = 26 #32 #60 how many leds for the ring are used
-CFG_NEOPIXEL_LED_START_OFFSET: int = (CFG_NEOPIXEL_LED_COUNT/2) # MAX CFG_NEOPIXEL_LED_COUNT TO ROTATE THE STARTPOINT
-CFG_NEOPIXEL_MAX_BRIGHTNESS: float = 0.8 # max led brighness modifier 0.0 - 1.0
-
 # DEFAULT WIFI SETTINGS
 # CAN LATER BE CANGED IN THE SDCARD/SETTINGS.JSON FILE
 CFG_NETWORK_HOSTNAME: str = "mixandmeasurebuddy" # xXxX.local
@@ -24,8 +15,24 @@ CFG_NETWORK_API_ENDPOINT: str = "mixmeasurebuddy.com/api/mmb"
 # SETTINGS FOR ACCESS POINT + LOCAL WEBEDITOR
 CFG_EDITOR_WIFI_STA_HOSTNAME: str = "mixandmeasurebuddy"
 CFG_EDITOR_WIFI_STA_SSID: str = "mixandmeasurebuddy"
-CFG_EDITOR_WIFI_STA_PSK: str = "{}"  #
+CFG_EDITOR_WIFI_STA_PSK: str = "mixandmeasurebuddy"  #
 CFG_EDITOR_HTTP_PORT: int = 80 # WEBSERVER PORT FOR THE ONLINE EDITOR
+
+
+
+# HARDWARE CONFIG STARTS HERE
+# ssd1306 = 128x64 olded with ssd1306 controller
+# sh1106 = 128x64 olded with ssh1106 controller
+CFG_DISPLAY_TYPE: str = "sh1106" # sh1106 ssd1306
+# DISPLAY RESOLUTION
+SCR_WIDTH: int = 128
+SCR_HEIGHT: int = 64
+
+
+CFG_NEOPIXEL_LED_COUNT: int = 26 #32 #60 how many leds for the ring are used
+CFG_NEOPIXEL_LED_START_OFFSET: int = (CFG_NEOPIXEL_LED_COUNT/2) # MAX CFG_NEOPIXEL_LED_COUNT TO ROTATE THE STARTPOINT
+CFG_NEOPIXEL_MAX_BRIGHTNESS: float = 0.8 # max led brighness modifier 0.0 - 1.0
+
 ############################
 ######## PIN CONFIG ########
 ############################
@@ -57,9 +64,7 @@ CFG_OLED_ADDR: int = 0x3c
 CFG_DISPLAY_CHAR_WIDTH: int = 8 # char width in pixels see vga2x8x as used fontfile
 CFG_DISPLAY_LINE_SPACING: int = (CFG_DISPLAY_CHAR_WIDTH + 1) # pixel font height +  a bit extra space to make large text more readable
 
-# DISPLAY RESOLUTION
-SCR_WIDTH: int = 128
-SCR_HEIGHT: int = 64
+
 
 
     
