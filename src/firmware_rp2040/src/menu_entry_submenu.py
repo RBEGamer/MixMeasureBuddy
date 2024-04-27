@@ -4,7 +4,7 @@ import system_command
 from ui import ui
 from ledring import ledring
 from recipe_updater import recipe_updater
-from static_modules.menu_manager import menu_manager
+from menu_manager import menu_manager
 class menu_entry_submenu(menu_entry.menu_entry):
 
 
@@ -30,21 +30,21 @@ class menu_entry_submenu(menu_entry.menu_entry):
     def display_preview(self):
         self.get_menu_entry().preview()
         # OPTIONAL DISPLAY LED STATE
-        ledring.ledring().set_neopixel_spinner(self.current_active_entry_index, len(self.menu_entires), ledring.ledring().COLOR_PRESET_HSV_H__PINK, ledring.ledring().COLOR_PRESET_HSV_H__BLUE)
+        ledring().set_neopixel_spinner(self.current_active_entry_index, len(self.menu_entires), ledring().COLOR_PRESET_HSV_H__PINK, ledring().COLOR_PRESET_HSV_H__BLUE)
     
 
 
     def activate(self):
         print("activate {}".format(self.name))
 
-        if len(self.menu_entires):
+        if len(self.menu_entires) <= 0:
             self.teardown()
-            menu_manager.exit_current_menu()
+            menu_manager().exit_current_menu()
 
         if self.current_active_entry_index < 0:
             self.current_active_entry_index = 0
-            self.display_preview()
-
+            
+        self.display_preview()
         self.current_menu_state: int = self.MENU_STATE_INACTIVE
 
     def teardown(self):
@@ -53,7 +53,23 @@ class menu_entry_submenu(menu_entry.menu_entry):
             self.get_menu_entry().teardown()
 
             
+    def get_menu_entry(self) -> menu_entry.menu_entry:
+        if self.current_active_entry_index < 0:
+            print("no menu_entries added ?")
+            return None
+        elif self.current_active_entry_index >= len(self.menu_entires):
+            self.current_active_entry_index = 0
 
+        return self.menu_entires[self.current_active_entry_index]
+    
+    def exit_current_menu(self):
+        if self.get_menu_entry() is not None:
+            self.get_menu_entry().teardown()
+            self.display_preview()
+        else:
+            self.current_active_entry_index = 0
+
+        self.current_menu_state = self.MENU_STATE_INACTIVE
 
     def update(self, _system_command: system_command.system_command):
         if self.get_menu_entry() is None:

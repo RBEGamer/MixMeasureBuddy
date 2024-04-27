@@ -21,17 +21,17 @@ import recipe_loader
 import recipe_updater
 from ui import ui
 import settings
-import static_modules.menu_manager as menu_manager
+import menu_manager
 # PLUGINS
 import menu_entry_submenu
 import menu_entry_recipe_update
 import menu_entry_recipe_editor
 import menu_entry_scale
-import static_modules.menu_entry_info as menu_entry_info
+import menu_entry_info
 import menu_entry_recipe
-import static_modules.menu_entry_hardwaretest as menu_entry_hardwaretest
+import menu_entry_hardwaretest
 import menu_entry_calibration
-import static_modules.menu_entry_restore as menu_entry_restore
+import menu_entry_restore
 
 
 TIME_ELAPSED_DIVIDER: int = 2
@@ -193,7 +193,7 @@ if __name__ == "__main__":
               
 
             # PERIODIC READ OF THE SCALE
-            if  abs(last_scale_update - helper.millis()) > (50/TIME_ELAPSED_DIVIDER):
+            if  abs(last_scale_update - helper.millis()) > (10/TIME_ELAPSED_DIVIDER):
                 last_scale_update = helper.millis()
                 # UPDATE SCALE VALUE AND SEND TO PROCESS
                 current_scale_cmd.value = ScaleInterface().get_current_weight()

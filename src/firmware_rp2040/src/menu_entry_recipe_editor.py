@@ -3,7 +3,7 @@ import system_command
 from ui import ui
 from ledring import ledring
 from recipe_updater import recipe_updater
-from static_modules.menu_manager import menu_manager
+from menu_manager import menu_manager
 from recipe_editor import recipe_editor
 import helper
 import config

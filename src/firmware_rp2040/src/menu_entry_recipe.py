@@ -3,7 +3,7 @@ import menu_entry
 import system_command
 from ui import ui
 from ledring import ledring
-from static_modules.menu_manager import menu_manager
+from menu_manager import menu_manager
 import recipe_loader
 import recipe
 import time
@@ -99,20 +99,21 @@ class menu_entry_recipe(menu_entry.menu_entry):
         # IF USER IS IN OVERVIEW SCREEN SWITCH TO FIRST RECIPE STEP IF USER PRESSED OK
         elif self.recipe_state == self.RECIPE_STATE_OVERVIEW:
             if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
-                ui().show_recipe_ingredients("DRINK QUANTITY","{}x".format(self.drink_multiplier))
+                ui().show_recipe_information("DRINK QUANTITY","{}x".format(self.drink_multiplier))
                 self.recipe_state = self.RECIPES_STATE_DRINK_MULTIPLIER
-            
+                
             elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
                 self.last_scale_value = _system_command.value
 
         elif self.recipe_state == self.RECIPES_STATE_DRINK_MULTIPLIER:
 
-            
             if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
                 if _system_command.action == system_command.system_command.NAVIGATION_ENTER:
                     ui().show_msg("Please place glass and press ok to begin")
                     self.drink_multiplier = max(1, self.drink_multiplier)
                     self.recipe_state = self.RECIPE_STATE_INITIAL_TARE
+                    time.sleep(1)
+                    return
 
                 elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_LEFT:
                     self.drink_multiplier = self.drink_multiplier - 1
@@ -121,7 +122,8 @@ class menu_entry_recipe(menu_entry.menu_entry):
                 elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
                     self.drink_multiplier = self.drink_multiplier + 1
 
-                ui().show_recipe_ingredients("DRINK QUANTITY","{}x".format(self.drink_multiplier))
+                ui().show_recipe_information("DRINK QUANTITY","{}x".format(self.drink_multiplier))
+
             elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
                 self.last_scale_value = _system_command.value
 
@@ -155,9 +157,15 @@ class menu_entry_recipe(menu_entry.menu_entry):
 
             if self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.SCALE:
                 ui().show_recipe_step("ADD", self.current_recipe_step.ingredient_name)
-                self.current_recipe_step.target_value = self.current_recipe_step * self.drink_multiplier
+                try:
+                    self.current_recipe_step.target_value = self.current_recipe_step * (self.drink_multiplier*1.0)
+                except Exception as e:
+                    self.current_recipe_step.target_value = 1.0
             elif self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.CONFIRM:
-                self.current_recipe_step.target_value = self.current_recipe_step * self.drink_multiplier
+                try:
+                    self.current_recipe_step.target_value = self.current_recipe_step * (self.drink_multiplier*1.0)
+                except Exception as e:
+                    self.current_recipe_step.target_value = 0.0
             elif self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.WAIT or self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.CONFIRM:
                 ui().show_recipe_step(self.current_recipe_step.current_step_text, self.current_recipe_step.ingredient_name)
             else:

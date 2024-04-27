@@ -9,9 +9,8 @@ class menu_entry_scale(menu_entry.menu_entry):
 
 
     WIGHT_CHANGE_DISPLAY_UPDATE: float = 1.0 # UPDAT DISPLAY AFTERLEAST Xg CHANGES
-    last_scale_value: float = 0.0
     max_scale_value: float = 0.0
-
+    last_scale_value: float = 0.0
     def __init__(self):
         super().__init__("SCALE", "A normal kitchen scale")
 
@@ -24,8 +23,8 @@ class menu_entry_scale(menu_entry.menu_entry):
         print("activate {}".format(self.name))
         ScaleInterface().tare()
         ui().show_scale(ScaleInterface().get_current_weight())
-        self.last_scale_value = 0.0
         self.max_scale_value = 10.0
+        self.last_scale_value = 0.0
         ledring().set_neopixel_full(10, 10, 10)
 
 
@@ -38,12 +37,13 @@ class menu_entry_scale(menu_entry.menu_entry):
 
         # UPDATE SCALE VALUE
         if _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
-            if abs(_system_command.value - self.last_scale_value):
+            if abs(_system_command.value - self.last_scale_value) > 0.2:
                 self.last_scale_value = _system_command.value
-                ui().show_scale(self.last_scale_value) 
+                self.max_scale_value = max(self.max_scale_value, _system_command.value + 10.0)
+                ui().show_scale(_system_command.value) 
                 
                 # ADD SOME NEOPIXEL LIGHTNING
-                ledring().set_neopixel_percentage(min(1.0, abs(self.max_scale_value / self.last_scale_value)))
+                ledring().set_neopixel_percentage(min(1.0, abs(_system_command.value / self.max_scale_value)))
 
         # TARE SCALE ON OK BUTTON
         elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION:
