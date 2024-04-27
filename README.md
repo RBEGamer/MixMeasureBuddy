@@ -101,12 +101,12 @@ Please connect the SD card reader to the following pins on the `Raspberry Pi Pic
 
 | Raspberry Pi Pico GPIO | SD CARD MODULE GPIO |
 |------------------------|---------------------|
-| VCC (Pin 36)           | 3v3 OUT / VCC       |
+| VCC (Pin 36)           | 3V3 (OUT) / VCC     |
 | GND (Pin 18)           | GND                 |
-| 10                     | SCK                 |
-| 8                      | MISO                |
-| 11                     | MOSI                |
-| 9                      | CS                  |
+| GP10                   | SCK                 |
+| GP8                    | MISO                |
+| GP11                   | MOSI                |
+| GP9                    | CS                  |
 
 No further software changes are needed later on. The systems firmware detects the connected SD card automatically.
 
@@ -118,10 +118,10 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 | Raspberry Pi Pico GPIO | Battery Expansion |
 |------------------------|-------------------|
 | VBUS (Pin 40)          | 5V OUT            |
-| GND                    | GND               |
+| GND  (Pin 38)          | GND               |
 
 
-# SOFTWARE INSTALLATION
+## SOFTWARE INSTALLATION
 
 Please check the `Releases` page of this repository for prebuild firmware archives.
 
@@ -131,7 +131,7 @@ The microcontroller will then restart and the MixMeasureBuddy logo should appear
 
 If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
 
-## SOFTWARE UPGRADE
+### SOFTWARE UPGRADE
 
 If a old version of the firmwre was already installed on the `Raspberry Pi Pico`, please flash the [flash_nuke.uf2](https://github.com/dwelch67/raspberrypi-pico/blob/main/flash_nuke.uf2) first! This clears all user settings!
 
@@ -236,7 +236,7 @@ For this part the following parts are needed:
 
 #### INSTRUCTIONS
 
-1. Scre the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
+1. Screw the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
 **NOTE** The cables from the load cell are facing towards the shell of the `bottom.stl`
 
 ![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7394.png)
@@ -454,7 +454,11 @@ $ rshell cp MyRecipe.recipe /data/MyRecipe.recipe
 
 The recipe is now stored on the `MixMeasureBuddy`. Powercycle the device to load the new recipes!
 
+### USER CONFIGURATION
 
+If a `Raspberry Pi Pico W` is used, its possible to use the recipe editor and the recipe api update functions.
+Here the wifi credentials needs to be set using the `SETTINGS.json` file on the scale.
+Please use the same procedure described above to edit files on the scale filesystem.
 
 
 
@@ -549,6 +553,18 @@ from menu_entry_MyPlugin import menu_entry_MyPlugin
 menu_manager.menu_manager().add_subentries(menu_entry_MyPlugin.menu_entry_MyPlugin())
 ```
 
+Its also possible to add sub-menus using the `menu_entry_submenu` plugin:
+
+```python
+# CREATE SUBMENU WITH CUSTOM TITLE
+submenu: menu_entry_submenu.menu_entry_submenu = menu_entry_submenu.menu_entry_submenu("SYSTEM", "ACCESS SYSTEM SETTINGS")
+# ADD MENU ENTRIES TO THE SUBMENU
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+# ADD THE SUBMENU TO THE MAIN MENU
+menu_manager.menu_manager().add_subentries(submenu)
+```
 
 ## FIRMWARE IMAGE
 
