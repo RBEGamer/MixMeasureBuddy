@@ -236,7 +236,7 @@ For this part the following parts are needed:
 
 #### INSTRUCTIONS
 
-1. Scre the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
+1. Screw the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
 **NOTE** The cables from the load cell are facing towards the shell of the `bottom.stl`
 
 ![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7394.png)
