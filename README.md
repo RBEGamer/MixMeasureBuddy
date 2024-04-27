@@ -553,6 +553,18 @@ from menu_entry_MyPlugin import menu_entry_MyPlugin
 menu_manager.menu_manager().add_subentries(menu_entry_MyPlugin.menu_entry_MyPlugin())
 ```
 
+Its also possible to add sub-menus using the `menu_entry_submenu` plugin:
+
+```python
+# CREATE SUBMENU WITH CUSTOM TITLE
+submenu: menu_entry_submenu.menu_entry_submenu = menu_entry_submenu.menu_entry_submenu("SYSTEM", "ACCESS SYSTEM SETTINGS")
+# ADD MENU ENTRIES TO THE SUBMENU
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+submenu.add_subentries(menu_entry_calibration.menu_entry_calibration())
+# ADD THE SUBMENU TO THE MAIN MENU
+menu_manager.menu_manager().add_subentries(submenu)
+```
 
 ## FIRMWARE IMAGE
 
