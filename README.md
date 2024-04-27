@@ -101,12 +101,12 @@ Please connect the SD card reader to the following pins on the `Raspberry Pi Pic
 
 | Raspberry Pi Pico GPIO | SD CARD MODULE GPIO |
 |------------------------|---------------------|
-| VCC (Pin 36)           | 3v3 OUT / VCC       |
+| VCC (Pin 36)           | 3V3 (OUT) / VCC     |
 | GND (Pin 18)           | GND                 |
-| 10                     | SCK                 |
-| 8                      | MISO                |
-| 11                     | MOSI                |
-| 9                      | CS                  |
+| GP10                   | SCK                 |
+| GP8                    | MISO                |
+| GP11                   | MOSI                |
+| GP9                    | CS                  |
 
 No further software changes are needed later on. The systems firmware detects the connected SD card automatically.
 
@@ -118,7 +118,7 @@ In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` pleas
 | Raspberry Pi Pico GPIO | Battery Expansion |
 |------------------------|-------------------|
 | VBUS (Pin 40)          | 5V OUT            |
-| GND                    | GND               |
+| GND  (Pin 38)          | GND               |
 
 
 ## SOFTWARE INSTALLATION
