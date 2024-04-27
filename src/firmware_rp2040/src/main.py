@@ -21,7 +21,7 @@ import recipe_loader
 import recipe_updater
 from ui import ui
 import settings
-import menu_manager
+import static_modules.menu_manager as menu_manager
 # PLUGINS
 import menu_entry_submenu
 import menu_entry_recipe_update
@@ -29,7 +29,7 @@ import menu_entry_recipe_editor
 import menu_entry_scale
 import static_modules.menu_entry_info as menu_entry_info
 import menu_entry_recipe
-import menu_entry_hardwaretest
+import static_modules.menu_entry_hardwaretest as menu_entry_hardwaretest
 import menu_entry_calibration
 import static_modules.menu_entry_restore as menu_entry_restore
 

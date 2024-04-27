@@ -3,7 +3,7 @@ import menu_entry
 import system_command
 from ui import ui
 from ledring import ledring
-from menu_manager import menu_manager
+from static_modules.menu_manager import menu_manager
 import recipe_loader
 import recipe
 import time

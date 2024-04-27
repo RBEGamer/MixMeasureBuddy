@@ -4,7 +4,7 @@ import system_command
 from ui import ui
 from ledring import ledring
 from recipe_updater import recipe_updater
-from menu_manager import menu_manager
+from static_modules.menu_manager import menu_manager
 class menu_entry_info(menu_entry.menu_entry):
 
 

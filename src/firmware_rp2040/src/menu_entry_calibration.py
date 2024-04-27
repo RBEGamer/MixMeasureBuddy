@@ -6,7 +6,7 @@ from ledring import ledring
 from Scales import ScaleInterface
 import time
 import config
-import menu_manager
+import static_modules.menu_manager as menu_manager
 import settings
 
 

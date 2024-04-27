@@ -3,7 +3,7 @@ import menu_entry
 import system_command
 from ui import ui
 from ledring import ledring
-from menu_manager import menu_manager
+from static_modules.menu_manager import menu_manager
 class menu_entry_hardwaretest(menu_entry.menu_entry):
 
 
