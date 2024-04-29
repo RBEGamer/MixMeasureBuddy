@@ -31,8 +31,9 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `cellplate.stl`
 * 1x `hinge.stl`
 * 1x `bottom.stl`
-* 1x `display_clamp_SH1106`
-* 1x `display_mount_SH1106`
+* 1x `display_clamp.stl`
+* 1x `display_mount.stl`
+* 1x `encoder_clamp.stl`
   
 #### 3D PRINT SETTINGS
 
@@ -43,15 +44,13 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 ![3D printed parts orientation on bed](documentation/images/3d_print_orientation.png)
 
 
-
-
 ### MECHANICAL
 
 * 6x `Heat Inserts M3`
 * 6x `M3x10 BHCS`
 * 4x `M4x10 BHCS` - depends on load cell screw threads
-* 3x `Heat Inserts M5`
-* 3x `M5x10 SHCS`
+* 3x `Heat Inserts M4`
+* 3x `M4x10 BHCS`
 * 8x `Cylindrical Magnet D5mm H8mm`
 
 ### MISC
@@ -144,164 +143,159 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 
 ### 1. DISPLAY MOUNT
 
-![DISPLAY_MOUNT_ASSEMBLY](documentation/images/build_images/IMG_7374.png)
-
-The first step is to assemble the display and its mounting together. For this step the following parts are needed:
+![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7376.png)
 
 * 1x `Heat Inserts M3`
-* 1x `M3x10 BHCS`
+* 1x `M3x10`
 * 1x `1.3" I2C OLED SSH1306`
 * 4x Jumperwires `male-female`
-* 1x `display_clamp_SH1106`
-* 1x `display_mount_SH1106`
+
+* 1x `display_clamp.stl`
+* 1x `display_mount.stl`
 
 #### INSTRUCTIONS
 
-![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7375.png)
+![display_0](documentation/images/build_images_v1.0.0/0_display/display_0.png)
 
-1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount_SH1106`
-2. Place the `1.3" I2C OLED SSH1306` display inside `display_mount_SH1106`.
-3. Press the display into the frame using the `display_clamp_SH1106` and one `M3x10 BHCS`
+1. Insert the `M3 Heat Insert` using a soldering iron into `display_mount`
+2. Place the `1.3" I2C OLED SSH1306` display inside `display_mount` 
+3. Press the display into place using the `display_clamp` and one `M3x10`
 4. Connect four `male-female` jumperwires onto the display header
 5. Glue the jumperwire ends and the header together using a drop of hotgleue
 6. [OPTIONAL] Lock down the jumperwires using a small zip-tie
 
-![DISPLAY_MOUNT_WITH_HEAT_INSERT](documentation/images/build_images/IMG_7376.png)
+![display_1](documentation/images/build_images_v1.0.0/0_display/display_1.png)
+
+### 2. ENCODER MOUNT
+
+* 2x `Heat Inserts M3`
+* 1x `M3x10`
+* 4x Jumperwires `male-female`
+* 1x `Encoder` e.g. `KY-040`
+
+* 1x `encoder_clamp.stl`
+* 1x `ring.stl`
+
+#### INSTRUCTIONS
+
+![1_encoder](documentation/images/build_images_v1.0.0/1_encoder/encoder_0.png)
+
+1. Connect five `male-female` jumperwires onto the encoder pcb header
+2. Insert the two `M3 Heat Inserts` using a soldering iron into `ring` part
+3. Insert the encoder pcb into `ring` shell
+4. Use the `encoder_clamp` and one `M3x10` to press the encoder into the `ring`
+
+![1_encoder](documentation/images/build_images_v1.0.0/1_encoder/encoder_1.png)
 
 
-### 2. PREPARE BODY
+### 3. ASSEMBLE DISPLAY AND RING PARTS
 
-The next step is to prepare the body parts with needed heat inserts and mount the display assembly.
-For this part the following parts are needed:
-
-* 1x `Heat Insert M3`
-* 1x `M3x10 BHCS`
-* 3x `Heat Insert M5`
-* 1x `DISPLAY ASSEMBLY` from previous step
-* 1x `bottom.stl`
+* 1x `M3x10`
 * 1x `hinge.stl`
 
 #### INSTRUCTIONS
 
-1. Insert the 1x `M3 Heat Insert`, 3x `M5 Heat Insert` using a soldering iron into `bottom`
+![2_base_display](documentation/images/build_images_v1.0.0/2_base_display/base_display_0.png) 
 
-![BASE_WITH_HEAT_INSERTS](documentation/images/build_images/IMG_7378.png)
-
-![BASE_WITH_HEAT_INSERT_2](documentation/images/build_images/IMG_7379.png)
-
-2. Insert the `DISPLAY ASSEMBLY` as shown in picture below.
-3. Fix the `DISPLAY ASSEMBLY` using the `hinge.stl` and `M3x10 BHCS` screw into the `M3 Heat Insert`
-
-![BASE_WITH_DISPLAY_ASSEMBLY](documentation/images/build_images/IMG_7382.png)
+* Place the display assembly in the indentation
+* Use the `hinge` and  one `M3x10` to press the assembly into the `ring`
 
 
-### 3. ELECTRONICS BAY
+### 3. LOADCELL
 
-![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383.JPG)
+* 4x `M4x10` - depends on load cell screw threads
+* 4x `Cylindrical Magnet D5mm H8mm`
+* 1x `LOAD CELL`
 
-* 4x `Heat Insert M3`
-* 2x `M3x10 BHCS`
-* 1x `breadboard_mount.stl`
-* [OPTIONAL] `Battery Expansion Shield 18650 V3`
-* 1x Breadboard with dimensions of `83 x 55mm`, for example `Mini Breadboard 400 Pin`
+* 1x `inner_cellplate.stl`
 
 #### INSTRUCTIONS
 
-1. Insert the 2x `M3 Heat Insert` into the side of the `breadboard_mount.stl`
-2. [OPTIONAL] Screw the `Battery Expansion Shield 18650 V3` into the side
+![3_loadcell](documentation/images/build_images_v1.0.0/3_loadcell/loadcell_0.png) 
 
-![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7385.png)
+1. Insert the three `M4 Heat Inserts` using a soldering iron into `ring` part
 
-3. Insert the 2x `M3 Heat Insert` into the top of the `breadboard_mount.stl`
+2. Screw the loadcell using two `M4x10` screws into the `ring`
+**NOTE** The cables from the load cell are facing towards the shell of the `ring`
 
-![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7383_copped.png)
+3. Use the remaining `M4x10` screws to mount the `inner_cellplate` on the load cell arm, in the center of the `ring` cutout
 
-3. Remove the protective film from the breadboard bottom side and place it ontop `breadboard_mount.stl`
+4. Glue four magnets into `inner_cellplate`
+
+![3_loadcell](documentation/images/build_images_v1.0.0/3_loadcell/loadcell_1.png) 
+
+
+
+### 4. BREADBOARD
 
 ![ELECTRONICS_BAY_COMPONENTS ](documentation/images/build_images/IMG_7401.png)
 
+* 4x `Heat Inserts M3`
+* 4x `M3x10 BHCS`
+* 1x `ASSEMBLED BREADBOARD`
 
-
-### 4. LOAD CELL
-
-* 2x `M3x10 BHCS`
-* 4x `M4x10 BHCS` - depends on load cell screw threads
-* 1x `inner_cellplate.stl`
-* 4x `Cylindrical Magnet D5mm H8mm`
-* 1x `LOAD CELL`
-* 1x `Enoder`
-
-* 1x `PREPARED BODY` ASSEMBLY
-* 1x `PREPARED ELECTRONICS BAY` ASSEMBLY
+* 1x `breadboard_mount.stl`
 
 #### INSTRUCTIONS
 
-1. Screw the loadcell using two `M4x10 BHCS` screws into the `bottom.stl` as shown in the picture below:
-**NOTE** The cables from the load cell are facing towards the shell of the `bottom.stl`
+![4_breadboard](documentation/images/build_images_v1.0.0/4_breadboard/breadboard_0.png) 
 
-![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7394.png)
+1. Insert the four `M3 Heat Inserts` using a soldering iron into `breadboard_mount` part
+2. [OPTIONAL] Screw the `Battery Expansion Shield 18650 V3` into the side using two `M3x10`
+3. Remove the protective film from the breadboard bottom side and place it ontop `breadboard_mount`stl`
+4. Use the remaining two `M3x10` screws to fix `breadboard_mount` and `ring` together into place
 
-2. Screw the `Encoder` into one of the holes next to the display assembly.
-3. Connect five jumperwires `male-female`to the headers
+![4_breadboard](documentation/images/build_images_v1.0.0/4_breadboard/breadboard_1.png) 
 
-![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_7400.png)
+**NOTE** Please connect all remaining components (`Encoder`, `Display`, ...) to the breadboard. See chapter `SCHEMATIC` again
 
-4. Place the `PREPARED ELECTRONICS BAY` assembly onto of the load cell.
-
-![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0423.png)
-
-5. Use two `M3x10 BHCS` screws to secure the `PREPARED ELECTRONICS BAY` assembly from the other side (top) of the `bottom.stl`
-
-![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0425.png)
-
-6. Use the remaining `M4x10 BHCS` screws to mount the `inner_cellplate.stl` on the load cell arm, in the center of the `bottom.stl` cutout
-
-![LOADCELL_ASSEMBLY](documentation/images/build_images/IMG_0425.png)
+**NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter
 
 
-**NOTE** Please connect all remaining components (`Encoder`, `Display`, ...) to the breadboard. See chapter `SCHEMATIC` again.
-**NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter.
 
 
-### 6. FINAL ASSEMBLY
 
-![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0426.png)
 
-The last assembly step is to add the led ring and prepare the top scale plate.
+### 5. BOTTOM
 
-* 1x `ring.stl`
-* 50cm `WS2812` strip
-* 3x `M5x10 SHCS`
-* 8x `Cylindrical Magnet D5mm H8mm`
+* `WS2812` strip
+* 3x `M4x10 SHCS`
 * 3x  Jumperwire `male-male`
 
+* 1x `bottom.stl`
+
 #### INSTRUCTIONS
 
-**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the `ring.stl`
+![5_bottom](documentation/images/build_images_v1.0.0/5_bottom/bottom_0.png) 
 
-1. Solder the three `male-male` jumperwires on the `WS2812` strip
-2. Remove the protective film from the `WS2812` strip and place them into the notch of the `ring.stl`
+1. Solder three `male-male` jumperwires onto the `WS2812` strip (`VCC`, `GND`, `DIN`)
+2. Remove the protective film from the `WS2812` strip and place them on the center ring of the `bottom`
 
-![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0428.png)
-![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0429.png)
-
-2. Glue four magnets into `inner_cellplate.stl`
-
-![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0424_magnets.png)
-
-3. Glue four magnets into the `cellplate.stl` with opposite orientation as in the `inner_cellplate.stl`
-
-![FINAL_ASSEMBLY](documentation/images/build_images/IMG_0427.png)
-
-4. Screw the `ring.stl` using the three `M5x10 SHCS` screws onto `bottom.stl` assembly.
+3. Screw the `bottom` using the three `M4x10` screws onto `ring` assembly.
 **NOTE** Make sure that the `Micro USB` is going thought opening between `bottom.stl`  and `ring.stl`
 
-5. Place the `cellplate.stl` ontop of the  `inner_cellplate.stl`
+
+**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the `bottom`
 
 
 
 
 
+
+### 6. CELLPLATE
+
+* 4x `Cylindrical Magnet D5mm H8mm`
+
+* 1x `cellplate.stl`
+
+#### INSTRUCTIONS
+
+![6_cellplate](documentation/images/build_images_v1.0.0/6_cellplate/cellplate_0.png) 
+
+1. Glue four magnets into `cellplate`
+2. Place the `cellplate` on the `inner_cellplate`
+
+**NOTE** Please ensure that the magnets in the two parts `cellplate`, `inner_cellplate` attract each other on opposite sides
 
 
 # USAGE
