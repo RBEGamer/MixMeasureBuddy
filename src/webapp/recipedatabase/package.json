@@ -1,0 +1,23 @@
+{
+  "name": "thecocktaildb-downloader",
+  "version": "1.0.0",
+  "description": "TheCocktailDB.com data for offline use",
+  "main": "./build/src/downloader/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/downloader/index.ts",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.11",
+    "@types/progress": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "eslint": "^7.30.0",
+    "node-fetch": "^2.6.1",
+    "progress": "^2.0.3",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.3.5"
+  }
+}

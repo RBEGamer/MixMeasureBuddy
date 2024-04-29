@@ -1,0 +1,80 @@
+FILE_DATA = ZLIBSTREAM
+
+# FOR DEBUGGING
+ALWAYS_HARD_RESTORE: bool = False
+
+RESTORE_IGNORED_FILES_LIST = ['static_modules', 'thridparty_libs', 'boot.py', 'lib', 'fsdatareconstructor']
+
+def restore_filesystem(_basepath: str = "/", _override: bool = False, _erase: bool = False):
+    import ubinascii
+    import os
+
+    if _erase:
+        print("erase enabled")
+        for f in os.listdir():
+            if f in __file__:
+                print("skipping {} to vaoid installer override".format(f))
+                continue 
+            
+            # UGLY REWORK
+            for n in RESTORE_IGNORED_FILES_LIST:
+                if n in f:
+                    print("skipping {} to vaoid installer override".format(f))
+                    continue
+
+            os.remove(f)
+
+    for k in FILE_DATA:
+
+        if k in os.listdir() and not _override:
+            continue
+        
+        print(k)
+        d = FILE_DATA[k]
+        ubinascii.a2b_base64(d)
+
+        with open(_basepath + "/" + k, "w") as file:
+            file.write(ubinascii.a2b_base64(d))
+
+    # CLEANUP
+    del ubinascii
+    del os
+
+
+def restore(_hard_restore: bool = False):
+    import machine
+    import time
+    RESTORE_BUTTON_PIN: int = 15
+    RESTORE_LED_PIN: int = 25
+
+    push_button_restore = machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.PULL_UP)
+    led_onboard = machine.Pin(RESTORE_LED_PIN, machine.Pin.OUT)
+
+    if not push_button_restore.value() or ALWAYS_HARD_RESTORE or _hard_restore:
+        led_onboard.on()
+        time.sleep(0.2)
+        led_onboard.off()
+        time.sleep(0.2)
+        led_onboard.on()
+        time.sleep(0.2)
+        led_onboard.on()
+        # RESTORE HARD OVERRIDE USER CHANGES
+        restore_filesystem(_override=True, _erase=True)
+        led_onboard.off()
+
+    else:
+        led_onboard.on()
+        # RESTORE SOFT ONLY ADD MISSING FILES IN VIRTUAL FS
+        restore_filesystem()
+        led_onboard.off()
+
+    # RESTORE PIN STATE
+    machine.Pin(RESTORE_BUTTON_PIN, machine.Pin.IN, machine.Pin.OPEN_DRAIN)
+    machine.Pin(RESTORE_LED_PIN, machine.Pin.IN)
+    
+    del machine
+
+
+if __name__ == "__main__":
+    restore()
+
