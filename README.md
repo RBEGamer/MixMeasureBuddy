@@ -149,7 +149,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 * 1x `M3x10`
 * 1x `1.3" I2C OLED SSH1306`
 * 4x Jumperwires `male-female`
-
 * 1x `display_clamp.stl`
 * 1x `display_mount.stl`
 
@@ -172,7 +171,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 * 1x `M3x10`
 * 4x Jumperwires `male-female`
 * 1x `Encoder` e.g. `KY-040`
-
 * 1x `encoder_clamp.stl`
 * 1x `ring.stl`
 
@@ -261,7 +259,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 * `WS2812` strip
 * 3x `M4x10 SHCS`
 * 3x  Jumperwire `male-male`
-
 * 1x `bottom.stl`
 
 #### INSTRUCTIONS
@@ -279,13 +276,9 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 
 
 
-
-
-
 ### 6. CELLPLATE
 
 * 4x `Cylindrical Magnet D5mm H8mm`
-
 * 1x `cellplate.stl`
 
 #### INSTRUCTIONS
