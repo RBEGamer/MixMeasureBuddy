@@ -75,9 +75,9 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * `Soldering Iron`
 * `Hotglue`
 
-# HARDWARE BUILD
+## HARDWARE BUILD
 
-## SCHEMATIC
+### SCHEMATIC
 
 The following diagram shows the internal wiring of the individual components of the `MixMeasureBuddy`.
 Only the `Raspberry Pi Pico`, button and the `HX711` are placed on the small breadboard.
@@ -88,12 +88,12 @@ The display, `LEDs` and the encoder(-module) are connected with longer cables so
 The circuit diagram was created in the Fritzing software. The project can be found under `documenation/schematic/`.
 After the function of all parts has been tested, the connections on the breadboard should be fixed with hot glue so that they do not come loose during transportation.
 
-## NOTES
+### NOTES
 
 To fix accuracy issues on several `HX711` boards, two addional resistors are needed.
 Please refer to this guide: [HX711 – Auswahl und Beschaltung](https://beelogger.de/sensoren/waegezellen_hx711/hx711_beschaltung/#:~:text=HX711%20Modul%20Auswahl,Wägezelle%20und%20einen%20einstellbaren%20Messbrückenverstärker.)
 
-### [OPTIONAL] SD CARD READER
+#### [OPTIONAL] SD CARD READER
 
 It is possible to connect an additional SD card reader. This makes it possible to save the recipes on an SD card.  
 Please connect the SD card reader to the following pins on the `Raspberry Pi Pico`:
@@ -109,7 +109,7 @@ Please connect the SD card reader to the following pins on the `Raspberry Pi Pic
 
 No further software changes are needed later on. The systems firmware detects the connected SD card automatically.
 
-### [OPTIONAL] BATTERY EXPANSION
+#### [OPTIONAL] BATTERY EXPANSION
 
 The `Battery Expansion Shield 18650 V3` can be mounted on the `breadboard_mount.stl` later on.
 In oder to connect the `Battery Expansion` to the `Raspberry Pi Pico GPIO` please follow the wiring table below:
@@ -129,6 +129,8 @@ A new removable disk will then appear on the `PC`. The `firmware.uf2` is then co
 The microcontroller will then restart and the MixMeasureBuddy logo should appear on the display.
 
 If you want to build the software yourself from source or add modifications, please refer to the `SOFTWARE DEVELOPMENT` chapter.
+
+**NOTE** There is an firmware archive with older stable versions located in `src/firmware/build/archive`.
 
 ### SOFTWARE UPGRADE
 
@@ -198,7 +200,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 * Place the display assembly in the indentation
 * Use the `hinge` and  one `M3x10` to press the assembly into the `ring`
 
-
 ### 3. LOADCELL
 
 * 4x `M4x10` - depends on load cell screw threads
@@ -212,16 +213,13 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 ![3_loadcell](documentation/images/build_images_v1.0.0/3_loadcell/loadcell_0.png) 
 
 1. Insert the three `M4 Heat Inserts` using a soldering iron into `ring` part
-
 2. Screw the loadcell using two `M4x10` screws into the `ring`
-**NOTE** The cables from the load cell are facing towards the shell of the `ring`
-
 3. Use the remaining `M4x10` screws to mount the `inner_cellplate` on the load cell arm, in the center of the `ring` cutout
-
 4. Glue four magnets into `inner_cellplate`
 
-![3_loadcell](documentation/images/build_images_v1.0.0/3_loadcell/loadcell_1.png) 
+**NOTE** The cables from the load cell are facing towards the shell of the `ring`
 
+![3_loadcell](documentation/images/build_images_v1.0.0/3_loadcell/loadcell_1.png) 
 
 
 ### 4. BREADBOARD
@@ -231,7 +229,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 * 4x `Heat Inserts M3`
 * 4x `M3x10 BHCS`
 * 1x `ASSEMBLED BREADBOARD`
-
 * 1x `breadboard_mount.stl`
 
 #### INSTRUCTIONS
@@ -245,13 +242,8 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 
 ![4_breadboard](documentation/images/build_images_v1.0.0/4_breadboard/breadboard_1.png) 
 
-**NOTE** Please connect all remaining components (`Encoder`, `Display`, ...) to the breadboard. See chapter `SCHEMATIC` again
-
-**NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter
-
-
-
-
+**NOTE** Please connect all remaining components (`Encoder`, `Display`, ...) to the breadboard. See chapter `SCHEMATIC` again.
+**NOTE** Its a good time to test the electronics again! Please refer to the `SOFTWARE INSTALLATION` chapter.
 
 
 ### 5. BOTTOM
@@ -267,13 +259,10 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 
 1. Solder three `male-male` jumperwires onto the `WS2812` strip (`VCC`, `GND`, `DIN`)
 2. Remove the protective film from the `WS2812` strip and place them on the center ring of the `bottom`
-
 3. Screw the `bottom` using the three `M4x10` screws onto `ring` assembly.
-**NOTE** Make sure that the `Micro USB` is going thought opening between `bottom.stl`  and `ring.stl`
 
-
-**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the `bottom`
-
+**NOTE** Make sure that the `Micro USB` is going thought opening between `bottom`  and `ring`.
+**NOTE** If no `Battery Expansion Shield 18650 V3` is installed, please insert a `Micro USB` cable into the `Raspberry Pi Pico` before attaching the `bottom`.
 
 
 ### 6. CELLPLATE
@@ -289,7 +278,6 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 2. Place the `cellplate` on the `inner_cellplate`
 
 **NOTE** Please ensure that the magnets in the two parts `cellplate`, `inner_cellplate` attract each other on opposite sides
-
 
 # USAGE
 
@@ -320,9 +308,8 @@ After starting the calibration routine, the user is guided through the following
 * User places calibration object on scale
 * User removes calibration object if shown by display
 
-**NOTE** If the scales light up red, please do not move them.
-
-**NOTE** The IKEA POKAL glass has a weight of 390g (empty)
+**NOTE** If the scales light up red, please DONT MOVE OR TOUCH.
+**NOTE** The IKEA POKAL glass has a weight of 390g (empty) :)
 
 ## RUN A RECIPE
 
