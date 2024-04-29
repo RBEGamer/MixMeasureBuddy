@@ -43,7 +43,7 @@ try:
             self.server.send(json.dumps(json_repsonse))
 
 
-        def __init__():
+        def __init__(self):
             pass
         
 
@@ -51,7 +51,7 @@ try:
             return True
         
         def disable_wifi(self):
-            wlan = network.WLAN(network.STA_IF)
+            wlan = network.WLAN(network.AP_IF)
             wlan.active(False)
         
 
@@ -80,14 +80,43 @@ try:
             network.country(config.CFG_NETWORK_WIFICOUNTRY)
             network.hostname(config.CFG_EDITOR_WIFI_STA_HOSTNAME.format("_" + helper.get_system_id()))
 
-            wlan = network.WLAN(network.STA_IF)
-            wlan.active(True)
+            wlan = network.WLAN(network.AP_IF)
             wlan.config(essid=_ssid, password=_psk)
+            wlan.active(True)
             
-           
             return wlan.ifconfig()
         
+        def connect_wifi() -> tuple(str, bool):
+            network.country(config.CFG_NETWORK_WIFICOUNTRY)
+            network.hostname(config.CFG_NETWORK_HOSTNAME) #.format(helper.get_system_id()))
 
+            wlan = network.WLAN(network.STA_IF)
+            wlan.active(True)
+            
+            
+            ssid = settings.settings().get_settings_entry(settings.SETTINGS_ENTRIES.NETWORK_WIFI_SSID)
+            psk = settings.settings().get_settings_entry(settings.SETTINGS_ENTRIES.NETWORK_WIFI_PSK)
+            
+            if ssid is None or psk is None:
+                print("SSID OR PSK FOR WIFI CONNECTION NOT SET")
+                return wlan.ifconfig(), False
+
+
+            print("CONNECTING TO: {}".format(ssid))
+            wlan.connect(ssid, psk)
+            timer = 0
+            while wlan.isconnected() == False:
+                print('Waiting for connection...')
+                time.sleep(1)
+                timer = timer + 1
+
+                if timer > 10:
+                    wlan.active(False)
+                    return wlan.ifconfig()
+            
+            if wlan.isconnected():
+                return wlan.ifconfig(), True
+            return wlan.ifconfig(), False
 
       
         
@@ -96,7 +125,7 @@ except Exception as e:
         
     class recipe_editor:
         
-        def __init__():
+        def __init__(self):
             pass
 
         def has_capabilities(self) -> bool:
@@ -116,3 +145,6 @@ except Exception as e:
 
         def open_accesspoint(self, _ssid: str, _psk: str = None) -> str:
             return ""
+        
+        def connect_wifi() -> tuple(str, bool):
+            return False

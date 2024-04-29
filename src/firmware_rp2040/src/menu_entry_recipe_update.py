@@ -24,7 +24,7 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
         
         print("activate {}".format(self.name))
         try:
-            ui().show_msg("CHECK FOR WIFI CONNECTION")
+            ui().show_msg("CHECKING FOR WIFI CONNECTION")
             if recipe_updater.check_update_url():
                 ui().show_msg("WIFI SUCCESS")
             else:
@@ -68,4 +68,5 @@ class menu_entry_recipe_update(menu_entry.menu_entry):
             elif _system_command.action == system_command.system_command.NAVIGATION_LEFT:
                 ui().show_device_qr_code(recipe_updater.get_api_url())
             elif _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
+                ui().show_msg("GENERATING")
                 ui().show_url(recipe_updater.get_api_url())

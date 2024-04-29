@@ -19,3 +19,11 @@ def has_wifi() -> bool:
     if 'Raspberry Pi Pico W' in str(sys.implementation):
         return True
     return False
+
+def get_free_flash_space() -> float:
+    import uos
+    stat = uos.statvfs('/')
+    del uos
+    total_free: float = stat[0] * stat[2]
+    used: float = stat[1] * stat[3]
+    return total_free - used

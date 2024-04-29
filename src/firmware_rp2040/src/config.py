@@ -13,6 +13,7 @@ CFG_NETWORK_API_ENDPOINT: str = "mixmeasurebuddy.com/api/mmb"
 
 
 # SETTINGS FOR ACCESS POINT + LOCAL WEBEDITOR
+CFG_EDITOR_OPEN_ACCESSPOINT: bool = False
 CFG_EDITOR_WIFI_STA_HOSTNAME: str = "mixandmeasurebuddy"
 CFG_EDITOR_WIFI_STA_SSID: str = "mixandmeasurebuddy"
 CFG_EDITOR_WIFI_STA_PSK: str = "mixandmeasurebuddy"  #
