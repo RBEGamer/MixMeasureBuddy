@@ -28,13 +28,25 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 * 1x `ring.stl`
 * 1x `breadboard_mount.stl`
 * 1x `inner_cellplate.stl`
-* 1x `cellplate.stl`
 * 1x `hinge.stl`
 * 1x `bottom.stl`
 * 1x `display_clamp.stl`
 * 1x `display_mount.stl`
 * 1x `encoder_clamp.stl`
-  
+
+#### CELLPLATE
+
+* 1x `cellplate_<style>.stl`
+
+The top plate exists in three different styles:
+
+* `normal` - plain top plate
+* `ring` - with an 82-84mm diameter ring depression in the center to plate a rubber band in it
+* `plate` - with an 80mm diameter circular depression to place a rubber sheet in it
+
+The `ring` and `plate` variants offer better grip of the glasses while standing on the platic top plate.
+
+
 #### 3D PRINT SETTINGS
 
 * Layer height: `0.2` - `0.3`mm
