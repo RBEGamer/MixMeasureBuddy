@@ -151,7 +151,9 @@ if __name__ == "__main__":
     # ADD RECIPE UPDATE FUNCTIONS
     if recipe_updater.recipe_update_helper.has_network_capabilities():
         system_menu.add_subentries(menu_entry_recipe_update.menu_entry_recipe_update())
-        system_menu.add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
+        # EDITOR IS CURRENTLY UNDER DEVELOPMENT
+        if config.CFG_DEBUG:
+            system_menu.add_subentries(menu_entry_recipe_editor.menu_entry_recipe_editor())
 
 
     menu_manager.menu_manager().add_subentries(system_menu)
