@@ -28,7 +28,7 @@ RUN cd ${MICROPYTHON_BASE_DIR} && make -C mpy-cross
 
 
 # CLONE
-RUN pip3 install littlefs-python
+RUN pip3 install littlefs-python --break-system-packages
 RUN git clone --depth 1 https://github.com/Gadgetoid/dir2uf2.git ${DIR2UF2_BASE_DIR}
 # COPY PROJECT FILES OVER
 COPY . ${CUSTOM_SRC_DIR}
