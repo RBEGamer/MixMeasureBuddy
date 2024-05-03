@@ -327,6 +327,11 @@ There are two ways to create a new recipe manually:
 
 ### BY USING recipe.py CLASS
 
+* Create a new empty folder
+* Copy the `src/firmware/src/static_modules/recipe.py` into the new created folder
+* Create a new `MyRecipe.py` file with the following content Python script below
+* Change the name, description and steps according your imagination
+
 ```python
 # SEE example_recipes.py FOR FURTHER / DETAILED EXAMPLES
 import recipe
@@ -345,12 +350,19 @@ example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.
 
 
 # EXPORT THE RECIPES AS JSON BASE .RECIPE FILE
-with open("recipe.recipe, "w") as file:
+with open("MyRecipe.recipe, "w") as file:
   file.write(json.dumps(example_recipe.to_dict()))
-# THEN ITS POSSIBLE TO COPY OVER THE .RECIPE FILE TO THE SCALE
-
+# COPY OVER THE .RECIPE FILE TO THE SCALE
 ```
 
+Run the 
+
+```bash
+$ python MyRecipe.py
+$ cat MyRecipe.recipe
+```
+
+This scripts created a new `MyRecipe.recipe` file. The content is a `JSON` strucutre which is compatible with the recipe system of the scale.
 
 ### CREATEING A JSON BASED .recipe FILE
 
