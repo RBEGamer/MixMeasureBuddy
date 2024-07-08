@@ -25,6 +25,8 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 ### 3D PRINTED PARTS
 
+**Please read the 3d printing instructions before printing any part!**
+
 * 1x `ring.stl`
 * 1x `breadboard_mount.stl`
 * 1x `inner_cellplate.stl`
@@ -46,10 +48,13 @@ The top plate exists in three different styles:
 
 The `ring` and `plate` variants offer better grip of the glasses while standing on the platic top plate.
 
+#### BOTTOM PLATE
+
+If a `8mm` wide led strip is used please set the scale of `bottom.stl` to `120%` in **Z** direction.
 
 #### 3D PRINT SETTINGS
 
-* Layer height: `0.2` - `0.3`mm
+* Layer height: `0.2` - `0.4`mm
 * Support: `Support on buildplate only`
 * Inflill: `20%`
 
