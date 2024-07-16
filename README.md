@@ -327,8 +327,10 @@ After starting the calibration routine, the user is guided through the following
 * User places calibration object on scale
 * User removes calibration object if shown by display
 
-**NOTE** If the scales light up red, please DONT MOVE OR TOUCH.
-**NOTE** The IKEA POKAL glass has a weight of 390g (empty) :)
+
+**NOTE** If the scales light up red, please `DONT MOVE OR TOUCH`.
+
+**NOTE** The `IKEA POKAL` glass has a weight of 390g (empty) :)
 
 ## RUN A RECIPE
 
