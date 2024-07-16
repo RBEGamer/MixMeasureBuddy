@@ -22,6 +22,8 @@ Discover the advanced features that set MixMeasureBuddy apart from traditional k
 
 ## BOM
 
+![mixmeasurebuddy](./documentation/images/IMG_3089.jpg)
+
 
 ### 3D PRINTED PARTS
 
