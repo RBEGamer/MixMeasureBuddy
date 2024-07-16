@@ -359,15 +359,15 @@ import recipe
 
 example_recipe: recipe.recipe = recipe.recipe("Tequila Sunrise", "A nice Tequila Sunrise Cocktail", "1.0.0", ["Tequila"])
 # ADD A SCALE STEP: ADD x g TO THE GLASS
-example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="White Tequila", _current_step_text="", _target_value = 10))
+example_recipe.add_step(recipe.recipe_step.create_scale_step(_ingredient_name="White Tequila", _target_value = 10))
 # ADD A SCALE STEP: ADD x g TO THE GLASS
-example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Orange Juice", _current_step_text="", _target_value = 120))
+example_recipe.add_step(recipe.create_scale_step(_ingredient_name="Orange Juice", _target_value = 120))
 # ADD CONFIRM STEP: ADD ICE AND CONFIRM WITH A BUTTON PRESS
-example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.CONFIRM, _ingredient_name="Ice", _current_step_text="Add Ice", _target_value = -1))
+example_recipe.add_step(recipe.create_scale_step(_ingredient_name="Ice", _current_step_text="Add Ice"))
 # ADD A SCALE STEP: ADD x g TO THE GLASS
-example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name="Grenadine", _current_step_text="", _target_value = 40))
+example_recipe.add_step(recipe.create_scale_step(_ingredient_name="Grenadine", _target_value = 40))
 # ADD A WAIT STEP:  WAIT x SECONDS
-example_recipe.add_step(recipe.recipe_step(_action=recipe.USER_INTERACTION_MODE.WAIT, _ingredient_name="", _current_step_text="Wait for settle down", _target_value = 10))
+example_recipe.add_step(recipe.create_scale_step(_current_step_text="Wait for settle down", _target_value = 10))
 
 
 # EXPORT THE RECIPES AS JSON BASE .RECIPE FILE

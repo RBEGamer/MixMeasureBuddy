@@ -17,7 +17,24 @@ class ingredient:
         self.amount = _amount
         self.id = _id
         self.unit = _unit
+
+
 class recipe_step:
+
+
+    @staticmethod
+    def create_scale_step(_ingredient_name: str, _target_value: int,  _current_step_text: str = ""):
+        return recipe_step(_action=recipe.USER_INTERACTION_MODE.SCALE, _ingredient_name=_ingredient_name, _current_step_text=_current_step_text, _target_value = _target_value)
+
+    @staticmethod
+    def create_confirm_step(_ingredient_name: str, _current_step_text: str):
+        return recipe_step(_action=recipe.USER_INTERACTION_MODE.CONFIRM, _ingredient_name = _ingredient_name, _current_step_text = _current_step_text, _target_value = -1)
+
+    @staticmethod
+    def create_wait_step(_current_step_text: str, _target_value: int):
+        return recipe_step(_action=recipe.USER_INTERACTION_MODE.WAIT, _ingredient_name="", _current_step_text = _current_step_text, _target_value = _target_value)
+
+
 
     action: USER_INTERACTION_MODE = USER_INTERACTION_MODE.UNKNOWN
     ingredient_name: str = ""
