@@ -590,3 +590,8 @@ One problem was how to build and distribute the Micropython images automatically
 The way documented by Micropython does not allow the user to change the code and data after building the u2f, because they are permanently written to the flash (static/lib) fodlers.
 That's why the complicated build process was created using a Docker image that installs a pre application boot procedure, so that the user source code to the Python file system during the first boot.
 This way, functions can be easily added/modified by the user and at the same time the finished software can be easily distributed.
+
+
+# TODO
+
+* Cocktail database webapp - `src/webapp`
