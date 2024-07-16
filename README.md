@@ -470,7 +470,7 @@ Please use the same procedure described above to edit files on the scale filesys
 
 
 
-# SOFTWARE DEVELOPMENT
+# FIRMWARE DEVELOPMENT
 
 The microcontroller firmware of the `Raspberry Pi Pico` was created in micropython and is automatically created with the pre-built image. 
 The source code files are located in the folder `src/firmware_rp2040` and the Python source code files in the folder `src/firmware_rp2040/src`.
