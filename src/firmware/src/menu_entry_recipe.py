@@ -10,6 +10,7 @@ import time
 from Scales import ScaleInterface
 import config
 
+
 class menu_entry_recipe(menu_entry.menu_entry):
     RECIPE_STATE_INIT = 0
     RECIPE_STATE_OVERVIEW = 1
@@ -121,7 +122,7 @@ class menu_entry_recipe(menu_entry.menu_entry):
 
                 elif _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_RIGHT:
                     self.drink_multiplier = self.drink_multiplier + 1
-
+                
                 ui().show_recipe_information("DRINK QUANTITY","{}x".format(self.drink_multiplier))
 
             elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
@@ -134,10 +135,17 @@ class menu_entry_recipe(menu_entry.menu_entry):
                 self.recipe_state = self.RECIPE_RUNNING_INIT
             # SYSTEM WAITS FOR INCREASING LOAD ON THE SCALE AND CONTINOUES AUTOMATICALLY
             elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
-                if _system_command.value > (self.last_scale_value + config.CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT):
+                current: float = _system_command.value
+                target: float = (self.last_scale_value + config.CFG_SCALE_GLASS_ADDITION_NEXT_STEP_WEIGHT)
+                if config.CFG_DEBUG:
+                    print("{}g of {}g".format(current, target))
+                    
+                    
+                if current > target:
                     self.tare_scale()
                     self.recipe_state = self.RECIPE_RUNNING_INIT
-
+            
+                
         # LOAD FIRST STEP
         elif self.recipe_state == self.RECIPE_RUNNING_INIT:
             self.loaded_recipe.reset_steps()
@@ -152,13 +160,19 @@ class menu_entry_recipe(menu_entry.menu_entry):
         
             self.tare_scale()
             self.current_recipe_step, self.is_end_step = self.loaded_recipe.get_current_recipe_step()
-            
+            if config.CFG_DEBUG:
+                print(self.current_recipe_step.target_value)
+                
             self.recipe_state = self.RECIPE_RUNNING
 
             if self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.SCALE:
                 ui().show_recipe_step("ADD", self.current_recipe_step.ingredient_name)
                 try:
-                    self.current_recipe_step.target_value = self.current_recipe_step * (self.drink_multiplier*1.0)
+                    self.current_recipe_step.target_value = self.current_recipe_step.target_value * (self.drink_multiplier*1.0)
+                    
+                    if config.CFG_DEBUG:
+                        print("target weight for this step is: {}g".format(self.current_recipe_step.target_value))
+                    
                 except Exception as e:
                     self.current_recipe_step.target_value = 1.0
             elif self.current_recipe_step.action == recipe.USER_INTERACTION_MODE.CONFIRM:
@@ -179,6 +193,8 @@ class menu_entry_recipe(menu_entry.menu_entry):
                 if _system_command.type == system_command.system_command.COMMAND_TYPE_NAVIGATION and _system_command.action == system_command.system_command.NAVIGATION_ENTER:
                     self.recipe_state = self.RECIPE_END_CHECK
                 elif _system_command.type == system_command.system_command.COMMAND_TYPE_SCALE_VALUE:
+                    if config.CFG_DEBUG:
+                        print("{}g of {}g".format(_system_command.value, self.current_recipe_step.target_value))
                     # UPDAT LED RING
                     if _system_command.value > (self.current_recipe_step.target_value * 0.9):
                         ledring().set_neopixel_percentage(_system_command.value / (self.current_recipe_step.target_value*1.0),_independent_coloring = False)
