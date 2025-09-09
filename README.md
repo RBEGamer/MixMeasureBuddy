@@ -70,7 +70,7 @@ If a `8mm` wide led strip is used please set the scale of `bottom.stl` to `120%`
 * 4x `M4x10 BHCS` - depends on load cell screw threads
 * 3x `Heat Inserts M4`
 * 3x `M4x10 BHCS`
-* 8x `Cylindrical Magnet D5mm H8mm`
+* 8x `Cylindrical Magnet D5mm H8mm` or four additional `Heat Inserts M4` + four additional `M4x10 SHCS` to replace the magnets
 
 ### MISC
 
@@ -286,17 +286,30 @@ If a old version of the firmwre was already installed on the `Raspberry Pi Pico`
 
 ### 6. CELLPLATE
 
-* 4x `Cylindrical Magnet D5mm H8mm`
+* 4x `Cylindrical Magnet D5mm H8mm` or 4x `M4x6.x mm` heat inserts + 4x `M4x10 SHCS` to replace the magnets
 * 1x `cellplate.stl`
+
 
 #### INSTRUCTIONS
 
 ![6_cellplate](documentation/images/build_images_v1.0.0/6_cellplate/cellplate_0.png) 
 
+##### USING MAGNETS
 1. Glue four magnets into `cellplate`
 2. Place the `cellplate` on the `inner_cellplate`
 
 **NOTE** Please ensure that the magnets in the two parts `cellplate`, `inner_cellplate` attract each other on opposite sides
+
+##### USING HEAT INSERTS
+
+1. Insert the `heatinserts` in the four holes of the `cellplate`
+2. 
+3. Place the `cellplate` on the `inner_cellplate`
+4. Align the flat edge of the `cellplate` with the display and use the four `M4x10 SHCS` screws to connect the `cellplate` with `inner_cellplate`
+
+
+
+
 
 # USAGE
 
