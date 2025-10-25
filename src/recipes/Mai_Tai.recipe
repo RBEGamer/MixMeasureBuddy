@@ -1,0 +1,52 @@
+{
+    "filename": "Mai_Tai.recipe",
+    "name": "Mai Tai",
+    "steps": [{
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Dark Rum",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Orange Curaçao",
+        "amount": 15,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Fresh Lime Juice",
+        "amount": 25,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Orgeat Syrup",
+        "amount": 15,
+        "action": 0
+    }, {
+        "text": "Add ice cubes to shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Shake well until chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+    }, {
+        "text": "Strain into an old-fashioned glass with crushed ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with mint sprig and lime wheel",
+        "ingredient": "Mint Sprig",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A tropical tiki classic combining light and dark rum, orange curaçao, lime juice, and orgeat syrup, served over crushed ice and garnished with mint.",
+    "version": "1.0.0"
+}
