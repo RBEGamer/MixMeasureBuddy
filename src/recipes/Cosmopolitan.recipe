@@ -1,0 +1,47 @@
+{
+    "filename": "Cosmopolitan.recipe",
+    "name": "Cosmopolitan",
+    "steps": [{
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 45,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Triple Sec",
+        "amount": 15,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Cranberry Juice",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Fresh Lime Juice",
+        "amount": 15,
+        "action": 0
+    }, {
+        "text": "Add ice cubes to shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Shake vigorously until well chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+    }, {
+        "text": "Strain into a chilled martini glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with a lime twist or orange zest",
+        "ingredient": "Lime Twist",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A stylish and tangy pink cocktail made with vodka, triple sec, cranberry, and lime juice — crisp, refreshing, and perfect for any occasion.",
+    "version": "1.0.0"
+}
