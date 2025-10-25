@@ -1,0 +1,42 @@
+{
+    "filename": "Old_Fashioned.recipe",
+    "name": "Old Fashioned",
+    "steps": [{
+        "text": "Add sugar cube and bitters to glass",
+        "ingredient": "Sugar Cube",
+        "amount": 1,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Angostura Bitters",
+        "amount": 2,
+        "action": 0
+    }, {
+        "text": "Muddle until sugar is dissolved",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "",
+        "ingredient": "Bourbon Whiskey",
+        "amount": 60,
+        "action": 0
+    }, {
+        "text": "Add large ice cube",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Stir gently to chill and mix",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+    }, {
+        "text": "Garnish with orange peel and cherry",
+        "ingredient": "Orange Peel",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A timeless cocktail made with bourbon, bitters, and sugar, stirred over ice and finished with an orange peel and cherry garnish.",
+    "version": "1.0.0"
+}
