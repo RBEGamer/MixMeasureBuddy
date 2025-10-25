@@ -1,0 +1,42 @@
+{
+    "filename": "Whiskey_Sour.recipe",
+    "name": "Whiskey Sour",
+    "steps": [{
+        "text": "",
+        "ingredient": "Bourbon Whiskey",
+        "amount": 60,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Fresh Lemon Juice",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Simple Syrup",
+        "amount": 15,
+        "action": 0
+    }, {
+        "text": "Add ice cubes to shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Shake well until chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+    }, {
+        "text": "Strain into an old-fashioned glass with fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with an orange slice and a maraschino cherry",
+        "ingredient": "Orange Slice",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A smooth and tangy cocktail made with bourbon, lemon juice, and simple syrup, served over ice and garnished with citrus and cherry.",
+    "version": "1.0.0"
+}
