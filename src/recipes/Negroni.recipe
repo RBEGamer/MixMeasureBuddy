@@ -1,0 +1,42 @@
+{
+    "filename": "Negroni.recipe",
+    "name": "Negroni",
+    "steps": [{
+        "text": "Add ice cubes to a mixing glass",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Campari",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Sweet Vermouth",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "Stir well until chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+    }, {
+        "text": "Strain into an old-fashioned glass with fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with an orange peel",
+        "ingredient": "Orange Peel",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A timeless Italian aperitif made with equal parts gin, Campari, and sweet vermouth, served over ice and garnished with an orange peel.",
+    "version": "1.0.0"
+}
