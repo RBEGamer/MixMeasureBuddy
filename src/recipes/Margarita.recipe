@@ -1,0 +1,47 @@
+{
+    "filename": "Margarita.recipe",
+    "name": "Margarita",
+    "steps": [{
+        "text": "Rim the glass with salt",
+        "ingredient": "Salt",
+        "amount": 2,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Tequila",
+        "amount": 50,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Triple Sec",
+        "amount": 25,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Fresh Lime Juice",
+        "amount": 25,
+        "action": 0
+    }, {
+        "text": "Add ice cubes to shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Shake well until chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+    }, {
+        "text": "Strain into the prepared glass with ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with a lime wheel",
+        "ingredient": "Lime Wheel",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A classic cocktail made with tequila, triple sec, and lime juice, served in a salt-rimmed glass for the perfect balance of tart and sweet.",
+    "version": "1.0.0"
+}
