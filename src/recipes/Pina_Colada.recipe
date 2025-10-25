@@ -1,0 +1,42 @@
+{
+    "filename": "Pina_Colada.recipe",
+    "name": "Piña Colada",
+    "steps": [{
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 60,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Coconut Cream",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Pineapple Juice",
+        "amount": 90,
+        "action": 0
+    }, {
+        "text": "Add ice cubes to blender",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "Blend until smooth",
+        "ingredient": "",
+        "amount": 20,
+        "action": 2
+    }, {
+        "text": "Pour into a chilled glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with pineapple wedge and cherry",
+        "ingredient": "Pineapple Wedge",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A creamy tropical cocktail made with rum, coconut cream, and pineapple juice — blended with ice for a smooth and refreshing drink.",
+    "version": "1.0.0"
+}
