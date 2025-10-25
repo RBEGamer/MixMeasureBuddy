@@ -1,0 +1,37 @@
+{
+    "filename": "Aperol_Spritz.recipe",
+    "name": "Aperol Spritz",
+    "steps": [{
+        "text": "Add ice cubes to the glass",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Prosecco",
+        "amount": 90,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Aperol",
+        "amount": 60,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "Soda Water",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "Gently stir to mix",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "Garnish with an orange slice",
+        "ingredient": "Orange Slice",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A refreshing Italian cocktail made with Aperol, Prosecco, and soda water, served over ice and garnished with an orange slice.",
+    "version": "1.0.0"
+}
