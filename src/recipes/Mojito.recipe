@@ -1,0 +1,47 @@
+{
+    "filename": "Mojito.recipe",
+    "name": "Mojito",
+    "steps": [{
+        "text": "Add fresh mint leaves and sugar to the glass",
+        "ingredient": "Mint Leaves",
+        "amount": 8,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "White Sugar",
+        "amount": 10,
+        "action": 0
+    }, {
+        "text": "Muddle mint and sugar together",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+    }, {
+        "text": "",
+        "ingredient": "Fresh Lime Juice",
+        "amount": 30,
+        "action": 0
+    }, {
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 50,
+        "action": 0
+    }, {
+        "text": "Add ice cubes",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+    }, {
+        "text": "",
+        "ingredient": "Soda Water",
+        "amount": 60,
+        "action": 0
+    }, {
+        "text": "Stir gently and garnish with mint sprig and lime slice",
+        "ingredient": "Mint Sprig",
+        "amount": 1,
+        "action": 1
+    }],
+    "description": "A classic Cuban cocktail combining fresh mint, lime juice, rum, sugar, and soda water for a perfectly refreshing drink.",
+    "version": "1.0.0"
+}
