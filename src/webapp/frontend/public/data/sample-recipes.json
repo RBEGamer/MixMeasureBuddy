@@ -294,6 +294,62 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Blackberry_Thyme_Gimlet.recipe",
+    "name": "Blackberry Thyme Gimlet",
+    "steps": [
+      {
+        "text": "Muddle blackberries and thyme with syrup",
+        "ingredient": "Blackberries",
+        "amount": 5,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 55,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Thyme Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add cracked ice and shake firmly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake to chill and extract berry color",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Double strain into chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with thyme sprig and blackberry",
+        "ingredient": "Thyme Sprig",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A jewel-toned gimlet melding blackberry sweetness with herbal thyme.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Blood_and_Sand.recipe",
     "name": "Blood and Sand",
     "steps": [
@@ -415,6 +471,68 @@
       }
     ],
     "description": "Savory brunch classic with vodka, tomato juice, citrus, and spice.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Blueberry_Sage_Spritz.recipe",
+    "name": "Blueberry Sage Spritz",
+    "steps": [
+      {
+        "text": "Lightly muddle blueberries and sage leaves in shaker",
+        "ingredient": "Blueberries",
+        "amount": 6,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Sage Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lemon Juice",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake gently",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake to chill without over diluting",
+        "ingredient": "",
+        "amount": 8,
+        "action": 2
+      },
+      {
+        "text": "Strain into a wine glass over fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with prosecco",
+        "ingredient": "Prosecco",
+        "amount": 100,
+        "action": 0
+      },
+      {
+        "text": "Garnish with additional blueberries and sage leaf",
+        "ingredient": "Sage Leaf",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Effervescent spritz featuring blueberry, sage, and a prosecco crown.",
     "version": "1.0.0"
   },
   {
@@ -624,6 +742,124 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Caramel_Apple_Martini.recipe",
+    "name": "Caramel Apple Martini",
+    "steps": [
+      {
+        "text": "Chill a coupe glass with ice water",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Apple Cider",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Caramel Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add a pinch of cinnamon to the shaker",
+        "ingredient": "Ground Cinnamon",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Shake until well chilled and combined",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Discard the ice from the glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Strain into the chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a thin apple slice",
+        "ingredient": "Apple Slice",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A Fall-inspired martini blending crisp apple cider with rich caramel and vodka.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Cherry_Vanilla_Manhattan.recipe",
+    "name": "Cherry Vanilla Manhattan",
+    "steps": [
+      {
+        "text": "Add ice to a mixing glass",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Rye Whiskey",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Sweet Vermouth",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Cherry Vanilla Syrup",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Add two drops of cherry bitters",
+        "ingredient": "Cherry Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Stir until chilled and silky",
+        "ingredient": "",
+        "amount": 18,
+        "action": 2
+      },
+      {
+        "text": "Strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with skewered cherries",
+        "ingredient": "Brandied Cherry",
+        "amount": 2,
+        "action": 1
+      }
+    ],
+    "description": "A dessert-worthy Manhattan enriched with cherry vanilla syrup.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Clover_Club.recipe",
     "name": "Clover Club",
     "steps": [
@@ -677,6 +913,174 @@
       }
     ],
     "description": "Pre-Prohibition raspberry gin sour finished with silky foam.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Coconut_Matcha_Colada.recipe",
+    "name": "Coconut Matcha Colada",
+    "steps": [
+      {
+        "text": "Add crushed ice to the blender cup",
+        "ingredient": "Ice",
+        "amount": 180,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Coconut Cream",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Pineapple Juice",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Add sifted matcha powder",
+        "ingredient": "Matcha Powder",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Blend until smooth and frothy",
+        "ingredient": "",
+        "amount": 18,
+        "action": 2
+      },
+      {
+        "text": "Pour into a chilled hurricane glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with pineapple frond and coconut flakes",
+        "ingredient": "Toasted Coconut",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A creamy frozen colada infused with earthy matcha tea and tropical coconut.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Coffee_Banana_Flip.recipe",
+    "name": "Coffee Banana Flip",
+    "steps": [
+      {
+        "text": "Add a fresh egg to the shaker",
+        "ingredient": "Egg",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Pour in aged rum",
+        "ingredient": "Aged Rum",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add coffee liqueur",
+        "ingredient": "Coffee Liqueur",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add banana liqueur",
+        "ingredient": "Banana Liqueur",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add a bar spoon of rich syrup",
+        "ingredient": "Rich Demerara Syrup",
+        "amount": 5,
+        "action": 0
+      },
+      {
+        "text": "Dry shake to emulsify",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Add ice and shake hard until frothy",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Fine strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Grate fresh nutmeg on top",
+        "ingredient": "Nutmeg",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A decadent flip shaking espresso-inspired liqueurs with banana sweetness and silky egg texture.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Cold_Brew_Amaro_Highball.recipe",
+    "name": "Cold Brew Amaro Highball",
+    "steps": [
+      {
+        "text": "Fill a chilled highball glass with clear ice",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Pour in cold brew concentrate",
+        "ingredient": "Cold Brew Coffee",
+        "amount": 75,
+        "action": 0
+      },
+      {
+        "text": "Add Italian amaro for bitterness",
+        "ingredient": "Amaro",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add a bar spoon of demerara syrup",
+        "ingredient": "Demerara Syrup",
+        "amount": 5,
+        "action": 0
+      },
+      {
+        "text": "Stir briefly to combine",
+        "ingredient": "",
+        "amount": 6,
+        "action": 2
+      },
+      {
+        "text": "Top with chilled soda water",
+        "ingredient": "Soda Water",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Garnish with expressed orange peel",
+        "ingredient": "Orange Peel",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A fizzy highball marrying cold brew coffee with bitter-sweet amaro and bright orange oils.",
     "version": "1.0.0"
   },
   {
@@ -795,6 +1199,118 @@
       }
     ],
     "description": "A stylish and tangy pink cocktail made with vodka, triple sec, cranberry, and lime juice — crisp, refreshing, and perfect for any occasion.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Cranberry_Spice_Spritz.recipe",
+    "name": "Cranberry Spice Spritz",
+    "steps": [
+      {
+        "text": "Fill wine glass with ice cubes",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Aperol",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Spiced Cranberry Syrup",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Sparkling Wine",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Soda Water",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Stir gently to integrate carbonation",
+        "ingredient": "",
+        "amount": 6,
+        "action": 2
+      },
+      {
+        "text": "Garnish with fresh cranberries and orange peel",
+        "ingredient": "Cranberries",
+        "amount": 3,
+        "action": 1
+      }
+    ],
+    "description": "Festive spritz combining Aperol, spiced cranberry syrup, and bubbles.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Cucumber_Lychee_Collins.recipe",
+    "name": "Cucumber Lychee Collins",
+    "steps": [
+      {
+        "text": "Muddle cucumber slices and lychee in shaker",
+        "ingredient": "Cucumber",
+        "amount": 4,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lychee Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lemon Juice",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake briefly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake to integrate flavors",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Strain into Collins glass with fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with soda water",
+        "ingredient": "Soda Water",
+        "amount": 100,
+        "action": 0
+      },
+      {
+        "text": "Garnish with cucumber ribbon and lychee",
+        "ingredient": "Lychee",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A crisp Collins with cooling cucumber and fragrant lychee.",
     "version": "1.0.0"
   },
   {
@@ -939,6 +1455,62 @@
       }
     ],
     "description": "A smooth, caffeinated cocktail blending vodka, coffee liqueur, and espresso for a rich and elegant pick-me-up.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Espresso_Negroni.recipe",
+    "name": "Espresso Negroni",
+    "steps": [
+      {
+        "text": "Add clear ice to a mixing glass",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Pour in gin",
+        "ingredient": "Gin",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add Campari",
+        "ingredient": "Campari",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add sweet vermouth",
+        "ingredient": "Sweet Vermouth",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add chilled espresso",
+        "ingredient": "Espresso",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Stir until well chilled",
+        "ingredient": "",
+        "amount": 18,
+        "action": 2
+      },
+      {
+        "text": "Strain over a large ice cube in a rocks glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a flamed orange coin",
+        "ingredient": "Orange Peel",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Bold Negroni build brightened by fresh espresso for extra depth and crema aromatics.",
     "version": "1.0.0"
   },
   {
@@ -1101,6 +1673,242 @@
       }
     ],
     "description": "Vibrant gin sour infused with muddled basil and lemon.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Ginger_Pear_Buck.recipe",
+    "name": "Ginger Pear Buck",
+    "steps": [
+      {
+        "text": "Add pear slices to shaker and muddle gently",
+        "ingredient": "Pear Slices",
+        "amount": 3,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Pear Nectar",
+        "amount": 80,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add spicy ginger syrup",
+        "ingredient": "Ginger Syrup",
+        "amount": 15,
+        "action": 1
+      },
+      {
+        "text": "Shake quickly with ice",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Strain into a mule mug filled with crushed ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with ginger beer",
+        "ingredient": "Ginger Beer",
+        "amount": 80,
+        "action": 0
+      },
+      {
+        "text": "Garnish with pear fan and candied ginger",
+        "ingredient": "Candied Ginger",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A bright buck cocktail combining juicy pear with zesty ginger.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Grapefruit_Basil_Cooler.recipe",
+    "name": "Grapefruit Basil Cooler",
+    "steps": [
+      {
+        "text": "Lightly muddle basil leaves in the shaker",
+        "ingredient": "Fresh Basil",
+        "amount": 5,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Grapefruit Juice",
+        "amount": 75,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Honey Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add ice to shaker and shake briskly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake to blend and chill",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Strain over fresh ice in a Collins glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with club soda",
+        "ingredient": "Club Soda",
+        "amount": 80,
+        "action": 0
+      },
+      {
+        "text": "Garnish with basil sprig and grapefruit slice",
+        "ingredient": "Grapefruit Slice",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A refreshing grapefruit highball brightened with basil and honey.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Hibiscus_Rose_Tonic.recipe",
+    "name": "Hibiscus Rose Tonic",
+    "steps": [
+      {
+        "text": "Fill a balloon glass with ice",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Hibiscus Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Rose Water",
+        "amount": 2,
+        "action": 0
+      },
+      {
+        "text": "Stir briefly to combine aromatics",
+        "ingredient": "",
+        "amount": 6,
+        "action": 2
+      },
+      {
+        "text": "Top with premium tonic water",
+        "ingredient": "Tonic Water",
+        "amount": 120,
+        "action": 0
+      },
+      {
+        "text": "Garnish with dried hibiscus petals and rosebud",
+        "ingredient": "Dried Hibiscus",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A floral tonic cocktail infused with hibiscus syrup and a whisper of rose.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Honeydew_Margarita.recipe",
+    "name": "Honeydew Margarita",
+    "steps": [
+      {
+        "text": "Add honeydew chunks to the shaker and muddle",
+        "ingredient": "Honeydew",
+        "amount": 40,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Tequila Blanco",
+        "amount": 55,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Cointreau",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add agave nectar for sweetness",
+        "ingredient": "Agave Nectar",
+        "amount": 10,
+        "action": 1
+      },
+      {
+        "text": "Fill shaker with ice and shake firmly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake until chilled and frothy",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Strain into a salt-rimmed rocks glass over fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with honeydew wedge",
+        "ingredient": "Honeydew Wedge",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Melon-forward margarita balancing tequila with fresh honeydew puree.",
     "version": "1.0.0"
   },
   {
@@ -1331,6 +2139,56 @@
       }
     ],
     "description": "Tropical bitter-sweet mix of rum, Campari, and pineapple.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Kiwi_Coconut_Caipirinha.recipe",
+    "name": "Kiwi Coconut Caipirinha",
+    "steps": [
+      {
+        "text": "Quarter the kiwi and muddle with sugar in rocks glass",
+        "ingredient": "Kiwi",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Coconut Sugar",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Cachaça",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Coconut Water",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Fill glass with crushed ice and stir",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Stir to combine and chill",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Garnish with kiwi wheel and toasted coconut",
+        "ingredient": "Toasted Coconut",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A tropical caipirinha bursting with kiwi sweetness and coconut water.",
     "version": "1.0.0"
   },
   {
@@ -1844,6 +2702,118 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Nitro_Irish_Cream_Float.recipe",
+    "name": "Nitro Irish Cream Float",
+    "steps": [
+      {
+        "text": "Fill a chilled pilsner glass halfway with nitro cold brew",
+        "ingredient": "Nitro Cold Brew",
+        "amount": 150,
+        "action": 0
+      },
+      {
+        "text": "Add Irish whiskey",
+        "ingredient": "Irish Whiskey",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add coffee liqueur",
+        "ingredient": "Coffee Liqueur",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Stir gently to combine the base",
+        "ingredient": "",
+        "amount": 6,
+        "action": 2
+      },
+      {
+        "text": "Float Irish cream over the back of a bar spoon",
+        "ingredient": "Irish Cream",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Top with lightly whipped cream",
+        "ingredient": "Lightly Whipped Cream",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Dust with cocoa powder and garnish with nutmeg",
+        "ingredient": "Cocoa Powder",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Layers of nitro cold brew, Irish spirits, and velvety cream for a dessert-like coffee cocktail.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Oaxacan_Coffee_Martini.recipe",
+    "name": "Oaxacan Coffee Martini",
+    "steps": [
+      {
+        "text": "Add mezcal to the shaker",
+        "ingredient": "Mezcal",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add reposado tequila",
+        "ingredient": "Tequila Reposado",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add coffee liqueur",
+        "ingredient": "Coffee Liqueur",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add cooled espresso",
+        "ingredient": "Espresso",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add agave nectar for balance",
+        "ingredient": "Agave Nectar",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake hard",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake until frothy crema forms",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Fine strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with three coffee beans",
+        "ingredient": "Coffee Beans",
+        "amount": 3,
+        "action": 1
+      }
+    ],
+    "description": "Smoky mezcal and reposado tequila shaken with espresso and agave for a rich coffee martini.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Old_Cuban.recipe",
     "name": "Old Cuban",
     "steps": [
@@ -2286,6 +3256,68 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Pineapple_Chili_Daiquiri.recipe",
+    "name": "Pineapple Chili Daiquiri",
+    "steps": [
+      {
+        "text": "Add a pinch of chili flakes to the shaker",
+        "ingredient": "Chili Flakes",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gold Rum",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Pineapple Juice",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Simple Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add ice cubes to the shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake hard to combine and chill",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Strain into a chilled coupe glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with pineapple leaf and chili slice",
+        "ingredient": "Chili Slice",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Classic daiquiri flavors with a tropical pineapple kick and chili heat.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Pisco_Sour.recipe",
     "name": "Pisco Sour",
     "steps": [
@@ -2528,6 +3560,68 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Rosemary_Lemonade_Fizz.recipe",
+    "name": "Rosemary Lemonade Fizz",
+    "steps": [
+      {
+        "text": "Fill a shaker with ice cubes",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Fresh Lemon Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Rosemary Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add a small rosemary sprig to the shaker",
+        "ingredient": "Rosemary",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Shake quickly to chill",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Double strain into an ice-filled Collins glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with sparkling water",
+        "ingredient": "Sparkling Water",
+        "amount": 120,
+        "action": 0
+      },
+      {
+        "text": "Garnish with a lemon wheel and rosemary sprig",
+        "ingredient": "Lemon Wheel",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Herbal lemonade fizz with rosemary syrup and bright gin notes.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Rum_and_Coke.recipe",
     "name": "Rum and Coke",
     "steps": [
@@ -2569,6 +3663,56 @@
       }
     ],
     "description": "Simple and refreshing mix of rum, cola, and lime.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Salted_Caramel_White_Russian.recipe",
+    "name": "Salted Caramel White Russian",
+    "steps": [
+      {
+        "text": "Fill an old fashioned glass with ice cubes",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Coffee Liqueur",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Salted Caramel Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Stir gently to combine spirits",
+        "ingredient": "",
+        "amount": 8,
+        "action": 2
+      },
+      {
+        "text": "Float heavy cream over the back of a spoon",
+        "ingredient": "Heavy Cream",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Lightly dust with cocoa powder",
+        "ingredient": "Cocoa Powder",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A dessert-style White Russian infused with salted caramel richness.",
     "version": "1.0.0"
   },
   {
@@ -2852,6 +3996,56 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Smoked_Maple_Old_Fashioned.recipe",
+    "name": "Smoked Maple Old Fashioned",
+    "steps": [
+      {
+        "text": "Add a large ice cube to a rocks glass",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Bourbon",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Maple Syrup",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Add two dashes of smoked bitters",
+        "ingredient": "Smoked Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Stir gently to chill and dilute",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Express an orange peel over the glass",
+        "ingredient": "Orange Peel",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Garnish with the peel and a bourbon cherry",
+        "ingredient": "Bourbon Cherry",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A rich old fashioned sweetened with maple and kissed with smoked bitters.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Southside.recipe",
     "name": "Southside",
     "steps": [
@@ -2908,6 +4102,254 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Spiced_Coconut_Coffee_Tiki.recipe",
+    "name": "Spiced Coconut Coffee Tiki",
+    "steps": [
+      {
+        "text": "Combine coconut rum and dark rum in the shaker",
+        "ingredient": "Coconut Rum",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add dark rum",
+        "ingredient": "Dark Rum",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add brewed coffee concentrate",
+        "ingredient": "Coffee Concentrate",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add allspice dram for tiki spice",
+        "ingredient": "Allspice Dram",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add coconut milk for creaminess",
+        "ingredient": "Coconut Milk",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Add cinnamon syrup",
+        "ingredient": "Cinnamon Syrup",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with crushed ice and shake vigorously",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Shake to chill and lightly dilute",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Dump contents into a tiki mug",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with additional crushed ice",
+        "ingredient": "Crushed Ice",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Garnish with coffee beans and cinnamon stick",
+        "ingredient": "Coffee Beans",
+        "amount": 3,
+        "action": 1
+      }
+    ],
+    "description": "A tropical tiki riff layering coconut, coffee concentrate, and warming spices over rum.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Spicy_Paloma_Twist.recipe",
+    "name": "Spicy Paloma Twist",
+    "steps": [
+      {
+        "text": "Rim a highball glass with chili salt and fill with ice",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Tequila Blanco",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Fresh Grapefruit Juice",
+        "amount": 70,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Agave Syrup",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Add a dash of hot sauce to spice things up",
+        "ingredient": "Hot Sauce",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Stir to combine the flavors",
+        "ingredient": "",
+        "amount": 8,
+        "action": 2
+      },
+      {
+        "text": "Top with grapefruit soda",
+        "ingredient": "Grapefruit Soda",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Garnish with grapefruit wedge and jalapeño slice",
+        "ingredient": "Grapefruit Wedge",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A zesty Paloma variation with a touch of heat from hot sauce and chili salt.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Strawberry_Colada.recipe",
+    "name": "Strawberry Colada",
+    "steps": [
+      {
+        "text": "Add fresh strawberries to the blender jar",
+        "ingredient": "Strawberries",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Pour in white rum",
+        "ingredient": "White Rum",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add coconut cream",
+        "ingredient": "Coconut Cream",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add pineapple juice",
+        "ingredient": "Pineapple Juice",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Add crushed ice",
+        "ingredient": "Ice",
+        "amount": 200,
+        "action": 0
+      },
+      {
+        "text": "Blend until smooth and creamy",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Pour into a chilled hurricane glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with strawberry and pineapple wedge",
+        "ingredient": "Strawberry",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A tropical frozen colada blended with ripe strawberries, creamy coconut, and pineapple.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Strawberry_Rhubarb_Sour.recipe",
+    "name": "Strawberry Rhubarb Sour",
+    "steps": [
+      {
+        "text": "Add strawberries and rhubarb syrup to the shaker",
+        "ingredient": "Strawberries",
+        "amount": 3,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Bourbon",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Rhubarb Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lemon Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add a dash of aromatic bitters",
+        "ingredient": "Aromatic Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Shake hard with ice to integrate fruit",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Double strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a thin strawberry fan",
+        "ingredient": "Strawberry Fan",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A tangy bourbon sour featuring ripe strawberries and rhubarb syrup.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Tequila_Sunrise.recipe",
     "name": "Tequila Sunrise",
     "steps": [
@@ -2943,6 +4385,56 @@
       }
     ],
     "description": "Layered tequila cocktail with orange juice and grenadine sunrise.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Toasted_Almond_Espresso.recipe",
+    "name": "Toasted Almond Espresso",
+    "steps": [
+      {
+        "text": "Add freshly brewed espresso to the mixing glass",
+        "ingredient": "Espresso",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Vodka",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Amaretto",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Coffee Liqueur",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add ice and stir until chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Strain into a chilled martini glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with grated nutmeg or toasted almond shavings",
+        "ingredient": "Toasted Almond",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "An indulgent espresso martini nuance with amaretto and toasted almond.",
     "version": "1.0.0"
   },
   {
@@ -3049,6 +4541,68 @@
       }
     ],
     "description": "Bond's blend of gin, vodka, and aromatized wine served icy cold.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Watermelon_Mint_Mojito.recipe",
+    "name": "Watermelon Mint Mojito",
+    "steps": [
+      {
+        "text": "Muddle mint leaves and watermelon cubes in the glass",
+        "ingredient": "Fresh Mint",
+        "amount": 8,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Watermelon",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lime Juice",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Simple Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Fill the glass with crushed ice",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Stir to combine and chill",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Top with sparkling water",
+        "ingredient": "Sparkling Water",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Garnish with watermelon wedge and mint sprig",
+        "ingredient": "Watermelon Wedge",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A juicy mojito riff featuring fresh watermelon and a bouquet of mint.",
     "version": "1.0.0"
   },
   {

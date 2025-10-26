@@ -1,0 +1,51 @@
+{
+    "filename": "Salted_Caramel_White_Russian.recipe",
+    "name": "Salted Caramel White Russian",
+    "steps": [
+        {
+            "text": "Fill an old fashioned glass with ice cubes",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coffee Liqueur",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Salted Caramel Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine spirits",
+            "ingredient": "",
+            "amount": 8,
+            "action": 2
+        },
+        {
+            "text": "Float heavy cream over the back of a spoon",
+            "ingredient": "Heavy Cream",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Lightly dust with cocoa powder",
+            "ingredient": "Cocoa Powder",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A dessert-style White Russian infused with salted caramel richness.",
+    "version": "1.0.0"
+}
+

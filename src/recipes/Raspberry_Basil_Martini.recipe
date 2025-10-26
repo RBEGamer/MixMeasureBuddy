@@ -1,0 +1,56 @@
+{
+    "filename": "Raspberry_Basil_Martini.recipe",
+    "name": "Raspberry Basil Martini",
+    "steps": [
+        {
+            "text": "Muddle raspberries and basil leaves with simple syrup",
+            "ingredient": "Raspberries",
+            "amount": 6,
+            "action": 1
+        },
+        {
+            "text": "Add fresh basil leaves",
+            "ingredient": "Fresh Basil",
+            "amount": 4,
+            "action": 1
+        },
+        {
+            "text": "Add vodka to the shaker",
+            "ingredient": "Vodka",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add raspberry liqueur",
+            "ingredient": "Raspberry Liqueur",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add lemon juice",
+            "ingredient": "Lemon Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake vigorously",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fine strain into a chilled martini glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a basil leaf and berry",
+            "ingredient": "Basil Leaf",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A vibrant martini marrying juicy raspberries with herbaceous basil and citrus.",
+    "version": "1.0.0"
+}

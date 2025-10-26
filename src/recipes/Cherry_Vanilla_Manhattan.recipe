@@ -1,0 +1,57 @@
+{
+    "filename": "Cherry_Vanilla_Manhattan.recipe",
+    "name": "Cherry Vanilla Manhattan",
+    "steps": [
+        {
+            "text": "Add ice to a mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Rye Whiskey",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Sweet Vermouth",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cherry Vanilla Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Add two drops of cherry bitters",
+            "ingredient": "Cherry Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Stir until chilled and silky",
+            "ingredient": "",
+            "amount": 18,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with skewered cherries",
+            "ingredient": "Brandied Cherry",
+            "amount": 2,
+            "action": 1
+        }
+    ],
+    "description": "A dessert-worthy Manhattan enriched with cherry vanilla syrup.",
+    "version": "1.0.0"
+}
+

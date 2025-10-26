@@ -1,0 +1,63 @@
+{
+    "filename": "Ginger_Pear_Buck.recipe",
+    "name": "Ginger Pear Buck",
+    "steps": [
+        {
+            "text": "Add pear slices to shaker and muddle gently",
+            "ingredient": "Pear Slices",
+            "amount": 3,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pear Nectar",
+            "amount": 80,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add spicy ginger syrup",
+            "ingredient": "Ginger Syrup",
+            "amount": 15,
+            "action": 1
+        },
+        {
+            "text": "Shake quickly with ice",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Strain into a mule mug filled with crushed ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with ginger beer",
+            "ingredient": "Ginger Beer",
+            "amount": 80,
+            "action": 0
+        },
+        {
+            "text": "Garnish with pear fan and candied ginger",
+            "ingredient": "Candied Ginger",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A bright buck cocktail combining juicy pear with zesty ginger.",
+    "version": "1.0.0"
+}
+

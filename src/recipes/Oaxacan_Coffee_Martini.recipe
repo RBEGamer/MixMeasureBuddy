@@ -1,0 +1,62 @@
+{
+    "filename": "Oaxacan_Coffee_Martini.recipe",
+    "name": "Oaxacan Coffee Martini",
+    "steps": [
+        {
+            "text": "Add mezcal to the shaker",
+            "ingredient": "Mezcal",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add reposado tequila",
+            "ingredient": "Tequila Reposado",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add coffee liqueur",
+            "ingredient": "Coffee Liqueur",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add cooled espresso",
+            "ingredient": "Espresso",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add agave nectar for balance",
+            "ingredient": "Agave Nectar",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake hard",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake until frothy crema forms",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Fine strain into a chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with three coffee beans",
+            "ingredient": "Coffee Beans",
+            "amount": 3,
+            "action": 1
+        }
+    ],
+    "description": "Smoky mezcal and reposado tequila shaken with espresso and agave for a rich coffee martini.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,51 @@
+{
+    "filename": "Toasted_Almond_Espresso.recipe",
+    "name": "Toasted Almond Espresso",
+    "steps": [
+        {
+            "text": "Add freshly brewed espresso to the mixing glass",
+            "ingredient": "Espresso",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Amaretto",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coffee Liqueur",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add ice and stir until chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled martini glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with grated nutmeg or toasted almond shavings",
+            "ingredient": "Toasted Almond",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "An indulgent espresso martini nuance with amaretto and toasted almond.",
+    "version": "1.0.0"
+}
+

@@ -1,0 +1,63 @@
+{
+    "filename": "Rosemary_Lemonade_Fizz.recipe",
+    "name": "Rosemary Lemonade Fizz",
+    "steps": [
+        {
+            "text": "Fill a shaker with ice cubes",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Fresh Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Rosemary Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add a small rosemary sprig to the shaker",
+            "ingredient": "Rosemary",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Shake quickly to chill",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Double strain into an ice-filled Collins glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with sparkling water",
+            "ingredient": "Sparkling Water",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Garnish with a lemon wheel and rosemary sprig",
+            "ingredient": "Lemon Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Herbal lemonade fizz with rosemary syrup and bright gin notes.",
+    "version": "1.0.0"
+}
+

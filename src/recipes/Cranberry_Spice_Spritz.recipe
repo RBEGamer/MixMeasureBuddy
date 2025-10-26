@@ -1,0 +1,51 @@
+{
+    "filename": "Cranberry_Spice_Spritz.recipe",
+    "name": "Cranberry Spice Spritz",
+    "steps": [
+        {
+            "text": "Fill wine glass with ice cubes",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Aperol",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Spiced Cranberry Syrup",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Sparkling Wine",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Soda Water",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to integrate carbonation",
+            "ingredient": "",
+            "amount": 6,
+            "action": 2
+        },
+        {
+            "text": "Garnish with fresh cranberries and orange peel",
+            "ingredient": "Cranberries",
+            "amount": 3,
+            "action": 1
+        }
+    ],
+    "description": "Festive spritz combining Aperol, spiced cranberry syrup, and bubbles.",
+    "version": "1.0.0"
+}
+

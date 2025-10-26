@@ -1,0 +1,68 @@
+{
+    "filename": "Apricot_Lavender_Sour.recipe",
+    "name": "Apricot Lavender Sour",
+    "steps": [
+        {
+            "text": "Add dried lavender and lemon juice to the shaker to bloom the aromatics",
+            "ingredient": "Dried Lavender",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Add apricot brandy",
+            "ingredient": "Apricot Brandy",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add bourbon",
+            "ingredient": "Bourbon",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add lavender honey syrup",
+            "ingredient": "Lavender Honey Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add fresh lemon juice",
+            "ingredient": "Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Separate an egg and add the white for texture",
+            "ingredient": "Egg White",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Dry shake to emulsify the egg white",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Add fresh ice and shake hard until frothy",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fine strain into a chilled coupe glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lavender sprig",
+            "ingredient": "Lavender Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A silky bourbon sour sweetened with apricot brandy and perfumed with lavender honey.",
+    "version": "1.0.0"
+}

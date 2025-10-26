@@ -1,0 +1,63 @@
+{
+    "filename": "Spicy_Paloma_Twist.recipe",
+    "name": "Spicy Paloma Twist",
+    "steps": [
+        {
+            "text": "Rim a highball glass with chili salt and fill with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Tequila Blanco",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Fresh Grapefruit Juice",
+            "amount": 70,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Agave Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Add a dash of hot sauce to spice things up",
+            "ingredient": "Hot Sauce",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Stir to combine the flavors",
+            "ingredient": "",
+            "amount": 8,
+            "action": 2
+        },
+        {
+            "text": "Top with grapefruit soda",
+            "ingredient": "Grapefruit Soda",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Garnish with grapefruit wedge and jalapeño slice",
+            "ingredient": "Grapefruit Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A zesty Paloma variation with a touch of heat from hot sauce and chili salt.",
+    "version": "1.0.0"
+}
+

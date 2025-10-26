@@ -1,0 +1,62 @@
+{
+    "filename": "Coffee_Banana_Flip.recipe",
+    "name": "Coffee Banana Flip",
+    "steps": [
+        {
+            "text": "Add a fresh egg to the shaker",
+            "ingredient": "Egg",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Pour in aged rum",
+            "ingredient": "Aged Rum",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add coffee liqueur",
+            "ingredient": "Coffee Liqueur",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add banana liqueur",
+            "ingredient": "Banana Liqueur",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add a bar spoon of rich syrup",
+            "ingredient": "Rich Demerara Syrup",
+            "amount": 5,
+            "action": 0
+        },
+        {
+            "text": "Dry shake to emulsify",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Add ice and shake hard until frothy",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fine strain into a chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Grate fresh nutmeg on top",
+            "ingredient": "Nutmeg",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A decadent flip shaking espresso-inspired liqueurs with banana sweetness and silky egg texture.",
+    "version": "1.0.0"
+}

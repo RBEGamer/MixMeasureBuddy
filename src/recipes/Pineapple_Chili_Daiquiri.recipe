@@ -1,0 +1,63 @@
+{
+    "filename": "Pineapple_Chili_Daiquiri.recipe",
+    "name": "Pineapple Chili Daiquiri",
+    "steps": [
+        {
+            "text": "Add a pinch of chili flakes to the shaker",
+            "ingredient": "Chili Flakes",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gold Rum",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add ice cubes to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake hard to combine and chill",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled coupe glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with pineapple leaf and chili slice",
+            "ingredient": "Chili Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Classic daiquiri flavors with a tropical pineapple kick and chili heat.",
+    "version": "1.0.0"
+}
+

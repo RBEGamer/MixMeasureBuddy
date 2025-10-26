@@ -1,0 +1,51 @@
+{
+    "filename": "Kiwi_Coconut_Caipirinha.recipe",
+    "name": "Kiwi Coconut Caipirinha",
+    "steps": [
+        {
+            "text": "Quarter the kiwi and muddle with sugar in rocks glass",
+            "ingredient": "Kiwi",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Coconut Sugar",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cachaça",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coconut Water",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Fill glass with crushed ice and stir",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Stir to combine and chill",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with kiwi wheel and toasted coconut",
+            "ingredient": "Toasted Coconut",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A tropical caipirinha bursting with kiwi sweetness and coconut water.",
+    "version": "1.0.0"
+}
+

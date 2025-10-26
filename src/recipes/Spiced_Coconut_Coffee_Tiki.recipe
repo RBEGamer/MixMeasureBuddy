@@ -1,0 +1,74 @@
+{
+    "filename": "Spiced_Coconut_Coffee_Tiki.recipe",
+    "name": "Spiced Coconut Coffee Tiki",
+    "steps": [
+        {
+            "text": "Combine coconut rum and dark rum in the shaker",
+            "ingredient": "Coconut Rum",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add dark rum",
+            "ingredient": "Dark Rum",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add brewed coffee concentrate",
+            "ingredient": "Coffee Concentrate",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add allspice dram for tiki spice",
+            "ingredient": "Allspice Dram",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add coconut milk for creaminess",
+            "ingredient": "Coconut Milk",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add cinnamon syrup",
+            "ingredient": "Cinnamon Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with crushed ice and shake vigorously",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake to chill and lightly dilute",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Dump contents into a tiki mug",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with additional crushed ice",
+            "ingredient": "Crushed Ice",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Garnish with coffee beans and cinnamon stick",
+            "ingredient": "Coffee Beans",
+            "amount": 3,
+            "action": 1
+        }
+    ],
+    "description": "A tropical tiki riff layering coconut, coffee concentrate, and warming spices over rum.",
+    "version": "1.0.0"
+}

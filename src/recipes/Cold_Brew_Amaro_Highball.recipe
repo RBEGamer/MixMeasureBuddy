@@ -1,0 +1,50 @@
+{
+    "filename": "Cold_Brew_Amaro_Highball.recipe",
+    "name": "Cold Brew Amaro Highball",
+    "steps": [
+        {
+            "text": "Fill a chilled highball glass with clear ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Pour in cold brew concentrate",
+            "ingredient": "Cold Brew Coffee",
+            "amount": 75,
+            "action": 0
+        },
+        {
+            "text": "Add Italian amaro for bitterness",
+            "ingredient": "Amaro",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add a bar spoon of demerara syrup",
+            "ingredient": "Demerara Syrup",
+            "amount": 5,
+            "action": 0
+        },
+        {
+            "text": "Stir briefly to combine",
+            "ingredient": "",
+            "amount": 6,
+            "action": 2
+        },
+        {
+            "text": "Top with chilled soda water",
+            "ingredient": "Soda Water",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Garnish with expressed orange peel",
+            "ingredient": "Orange Peel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A fizzy highball marrying cold brew coffee with bitter-sweet amaro and bright orange oils.",
+    "version": "1.0.0"
+}

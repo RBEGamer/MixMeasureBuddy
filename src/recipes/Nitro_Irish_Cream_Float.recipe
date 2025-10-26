@@ -1,0 +1,50 @@
+{
+    "filename": "Nitro_Irish_Cream_Float.recipe",
+    "name": "Nitro Irish Cream Float",
+    "steps": [
+        {
+            "text": "Fill a chilled pilsner glass halfway with nitro cold brew",
+            "ingredient": "Nitro Cold Brew",
+            "amount": 150,
+            "action": 0
+        },
+        {
+            "text": "Add Irish whiskey",
+            "ingredient": "Irish Whiskey",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add coffee liqueur",
+            "ingredient": "Coffee Liqueur",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine the base",
+            "ingredient": "",
+            "amount": 6,
+            "action": 2
+        },
+        {
+            "text": "Float Irish cream over the back of a bar spoon",
+            "ingredient": "Irish Cream",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Top with lightly whipped cream",
+            "ingredient": "Lightly Whipped Cream",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Dust with cocoa powder and garnish with nutmeg",
+            "ingredient": "Cocoa Powder",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Layers of nitro cold brew, Irish spirits, and velvety cream for a dessert-like coffee cocktail.",
+    "version": "1.0.0"
+}

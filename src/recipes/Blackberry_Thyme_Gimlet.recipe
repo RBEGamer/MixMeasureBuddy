@@ -1,0 +1,57 @@
+{
+    "filename": "Blackberry_Thyme_Gimlet.recipe",
+    "name": "Blackberry Thyme Gimlet",
+    "steps": [
+        {
+            "text": "Muddle blackberries and thyme with syrup",
+            "ingredient": "Blackberries",
+            "amount": 5,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 55,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Thyme Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add cracked ice and shake firmly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake to chill and extract berry color",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Double strain into chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with thyme sprig and blackberry",
+            "ingredient": "Thyme Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A jewel-toned gimlet melding blackberry sweetness with herbal thyme.",
+    "version": "1.0.0"
+}
+

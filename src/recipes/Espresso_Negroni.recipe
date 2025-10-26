@@ -1,0 +1,56 @@
+{
+    "filename": "Espresso_Negroni.recipe",
+    "name": "Espresso Negroni",
+    "steps": [
+        {
+            "text": "Add clear ice to a mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Pour in gin",
+            "ingredient": "Gin",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add Campari",
+            "ingredient": "Campari",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add sweet vermouth",
+            "ingredient": "Sweet Vermouth",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add chilled espresso",
+            "ingredient": "Espresso",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Stir until well chilled",
+            "ingredient": "",
+            "amount": 18,
+            "action": 2
+        },
+        {
+            "text": "Strain over a large ice cube in a rocks glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a flamed orange coin",
+            "ingredient": "Orange Peel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Bold Negroni build brightened by fresh espresso for extra depth and crema aromatics.",
+    "version": "1.0.0"
+}

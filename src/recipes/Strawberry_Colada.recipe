@@ -1,0 +1,56 @@
+{
+    "filename": "Strawberry_Colada.recipe",
+    "name": "Strawberry Colada",
+    "steps": [
+        {
+            "text": "Add fresh strawberries to the blender jar",
+            "ingredient": "Strawberries",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Pour in white rum",
+            "ingredient": "White Rum",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add coconut cream",
+            "ingredient": "Coconut Cream",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add pineapple juice",
+            "ingredient": "Pineapple Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Add crushed ice",
+            "ingredient": "Ice",
+            "amount": 200,
+            "action": 0
+        },
+        {
+            "text": "Blend until smooth and creamy",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Pour into a chilled hurricane glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with strawberry and pineapple wedge",
+            "ingredient": "Strawberry",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A tropical frozen colada blended with ripe strawberries, creamy coconut, and pineapple.",
+    "version": "1.0.0"
+}

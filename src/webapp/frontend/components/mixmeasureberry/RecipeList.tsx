@@ -40,7 +40,7 @@ export const MMBLandingFeatureITEM = ({
 
 
                     <p className="text-sm text-gray-800 dark:text-gray-200">{description}</p>
-            <h4 className="text-small font-semibold">by {author}</h4>
+            <h4 className="text-small font-semibold">{author}</h4>
         </div>
     );
 };
@@ -99,6 +99,15 @@ const SAMPLE_DATA_PATH = path.join(
   'sample-recipes.json',
 );
 
+const shuffleRecipes = (recipes: Recipe[]): Recipe[] => {
+  const copy = [...recipes];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+
 const loadFallbackRecipes = async (limit: number): Promise<MMBRecipeListItem[]> => {
   try {
     const raw = await fs.readFile(SAMPLE_DATA_PATH, 'utf8');
@@ -108,10 +117,11 @@ const loadFallbackRecipes = async (limit: number): Promise<MMBRecipeListItem[]> 
       console.warn('[MMBRecipeList] Sample recipes failed validation');
       return [];
     }
-    return parsed.data.slice(0, limit).map((recipe: Recipe) => ({
+    const randomized = shuffleRecipes(parsed.data);
+    return randomized.slice(0, limit).map((recipe: Recipe) => ({
       name: recipe.name,
       description: recipe.description,
-      author: 'Bundled Sample',
+      author: '',
     }));
   } catch (error) {
     console.warn('[MMBRecipeList] Unable to read sample recipes:', error);
@@ -158,7 +168,7 @@ export const MMBRecipeList = async ({
       console.warn('[MMBRecipeList] Recipe fetch failed:', error);
     }
   } else {
-    const fallback = await loadFallbackRecipes(max_items);
+    const fallback = await loadFallbackRecipes(6);
     if (fallback.length) {
       items = fallback;
       resolvedDescription = description;

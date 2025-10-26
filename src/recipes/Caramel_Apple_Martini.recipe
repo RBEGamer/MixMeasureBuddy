@@ -1,0 +1,63 @@
+{
+    "filename": "Caramel_Apple_Martini.recipe",
+    "name": "Caramel Apple Martini",
+    "steps": [
+        {
+            "text": "Chill a coupe glass with ice water",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Apple Cider",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Caramel Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add a pinch of cinnamon to the shaker",
+            "ingredient": "Ground Cinnamon",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Shake until well chilled and combined",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Discard the ice from the glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Strain into the chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a thin apple slice",
+            "ingredient": "Apple Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A Fall-inspired martini blending crisp apple cider with rich caramel and vodka.",
+    "version": "1.0.0"
+}
+

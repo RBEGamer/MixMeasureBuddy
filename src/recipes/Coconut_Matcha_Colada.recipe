@@ -1,0 +1,57 @@
+{
+    "filename": "Coconut_Matcha_Colada.recipe",
+    "name": "Coconut Matcha Colada",
+    "steps": [
+        {
+            "text": "Add crushed ice to the blender cup",
+            "ingredient": "Ice",
+            "amount": 180,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "White Rum",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coconut Cream",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Add sifted matcha powder",
+            "ingredient": "Matcha Powder",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Blend until smooth and frothy",
+            "ingredient": "",
+            "amount": 18,
+            "action": 2
+        },
+        {
+            "text": "Pour into a chilled hurricane glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with pineapple frond and coconut flakes",
+            "ingredient": "Toasted Coconut",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A creamy frozen colada infused with earthy matcha tea and tropical coconut.",
+    "version": "1.0.0"
+}
+

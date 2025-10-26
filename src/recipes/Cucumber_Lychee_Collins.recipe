@@ -1,0 +1,63 @@
+{
+    "filename": "Cucumber_Lychee_Collins.recipe",
+    "name": "Cucumber Lychee Collins",
+    "steps": [
+        {
+            "text": "Muddle cucumber slices and lychee in shaker",
+            "ingredient": "Cucumber",
+            "amount": 4,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lychee Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake briefly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake to integrate flavors",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Strain into Collins glass with fresh ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with soda water",
+            "ingredient": "Soda Water",
+            "amount": 100,
+            "action": 0
+        },
+        {
+            "text": "Garnish with cucumber ribbon and lychee",
+            "ingredient": "Lychee",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A crisp Collins with cooling cucumber and fragrant lychee.",
+    "version": "1.0.0"
+}
+

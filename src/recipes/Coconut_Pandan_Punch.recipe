@@ -1,0 +1,62 @@
+{
+    "filename": "Coconut_Pandan_Punch.recipe",
+    "name": "Coconut Pandan Punch",
+    "steps": [
+        {
+            "text": "Add coconut rum to a shaker tin",
+            "ingredient": "Coconut Rum",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add pandan syrup",
+            "ingredient": "Pandan Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add fresh lime juice",
+            "ingredient": "Lime Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add coconut water",
+            "ingredient": "Coconut Water",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Add pineapple juice",
+            "ingredient": "Pineapple Juice",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add crushed ice and shake shortly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Dump into a tiki mug or punch glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with sparkling mineral water",
+            "ingredient": "Sparkling Water",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Garnish with pandan leaf and coconut flakes",
+            "ingredient": "Pandan Leaf",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A tropical punch balancing pandan sweetness, coconut water, and bright lime.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,63 @@
+{
+    "filename": "Blueberry_Sage_Spritz.recipe",
+    "name": "Blueberry Sage Spritz",
+    "steps": [
+        {
+            "text": "Lightly muddle blueberries and sage leaves in shaker",
+            "ingredient": "Blueberries",
+            "amount": 6,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Sage Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake gently",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake to chill without over diluting",
+            "ingredient": "",
+            "amount": 8,
+            "action": 2
+        },
+        {
+            "text": "Strain into a wine glass over fresh ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with prosecco",
+            "ingredient": "Prosecco",
+            "amount": 100,
+            "action": 0
+        },
+        {
+            "text": "Garnish with additional blueberries and sage leaf",
+            "ingredient": "Sage Leaf",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Effervescent spritz featuring blueberry, sage, and a prosecco crown.",
+    "version": "1.0.0"
+}
+

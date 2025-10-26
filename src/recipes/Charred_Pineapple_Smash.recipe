@@ -1,0 +1,62 @@
+{
+    "filename": "Charred_Pineapple_Smash.recipe",
+    "name": "Charred Pineapple Smash",
+    "steps": [
+        {
+            "text": "Add charred pineapple chunks to the shaker and muddle gently",
+            "ingredient": "Charred Pineapple",
+            "amount": 50,
+            "action": 1
+        },
+        {
+            "text": "Add reposado tequila",
+            "ingredient": "Tequila Reposado",
+            "amount": 55,
+            "action": 0
+        },
+        {
+            "text": "Add mezcal for smoke",
+            "ingredient": "Mezcal",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add lime juice",
+            "ingredient": "Lime Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add agave nectar",
+            "ingredient": "Agave Nectar",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add a pinch of smoked sea salt",
+            "ingredient": "Smoked Sea Salt",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Shake with pebble ice to chill",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Dump entire contents into a double old fashioned glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with pineapple fronds and lime wheel",
+            "ingredient": "Lime Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Smoky tequila smash featuring fire-kissed pineapple, mezcal, and citrus.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,63 @@
+{
+    "filename": "Watermelon_Mint_Mojito.recipe",
+    "name": "Watermelon Mint Mojito",
+    "steps": [
+        {
+            "text": "Muddle mint leaves and watermelon cubes in the glass",
+            "ingredient": "Fresh Mint",
+            "amount": 8,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Watermelon",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "White Rum",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Fill the glass with crushed ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Stir to combine and chill",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Top with sparkling water",
+            "ingredient": "Sparkling Water",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Garnish with watermelon wedge and mint sprig",
+            "ingredient": "Watermelon Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A juicy mojito riff featuring fresh watermelon and a bouquet of mint.",
+    "version": "1.0.0"
+}
+

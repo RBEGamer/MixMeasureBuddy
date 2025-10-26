@@ -1,0 +1,63 @@
+{
+    "filename": "Honeydew_Margarita.recipe",
+    "name": "Honeydew Margarita",
+    "steps": [
+        {
+            "text": "Add honeydew chunks to the shaker and muddle",
+            "ingredient": "Honeydew",
+            "amount": 40,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Tequila Blanco",
+            "amount": 55,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cointreau",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add agave nectar for sweetness",
+            "ingredient": "Agave Nectar",
+            "amount": 10,
+            "action": 1
+        },
+        {
+            "text": "Fill shaker with ice and shake firmly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake until chilled and frothy",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Strain into a salt-rimmed rocks glass over fresh ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with honeydew wedge",
+            "ingredient": "Honeydew Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Melon-forward margarita balancing tequila with fresh honeydew puree.",
+    "version": "1.0.0"
+}
+

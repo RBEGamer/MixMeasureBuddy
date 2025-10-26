@@ -1,0 +1,51 @@
+{
+    "filename": "Hibiscus_Rose_Tonic.recipe",
+    "name": "Hibiscus Rose Tonic",
+    "steps": [
+        {
+            "text": "Fill a balloon glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Hibiscus Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Rose Water",
+            "amount": 2,
+            "action": 0
+        },
+        {
+            "text": "Stir briefly to combine aromatics",
+            "ingredient": "",
+            "amount": 6,
+            "action": 2
+        },
+        {
+            "text": "Top with premium tonic water",
+            "ingredient": "Tonic Water",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Garnish with dried hibiscus petals and rosebud",
+            "ingredient": "Dried Hibiscus",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A floral tonic cocktail infused with hibiscus syrup and a whisper of rose.",
+    "version": "1.0.0"
+}
+

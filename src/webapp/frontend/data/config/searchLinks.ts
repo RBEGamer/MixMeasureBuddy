@@ -14,6 +14,13 @@ export const searchLinks = [
     href: '/editor'
   },
   {
+    id: 'mixer',
+    name: 'Mix Lab',
+    keywords: '',
+    section: 'Navigation',
+    href: '/mixer'
+  },
+  {
     id: 'gallery',
     name: 'Recipe Gallery',
     keywords: '',

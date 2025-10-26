@@ -1,0 +1,50 @@
+{
+    "filename": "Maple_Berry_Smash.recipe",
+    "name": "Maple Berry Smash",
+    "steps": [
+        {
+            "text": "Muddle mixed berries with maple syrup in shaker",
+            "ingredient": "Mixed Berries",
+            "amount": 40,
+            "action": 1
+        },
+        {
+            "text": "Add rye whiskey",
+            "ingredient": "Rye Whiskey",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add lemon juice",
+            "ingredient": "Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add a dash of aromatic bitters",
+            "ingredient": "Aromatic Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Fill shaker with crushed ice and shake",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Strain into a rocks glass over crushed ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with berry skewer and mint sprig",
+            "ingredient": "Mint Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A whiskey smash sweetened with maple syrup and ripe mixed berries.",
+    "version": "1.0.0"
+}

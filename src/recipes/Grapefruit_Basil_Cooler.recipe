@@ -1,0 +1,63 @@
+{
+    "filename": "Grapefruit_Basil_Cooler.recipe",
+    "name": "Grapefruit Basil Cooler",
+    "steps": [
+        {
+            "text": "Lightly muddle basil leaves in the shaker",
+            "ingredient": "Fresh Basil",
+            "amount": 5,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grapefruit Juice",
+            "amount": 75,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Honey Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add ice to shaker and shake briskly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Shake to blend and chill",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Strain over fresh ice in a Collins glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with club soda",
+            "ingredient": "Club Soda",
+            "amount": 80,
+            "action": 0
+        },
+        {
+            "text": "Garnish with basil sprig and grapefruit slice",
+            "ingredient": "Grapefruit Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A refreshing grapefruit highball brightened with basil and honey.",
+    "version": "1.0.0"
+}
+

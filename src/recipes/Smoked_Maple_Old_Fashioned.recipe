@@ -1,0 +1,51 @@
+{
+    "filename": "Smoked_Maple_Old_Fashioned.recipe",
+    "name": "Smoked Maple Old Fashioned",
+    "steps": [
+        {
+            "text": "Add a large ice cube to a rocks glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Bourbon",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Maple Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Add two dashes of smoked bitters",
+            "ingredient": "Smoked Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Stir gently to chill and dilute",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Express an orange peel over the glass",
+            "ingredient": "Orange Peel",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Garnish with the peel and a bourbon cherry",
+            "ingredient": "Bourbon Cherry",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A rich old fashioned sweetened with maple and kissed with smoked bitters.",
+    "version": "1.0.0"
+}
+

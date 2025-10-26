@@ -1,0 +1,57 @@
+{
+    "filename": "Strawberry_Rhubarb_Sour.recipe",
+    "name": "Strawberry Rhubarb Sour",
+    "steps": [
+        {
+            "text": "Add strawberries and rhubarb syrup to the shaker",
+            "ingredient": "Strawberries",
+            "amount": 3,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Bourbon",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Rhubarb Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add a dash of aromatic bitters",
+            "ingredient": "Aromatic Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Shake hard with ice to integrate fruit",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Double strain into a chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a thin strawberry fan",
+            "ingredient": "Strawberry Fan",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A tangy bourbon sour featuring ripe strawberries and rhubarb syrup.",
+    "version": "1.0.0"
+}
+
