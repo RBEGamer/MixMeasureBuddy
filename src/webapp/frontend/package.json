@@ -52,6 +52,7 @@
     "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.20",
     "autoprefixer": "^10.4.13",
+    "caniuse-lite": "^1.0.30001751",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
