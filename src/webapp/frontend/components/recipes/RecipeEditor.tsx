@@ -435,7 +435,7 @@ export function RecipeEditor(): JSX.Element {
             </CardFooter>
           </Card>
 
-          <Card className="flex h-[420px] flex-col">
+          <Card className="flex h-[520px] flex-col">
             <CardHeader>
               <CardTitle className="text-lg">Sample recipe library</CardTitle>
               <CardDescription>

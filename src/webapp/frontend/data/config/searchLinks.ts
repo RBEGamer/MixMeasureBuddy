@@ -7,13 +7,6 @@ export const searchLinks = [
     href: '/'
   },
   {
-    id: 'build',
-    name: 'Build your own',
-    keywords: '',
-    section: 'Navigation',
-    href: '/build'
-  },
-  {
     id: 'editor',
     name: 'Recipe Editor',
     keywords: '',

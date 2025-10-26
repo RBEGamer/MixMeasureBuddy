@@ -7,6 +7,7 @@ import SearchButton from '../search/SearchButton';
 import ActiveLink from '@/components/shared/ActiveLink';
 import Image from 'next/image';
 import { withBasePath } from '@/lib/base-path';
+import { Github } from 'lucide-react';
 
 const Header = () => {
   return (
@@ -47,6 +48,16 @@ const Header = () => {
             <span>{link.title}</span>
           </ActiveLink>
         ))}
+
+        <a
+          href={siteConfig.github || 'https://github.com/RBEGamer/MixMeasureBuddy'}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="MixMeasureBuddy on GitHub"
+          className="hidden sm:inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent transition hover:border-primary-300 hover:bg-primary-100/60 dark:hover:bg-primary-900/40"
+        >
+          <Github className="h-5 w-5" />
+        </a>
 
         <ThemeSwitch />
         <MobileNav />

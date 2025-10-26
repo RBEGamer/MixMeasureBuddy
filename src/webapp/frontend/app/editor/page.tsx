@@ -17,9 +17,8 @@ export default function RecipeEditorPage() {
             Manage your MixMeasureBuddy recipes
           </h1>
           <p className="mt-3 max-w-3xl text-base text-muted-foreground md:text-lg">
-            Connect to any GitHub repository, browse existing <code>.recipe</code>{' '}
-            files, create new cocktails, and push updates without leaving the
-            browser.
+            Upload your local <code>.recipe</code> files, tweak steps directly in
+            the browser, and download updated copies ready for your MixMeasureBuddy.
           </p>
         </section>
 
