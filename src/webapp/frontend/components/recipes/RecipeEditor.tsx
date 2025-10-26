@@ -14,6 +14,7 @@ import {
   RecipeAction,
   type RecipeActionValue,
 } from '@/lib/recipes';
+import { withBasePath } from '@/lib/base-path';
 import {
   Card,
   CardContent,
@@ -67,7 +68,7 @@ import {
 
 type SampleRecipe = Recipe & { filename: string };
 
-const SAMPLE_DATA_ENDPOINT = '/data/sample-recipes.json';
+const SAMPLE_DATA_ENDPOINT = withBasePath('/data/sample-recipes.json');
 
 type StepTypeDefinition = {
   id: RecipeActionValue;
