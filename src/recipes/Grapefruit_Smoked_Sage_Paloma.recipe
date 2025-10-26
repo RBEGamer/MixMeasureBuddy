@@ -1,0 +1,62 @@
+{
+    "filename": "Grapefruit_Smoked_Sage_Paloma.recipe",
+    "name": "Grapefruit Smoked Sage Paloma",
+    "steps": [
+        {
+            "text": "Rim a highball glass with smoked salt and fill with ice",
+            "ingredient": "Smoked Salt",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Add mezcal to the shaker",
+            "ingredient": "Mezcal",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "Add fresh grapefruit juice",
+            "ingredient": "Grapefruit Juice",
+            "amount": 70,
+            "action": 0
+        },
+        {
+            "text": "Add lime juice",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add sage syrup",
+            "ingredient": "Sage Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add a splash of sparkling water",
+            "ingredient": "Sparkling Water",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine in the glass",
+            "ingredient": "",
+            "amount": 6,
+            "action": 2
+        },
+        {
+            "text": "Top with grapefruit soda",
+            "ingredient": "Grapefruit Soda",
+            "amount": 80,
+            "action": 0
+        },
+        {
+            "text": "Garnish with smoked sage sprig",
+            "ingredient": "Sage Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Herbal Paloma combining smoky mezcal, sage syrup, and grapefruit soda over ice.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,56 @@
+{
+    "filename": "Smoked_Fig_Boulevardier.recipe",
+    "name": "Smoked Fig Boulevardier",
+    "steps": [
+        {
+            "text": "Add fig preserves to the mixing glass",
+            "ingredient": "Fig Preserves",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add rye whiskey",
+            "ingredient": "Rye Whiskey",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add bitter aperitivo",
+            "ingredient": "Campari",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add sweet vermouth",
+            "ingredient": "Sweet Vermouth",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add two drops of smoked bitters",
+            "ingredient": "Smoked Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Add ice and stir until chilled",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Strain over a large ice cube in a rocks glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with skewered dried fig",
+            "ingredient": "Dried Fig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A fall-ready boulevardier enhanced with fig preserves and smoky bitters.",
+    "version": "1.0.0"
+}

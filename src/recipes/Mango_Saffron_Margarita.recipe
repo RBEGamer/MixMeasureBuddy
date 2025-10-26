@@ -1,0 +1,62 @@
+{
+    "filename": "Mango_Saffron_Margarita.recipe",
+    "name": "Mango Saffron Margarita",
+    "steps": [
+        {
+            "text": "Bloom saffron strands in warm agave nectar for 30 seconds",
+            "ingredient": "Saffron",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Add mango puree to the shaker",
+            "ingredient": "Mango Puree",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add reposado tequila",
+            "ingredient": "Tequila Reposado",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Add orange liqueur",
+            "ingredient": "Orange Liqueur",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add lime juice",
+            "ingredient": "Lime Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add the saffron agave nectar",
+            "ingredient": "Saffron Agave",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake hard",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Strain into a tajin-rimmed rocks glass over fresh ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with mango slice and lime wheel",
+            "ingredient": "Mango Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A luxurious margarita marrying ripe mango with saffron-infused agave nectar.",
+    "version": "1.0.0"
+}

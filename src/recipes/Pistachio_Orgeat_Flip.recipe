@@ -1,0 +1,68 @@
+{
+    "filename": "Pistachio_Orgeat_Flip.recipe",
+    "name": "Pistachio Orgeat Flip",
+    "steps": [
+        {
+            "text": "Add pistachio orgeat to shaker",
+            "ingredient": "Pistachio Orgeat",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add aged rum",
+            "ingredient": "Aged Rum",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "Add oloroso sherry",
+            "ingredient": "Oloroso Sherry",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add cream",
+            "ingredient": "Heavy Cream",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Crack a fresh egg into the shaker",
+            "ingredient": "Egg",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Add a dash of orange bitters",
+            "ingredient": "Orange Bitters",
+            "amount": 2,
+            "action": 1
+        },
+        {
+            "text": "Dry shake vigorously to emulsify",
+            "ingredient": "",
+            "amount": 12,
+            "action": 2
+        },
+        {
+            "text": "Add ice and shake again until chilled",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fine strain into a chilled coupe",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with grated pistachio and nutmeg",
+            "ingredient": "Ground Pistachio",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A velvety flip cocktail showcasing pistachio orgeat, aged rum, and sherry.",
+    "version": "1.0.0"
+}

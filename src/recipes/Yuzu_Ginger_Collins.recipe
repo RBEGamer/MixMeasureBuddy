@@ -1,0 +1,56 @@
+{
+    "filename": "Yuzu_Ginger_Collins.recipe",
+    "name": "Yuzu Ginger Collins",
+    "steps": [
+        {
+            "text": "Add thin slices of ginger to the shaker and muddle",
+            "ingredient": "Fresh Ginger",
+            "amount": 4,
+            "action": 1
+        },
+        {
+            "text": "Add gin",
+            "ingredient": "Gin",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "Add yuzu juice",
+            "ingredient": "Yuzu Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Add ginger syrup",
+            "ingredient": "Ginger Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Fill shaker with ice and shake briskly",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Strain into a collins glass with fresh ice",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with chilled soda water",
+            "ingredient": "Soda Water",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Garnish with candied ginger and lemon peel",
+            "ingredient": "Candied Ginger",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A zesty Collins featuring tart yuzu, fresh ginger, and sparkling soda.",
+    "version": "1.0.0"
+}
