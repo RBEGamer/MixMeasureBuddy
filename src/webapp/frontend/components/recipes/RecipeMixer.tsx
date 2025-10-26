@@ -254,10 +254,10 @@ export const RecipeMixer = () => {
               </label>
               <Textarea
                 placeholder="Vodka, Coffee Liqueur, Lime Juice, Simple Syrup"
-                minRows={2}
                 value={ingredientInput}
                 id={ingredientInputId}
                 onChange={(event) => setIngredientInput(event.target.value)}
+                className="min-h-[96px]"
               />
               <p className="text-xs text-muted-foreground">
                 Tip: include flavorful extras like syrups or garnishes so we can
