@@ -1,15 +1,9 @@
-import {FeatureListItem} from "@/components/landing/LandingFeatureList";
-import {
-    GlassWater} from 'lucide-react';
-
-
-import { LandingFeature } from '@/components/landing/feature/LandingFeature';
-import { cn } from '@/lib/utils';
-
-
-
+import { GlassWater } from 'lucide-react';
 import clsx from 'clsx';
-import {alignments} from "@floating-ui/utils";
+import { cn } from '@/lib/utils';
+import path from 'path';
+import { promises as fs } from 'fs';
+import { recipeSchema, type Recipe } from '@/lib/recipes';
 
 export interface MMBRecipeListItem {
     name: string;
@@ -98,32 +92,93 @@ export const MMBRecipeListVisual = ({
 
 
 
-export const MMBRecipeList = async ({
-                                        className,
-                                        title,
-                                        description,
-                                        max_items
-                                    }: {
-    className?: string;
-    title: string | React.ReactNode;
-    description: string | React.ReactNode;
-    api_endpoint?: string;
-    max_items?: number;
+const SAMPLE_DATA_PATH = path.join(
+  process.cwd(),
+  'public',
+  'data',
+  'sample-recipes.json',
+);
 
-
-}) => {
-    const item_response = await fetch(`http://127.0.0.1:5500/api/recipes?max_items=${max_items}`, {cache: 'force-cache'});
-    let items = [];
-    if(item_response.ok){
-        items = await item_response.json();
+const loadFallbackRecipes = async (limit: number): Promise<MMBRecipeListItem[]> => {
+  try {
+    const raw = await fs.readFile(SAMPLE_DATA_PATH, 'utf8');
+    const json = JSON.parse(raw);
+    const parsed = recipeSchema.array().safeParse(json);
+    if (!parsed.success) {
+      console.warn('[MMBRecipeList] Sample recipes failed validation');
+      return [];
     }
-
-    return (
-        <MMBRecipeListVisual
-            title="Online Recipe Database"
-            description={description}
-            featureItems={items}
-        />
-    );
+    return parsed.data.slice(0, limit).map((recipe: Recipe) => ({
+      name: recipe.name,
+      description: recipe.description,
+      author: 'Bundled Sample',
+    }));
+  } catch (error) {
+    console.warn('[MMBRecipeList] Unable to read sample recipes:', error);
+    return [];
+  }
 };
 
+export const MMBRecipeList = async ({
+  className,
+  title,
+  description,
+  api_endpoint,
+  max_items = 9,
+}: {
+  className?: string;
+  title: string | React.ReactNode;
+  description: string | React.ReactNode;
+  api_endpoint?: string;
+  max_items?: number;
+}) => {
+  const endpoint =
+    api_endpoint ?? process.env.NEXT_PUBLIC_RECIPE_API_ENDPOINT ?? null;
+
+  let items: MMBRecipeListItem[] = [];
+  let resolvedDescription = description;
+
+  if (endpoint) {
+    try {
+      const response = await fetch(
+        `${endpoint}?max_items=${encodeURIComponent(String(max_items))}`,
+        {
+          next: { revalidate: 300 },
+        },
+      );
+
+      if (response.ok) {
+        items = await response.json();
+      } else {
+        console.warn(
+          `[MMBRecipeList] Failed to load recipes: ${response.status} ${response.statusText}`,
+        );
+      }
+    } catch (error) {
+      console.warn('[MMBRecipeList] Recipe fetch failed:', error);
+    }
+  } else {
+    const fallback = await loadFallbackRecipes(max_items);
+    if (fallback.length) {
+      items = fallback;
+      resolvedDescription = description;
+    } else {
+      resolvedDescription =
+        'Connect the API service to showcase the latest community cocktails.';
+    }
+  }
+
+  return (
+    <MMBRecipeListVisual
+      className={className}
+      title={title}
+      description={
+        items.length
+          ? description
+          : resolvedDescription
+      }
+      featureItems={items}
+      withBackground={items.length === 0}
+    />
+  );
+};

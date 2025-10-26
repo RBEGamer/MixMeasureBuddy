@@ -105,11 +105,6 @@ export default function Home() {
             answer:
               'Absolutely, MixMeasureBuddy is versatile and can be used for a wide range of beverages beyond cocktails.',
           },
-          {
-            question: 'Does MixMeasureBuddy come with a warranty?',
-            answer:
-              'Yes, MixMeasureBuddy offers a warranty to ensure your satisfaction and peace of mind.',
-          },
         ]}
         withBackground
       />

@@ -3,7 +3,7 @@ import {
   ComputedFields,
   makeSource,
 } from 'shipixen-contentlayer/source-files';
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import readingTime from 'reading-time';
 import GithubSlugger from 'github-slugger';
 import path from 'path';
@@ -132,6 +132,8 @@ export const Authors = defineDocumentType(() => ({
   computedFields,
 }));
 
+const generatedDir = path.join(root, '.contentlayer', 'generated');
+
 export default makeSource({
   contentDirPath: 'data',
   documentTypes: [Blog, Authors],
@@ -154,9 +156,18 @@ export default makeSource({
     ],
   },
   onMissingOrIncompatibleData: 'skip-warn',
-  onSuccess: async (importData) => {
-    const { allBlogs } = await importData();
-    createTagCount(allBlogs);
-    createSearchIndex(allBlogs);
+  onSuccess: async () => {
+    try {
+      const blogsPath = path.join(generatedDir, 'Blog', '_index.json');
+      const fileContents = readFileSync(blogsPath, { encoding: 'utf8' });
+      const allBlogs = JSON.parse(fileContents);
+      createTagCount(allBlogs);
+      createSearchIndex(allBlogs);
+    } catch (error) {
+      console.warn(
+        '[contentlayer] Skipped tag & search index generation:',
+        error instanceof Error ? error.message : error,
+      );
+    }
   },
 });

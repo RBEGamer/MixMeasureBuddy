@@ -1,10 +1,36 @@
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'fs';
 import path from 'path';
 import GithubSlugger from 'github-slugger';
 import { escape } from '@shipixen/pliny/utils/htmlEscaper.js';
 import { siteConfig } from '../data/config/site.settings.js';
-import tagData from '../app/tag-data.json' assert { type: 'json' };
-import { allBlogs } from '../.contentlayer/generated/index.mjs';
+import { fileURLToPath } from 'url';
+
+const moduleDir = path.dirname(fileURLToPath(import.meta.url));
+
+const loadJson = (relativePath) => {
+  const absolutePath = path.join(moduleDir, relativePath);
+  const raw = readFileSync(absolutePath, { encoding: 'utf8' });
+  return JSON.parse(raw);
+};
+
+const tagData = loadJson('../app/tag-data.json');
+
+const loadBlogs = () => {
+  try {
+    const blogsPath = path.join(
+      moduleDir,
+      '../.contentlayer/generated/Blog/_index.json',
+    );
+    const raw = readFileSync(blogsPath, { encoding: 'utf8' });
+    return JSON.parse(raw);
+  } catch (error) {
+    console.warn(
+      '[rss] Skipped RSS generation because contentlayer output was unavailable:',
+      error instanceof Error ? error.message : error,
+    );
+    return [];
+  }
+};
 
 const BLOG_URL = siteConfig.blogPath ? `/${siteConfig.blogPath}` : '';
 
@@ -59,8 +85,14 @@ async function generateRSS(config, allBlogs, page = 'feed.xml') {
   }
 }
 
-const rss = () => {
-  generateRSS(siteConfig, allBlogs);
+const rss = async () => {
+  const blogs = loadBlogs();
+  if (blogs.length === 0) {
+    console.warn('[rss] No blog posts found; RSS feeds were not written.');
+    return;
+  }
+
+  generateRSS(siteConfig, blogs);
   console.log('RSS feed generated...');
 };
 export default rss;
