@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import MMBHeader from "@/components/mixmeasureberry/MMBHeader";
+import MMBHeader from '@/components/mixmeasureberry/MMBHeader';
 import Footer from '@/components/shared/Footer';
 import { siteConfig } from '@/data/config/site.settings';
 import { ThemeProviders } from './theme-providers';
@@ -11,6 +11,7 @@ import '@/css/globals.css';
 import { SearchProvider } from '@/components/shared/SearchProvider';
 import { AnalyticsWrapper } from '@/components/shared/Analytics';
 import MMBFooter from "@/components/mixmeasureberry/MMBFooter";
+import { withBasePath } from '@/lib/base-path';
 
 const baseFont = Inter({
   subsets: ['latin'],
@@ -91,24 +92,27 @@ export default function RootLayout({
         <link
           rel="apple-touch-icon"
           sizes="76x76"
-          href="/static/favicons/apple-touch-icon.png"
+          href={withBasePath('/static/favicons/apple-touch-icon.png')}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/static/favicons/favicon-32x32.png"
+          href={withBasePath('/static/favicons/favicon-32x32.png')}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/static/favicons/favicon-16x16.png"
+          href={withBasePath('/static/favicons/favicon-16x16.png')}
         />
-        <link rel="manifest" href="/static/favicons/manifest.webmanifest" />
+        <link
+          rel="manifest"
+          href={withBasePath('/static/favicons/manifest.webmanifest')}
+        />
         <link
           rel="mask-icon"
-          href="/static/favicons/safari-pinned-tab.svg"
+          href={withBasePath('/static/favicons/safari-pinned-tab.svg')}
           color="#5bbad5"
         />
         <meta name="generator" content="Shipixen" />
@@ -123,7 +127,11 @@ export default function RootLayout({
           media="(prefers-color-scheme: dark)"
           content="#000"
         />
-        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          href={withBasePath('/feed.xml')}
+        />
       </head>
 
       <body className="flex flex-col bg-white text-black antialiased dark:bg-gray-950 dark:text-white min-h-screen">

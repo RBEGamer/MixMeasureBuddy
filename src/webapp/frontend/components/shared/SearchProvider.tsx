@@ -6,22 +6,20 @@ import { CoreContent } from '@shipixen/pliny/utils/contentlayer';
 import { Blog } from 'shipixen-contentlayer/generated';
 import { formatDate } from '@shipixen/pliny/utils/formatDate';
 import { searchLinks } from '@/data/config/searchLinks';
+import { withBasePath } from '@/lib/base-path';
 
 export const SearchProvider = ({ children }) => {
   const router = useRouter();
 
   const makeRootPath = (path: string) => {
-    if (!path.startsWith('/')) {
-      return `/${path}`;
-    }
-
-    return path;
+    const normalized = path.startsWith('/') ? path : `/${path}`;
+    return withBasePath(normalized);
   };
 
   return (
     <KBarSearchProvider
       kbarConfig={{
-        searchDocumentsPath: 'search.json',
+        searchDocumentsPath: withBasePath('/search.json'),
         onSearchDocumentsLoad(json) {
           return [
             ...json.map((post: CoreContent<Blog>) => ({
@@ -41,7 +39,7 @@ export const SearchProvider = ({ children }) => {
                 name: link.name,
                 keywords: link.keywords,
                 section: link.section,
-                perform: () => router.push(link.href),
+                perform: () => router.push(withBasePath(link.href)),
               };
             }),
           ];

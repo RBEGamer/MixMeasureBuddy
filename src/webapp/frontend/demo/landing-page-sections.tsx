@@ -2,6 +2,7 @@ import { LandingBandSection } from '@/components/landing/LandingBand';
 import { LandingFaqSection } from '@/components/landing/LandingFaq';
 import { LandingFeatureList } from '@/components/landing/LandingFeatureList';
 import { LandingProductFeature } from '@/components/landing/LandingProductFeature';
+import { withBasePath } from '@/lib/base-path';
 import { LandingSaleCtaSection } from '@/components/landing/LandingSaleCta';
 import { LandingTestimonialListSection } from '@/components/landing/LandingTestimonialList';
 
@@ -122,7 +123,7 @@ export const LandingPageSections = ({ className }: { className?: string }) => {
 
       <LandingProductFeature
         imagePosition="left"
-        imageSrc="/static/images/product-sample.webp"
+        imageSrc={withBasePath('/static/images/product-sample.webp')}
         imageAlt="Shipixen dashboard"
         title="See historical logs of API calls"
         description="  Access historical data directly in the dashboard & see exactly when a

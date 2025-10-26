@@ -2,10 +2,11 @@ import { siteConfig } from '@/data/config/site.settings';
 import { headerNavLinks } from '@/data/config/headerNavLinks';
 import Link from '@/components/shared/Link';
 import MobileNav from '@/components/shared/MobileNav';
-import ThemeSwitch from'@/components/shared/ThemeSwitch';
+import ThemeSwitch from '@/components/shared/ThemeSwitch';
 import SearchButton from '../search/SearchButton';
 import ActiveLink from '@/components/shared/ActiveLink';
 import Image from 'next/image';
+import { withBasePath } from '@/lib/base-path';
 
 const Header = () => {
   return (
@@ -14,7 +15,7 @@ const Header = () => {
         <Link href="/" aria-label={siteConfig.logoTitle}>
           <div className="flex items-center gap-3 justify-between">
             <Image
-              src="/static/images/logo.svg"
+              src={withBasePath('/static/images/logo.svg')}
               alt="MixMeasureBuddy logo"
               height={43}
               width={43}
@@ -22,7 +23,7 @@ const Header = () => {
             />
 
             <Image
-              src="/static/images/logo-dark.svg"
+              src={withBasePath('/static/images/logo-dark.svg')}
               alt="MixMeasureBuddy logo"
               height={43}
               width={43}

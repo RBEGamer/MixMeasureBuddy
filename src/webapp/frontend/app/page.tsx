@@ -21,6 +21,7 @@ import {
 import { MMBRecipeList } from '@/components/mixmeasureberry/RecipeList';
 import {cn} from "@/lib/utils";
 import Image from "next/image";
+import { withBasePath } from '@/lib/base-path';
 
 export default function Home() {
   // @ts-ignore
@@ -28,7 +29,7 @@ export default function Home() {
     <div className="flex flex-col w-full items-center fancy-overlay">
         <LandingProductFeature
             imagePosition="right"
-            imageSrc="/static/images/A003_11281139_S044_.png"
+            imageSrc={withBasePath('/static/images/A003_11281139_S044_.png')}
             imageAlt="Product image"
             title="Intelligent Mixing Made Simple"
             zoomOnHover={true}

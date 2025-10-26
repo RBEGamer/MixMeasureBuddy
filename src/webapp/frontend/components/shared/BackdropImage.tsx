@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import style from '@/components/shared/backdropImage.module.css';
+import { withBasePath } from '@/lib/base-path';
 
 export default function BackdropImage({
   src,
@@ -22,6 +23,8 @@ export default function BackdropImage({
   captionText?: string;
 }) {
   const blurDataURL = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAYAAAB4ka1VAAAAAXNSR0IArs4c6QAAAJNJREFUGFcFwdEKgjAAQNG7MplamL4EvfRFWT1bfUAQ/XMQEYHJ2nTaxjpH3K6X4Jzj21tUN2D9SCQmLGRMEseI87EO3nlUP9CaDm0ts0hQpJJ5EiOq3T78Rk+jDfe35mkGCgmbPKXMJaKuT2EcPB/d82oUjenJZlNWhWSZpYhtdQjOO1pleTSapzKUcso6T1jmkj8C7EWMue4QsgAAAABJRU5ErkJggg==`;
+  const backgroundImageUrl = withBasePath('/static/images/backdrop-3.jpg');
+  const resolvedSrc = withBasePath(src);
 
   return (
     <div
@@ -38,11 +41,11 @@ export default function BackdropImage({
         )}
         style={{
           // Chose between 1-5 available backdrops.
-          backgroundImage: "url('/static/images/backdrop-3.jpg')",
+          backgroundImage: `url('${backgroundImageUrl}')`,
         }}
       >
         <Image
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           width={width}
           height={height}

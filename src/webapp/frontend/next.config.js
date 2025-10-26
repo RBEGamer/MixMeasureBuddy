@@ -72,6 +72,9 @@ module.exports = () => {
     output: 'export',
     basePath,
     assetPrefix,
+    env: {
+      NEXT_PUBLIC_BASE_PATH: basePath,
+    },
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     eslint: {
       dirs: ['app', 'components', 'layouts', 'scripts'],

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { withBasePath } from '@/lib/base-path';
 import Link from './Link';
 import { siteConfig } from '@/data/config/site.settings';
 import {
@@ -40,7 +41,7 @@ export default function Footer({ className }: { className?: string }) {
             <Link href="/" aria-label={siteConfig.title}>
               <div className="flex items-center gap-3 justify-start">
                 <Image
-                  src="/static/images/logo.svg"
+                  src={withBasePath('/static/images/logo.svg')}
                   alt="MixMeasureBuddy logo"
                   height={36}
                   width={36}
@@ -48,7 +49,7 @@ export default function Footer({ className }: { className?: string }) {
                 />
 
                 <Image
-                  src="/static/images/logo-dark.svg"
+                  src={withBasePath('/static/images/logo-dark.svg')}
                   alt="MixMeasureBuddy logo"
                   height={36}
                   width={36}

@@ -8,6 +8,7 @@ import Link from '@/components/shared/Link';
 import PageTitle from '@/components/shared/PageTitle';
 import SectionContainer from '@/components/shared/SectionContainer';
 import ScrollTop from '@/components/shared/ScrollTop';
+import { withBasePath } from '@/lib/base-path';
 
 interface LayoutProps {
   className?: string;
@@ -25,8 +26,10 @@ export default function PostMinimal({
   children,
 }: LayoutProps) {
   const { slug, title, images } = content;
-  const displayImage =
-    images && images.length > 0 ? images[0] : '/static/images/backdrop-3.webp';
+  const displayImageSource =
+    images && images.length > 0
+      ? withBasePath(images[0] as string)
+      : withBasePath('/static/images/backdrop-3.webp');
 
   return (
     <SectionContainer type="wide" className={cn(className)}>
@@ -38,7 +41,7 @@ export default function PostMinimal({
               <Bleed>
                 <div className="aspect-[2/1] w-full relative">
                   <Image
-                    src={displayImage}
+                    src={displayImageSource}
                     alt={title}
                     fill
                     className="object-cover"
