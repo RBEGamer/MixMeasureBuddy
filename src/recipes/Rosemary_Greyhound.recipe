@@ -1,0 +1,50 @@
+{
+    "filename": "Rosemary_Greyhound.recipe",
+    "name": "Rosemary Greyhound",
+    "steps": [
+        {
+            "text": "Lightly muddle rosemary in the glass",
+            "ingredient": "Rosemary Sprig",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grapefruit Juice",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a rosemary sprig",
+            "ingredient": "Rosemary Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Botanical vodka highball with grapefruit and rosemary.",
+    "version": "1.0.0"
+}

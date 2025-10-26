@@ -1,0 +1,56 @@
+{
+    "filename": "Sazerac.recipe",
+    "name": "Sazerac",
+    "steps": [
+        {
+            "text": "Rinse a chilled glass with absinthe and discard the excess",
+            "ingredient": "Absinthe",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Add ice to the mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Rye Whiskey",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Add dashes of Peychaud's bitters",
+            "ingredient": "Peychaud's Bitters",
+            "amount": 2,
+            "action": 0
+        },
+        {
+            "text": "Stir until well chilled",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Express a lemon peel over the drink and discard",
+            "ingredient": "Lemon Peel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Historic New Orleans cocktail built on rye, bitters, and absinthe aroma.",
+    "version": "1.0.0"
+}

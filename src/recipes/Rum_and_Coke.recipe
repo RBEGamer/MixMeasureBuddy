@@ -1,0 +1,44 @@
+{
+    "filename": "Rum_and_Coke.recipe",
+    "name": "Rum and Coke",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Aged Rum",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Top with chilled cola",
+            "ingredient": "Cola",
+            "amount": 150,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wedge",
+            "ingredient": "Lime Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Simple and refreshing mix of rum, cola, and lime.",
+    "version": "1.0.0"
+}

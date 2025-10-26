@@ -1,0 +1,74 @@
+{
+    "filename": "Ramos_Gin_Fizz.recipe",
+    "name": "Ramos Gin Fizz",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Heavy Cream",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add egg white",
+            "ingredient": "Egg White",
+            "amount": 1,
+            "action": 0
+        },
+        {
+            "text": "Add orange flower water",
+            "ingredient": "Orange Flower Water",
+            "amount": 2,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top slowly with soda water",
+            "ingredient": "Soda Water",
+            "amount": 90,
+            "action": 0
+        }
+    ],
+    "description": "Rich, frothy gin fizz with cream, citrus, and orange blossom.",
+    "version": "1.0.0"
+}

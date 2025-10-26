@@ -1,0 +1,56 @@
+{
+    "filename": "Tom_Collins.recipe",
+    "name": "Tom Collins",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with soda water",
+            "ingredient": "Soda Water",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Garnish with a lemon wheel and cherry",
+            "ingredient": "Lemon Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Classic sparkling gin cooler with citrus and a touch of sweetness.",
+    "version": "1.0.0"
+}

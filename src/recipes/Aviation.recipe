@@ -1,0 +1,56 @@
+{
+    "filename": "Aviation.recipe",
+    "name": "Aviation",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Maraschino Liqueur",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cr\u00e8me de Violette",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a brandied cherry",
+            "ingredient": "Brandied Cherry",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Classic gin sour tinted with maraschino and violet liqueur.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,50 @@
+{
+    "filename": "Boulevardier.recipe",
+    "name": "Boulevardier",
+    "steps": [
+        {
+            "text": "Add ice to the mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Bourbon",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Sweet Vermouth",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Campari",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Stir until well chilled",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with an expressed orange twist",
+            "ingredient": "Orange Twist",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Bourbon's answer to the Negroni with bittersweet balance.",
+    "version": "1.0.0"
+}

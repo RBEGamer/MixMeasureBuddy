@@ -1,0 +1,56 @@
+{
+    "filename": "Painkiller.recipe",
+    "name": "Painkiller",
+    "steps": [
+        {
+            "text": "Add crushed ice to the blender",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Navy Rum",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Orange Juice",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cream of Coconut",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Blend until smooth",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Pour into the serving glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Dust the top with freshly grated nutmeg",
+            "ingredient": "Grated Nutmeg",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Creamy tiki staple with rum, pineapple, orange, and coconut.",
+    "version": "1.0.0"
+}

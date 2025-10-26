@@ -1,0 +1,50 @@
+{
+    "filename": "Hot_Toddy.recipe",
+    "name": "Hot Toddy",
+    "steps": [
+        {
+            "text": "Warm the mug before building the drink",
+            "ingredient": "",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Irish Whiskey",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Honey Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Hot Water",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Stir to combine and integrate flavors",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lemon wheel and clove",
+            "ingredient": "Lemon Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Comforting mix of whiskey, honey, lemon, and hot water.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,38 @@
+{
+    "filename": "Tequila_Sunrise.recipe",
+    "name": "Tequila Sunrise",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Tequila",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Orange Juice",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Slowly pour grenadine to sink",
+            "ingredient": "Grenadine",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Garnish with an orange slice and cherry",
+            "ingredient": "Orange Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Layered tequila cocktail with orange juice and grenadine sunrise.",
+    "version": "1.0.0"
+}

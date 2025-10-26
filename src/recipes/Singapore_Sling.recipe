@@ -1,0 +1,80 @@
+{
+    "filename": "Singapore_Sling.recipe",
+    "name": "Singapore Sling",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cherry Heering",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cointreau",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "B\u00e9n\u00e9dictine",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grenadine",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with soda water",
+            "ingredient": "Soda Water",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Garnish with pineapple and cherry",
+            "ingredient": "Pineapple Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Layered gin sling with cherry, citrus, and sparkling length.",
+    "version": "1.0.0"
+}

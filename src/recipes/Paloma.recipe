@@ -1,0 +1,56 @@
+{
+    "filename": "Paloma.recipe",
+    "name": "Paloma",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Tequila",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grapefruit Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Sweeten with agave syrup",
+            "ingredient": "Agave Syrup",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Top with soda water",
+            "ingredient": "Soda Water",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a grapefruit wedge",
+            "ingredient": "Grapefruit Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Bright tequila highball with grapefruit, lime, and sparkle.",
+    "version": "1.0.0"
+}

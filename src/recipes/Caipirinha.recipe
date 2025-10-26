@@ -1,0 +1,44 @@
+{
+    "filename": "Caipirinha.recipe",
+    "name": "Caipirinha",
+    "steps": [
+        {
+            "text": "Muddle lime wedges with sugar in the glass",
+            "ingredient": "Lime Wedges",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Demerara Sugar",
+            "amount": 12,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cacha\u00e7a",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wheel",
+            "ingredient": "Lime Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Brazil's national cocktail muddling lime, sugar, and cacha\u00e7a.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,68 @@
+{
+    "filename": "Hurricane.recipe",
+    "name": "Hurricane",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Light Rum",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Dark Rum",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Passion Fruit Syrup",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Orange Juice",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grenadine",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with an orange slice and cherry",
+            "ingredient": "Orange Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Passion fruit-forward rum punch from New Orleans.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,44 @@
+{
+    "filename": "Bay_Breeze.recipe",
+    "name": "Bay Breeze",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cranberry Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a pineapple wedge",
+            "ingredient": "Pineapple Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Tropical cranberry cooler with pineapple sweetness.",
+    "version": "1.0.0"
+}

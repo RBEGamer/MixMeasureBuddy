@@ -1,0 +1,50 @@
+{
+    "filename": "Sex_on_the_Beach.recipe",
+    "name": "Sex on the Beach",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Peach Schnapps",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cranberry Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Orange Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with an orange slice and cherry",
+            "ingredient": "Orange Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Fruity crowd-pleaser with vodka, peach, and citrus juices.",
+    "version": "1.0.0"
+}

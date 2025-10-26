@@ -1,0 +1,50 @@
+{
+    "filename": "Irish_Coffee.recipe",
+    "name": "Irish Coffee",
+    "steps": [
+        {
+            "text": "Preheat the glass with hot water",
+            "ingredient": "",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Irish Whiskey",
+            "amount": 40,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Brown Sugar Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Hot Coffee",
+            "amount": 150,
+            "action": 0
+        },
+        {
+            "text": "Stir to combine and integrate flavors",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Float cream on top",
+            "ingredient": "Lightly Whipped Cream",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Dust lightly with grated nutmeg",
+            "ingredient": "Grated Nutmeg",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Warming mug of Irish whiskey, coffee, and lightly whipped cream.",
+    "version": "1.0.0"
+}

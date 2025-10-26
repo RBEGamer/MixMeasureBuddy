@@ -1,0 +1,56 @@
+{
+    "filename": "French_75.recipe",
+    "name": "French 75",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 40,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with chilled Champagne",
+            "ingredient": "Champagne",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Garnish with a lemon twist",
+            "ingredient": "Lemon Twist",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Sparkling combination of gin, lemon, and Champagne.",
+    "version": "1.0.0"
+}

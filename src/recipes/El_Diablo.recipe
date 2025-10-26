@@ -1,0 +1,50 @@
+{
+    "filename": "El_Diablo.recipe",
+    "name": "El Diablo",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Tequila",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cr\u00e8me de Cassis",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Top with ginger beer",
+            "ingredient": "Ginger Beer",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wheel",
+            "ingredient": "Lime Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Tequila highball with cassis, lime, and spicy ginger beer.",
+    "version": "1.0.0"
+}

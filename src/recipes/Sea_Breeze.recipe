@@ -1,0 +1,44 @@
+{
+    "filename": "Sea_Breeze.recipe",
+    "name": "Sea Breeze",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cranberry Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Grapefruit Juice",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wedge",
+            "ingredient": "Lime Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Vodka highball with cranberry bite and grapefruit zest.",
+    "version": "1.0.0"
+}

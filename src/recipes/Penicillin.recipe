@@ -1,0 +1,56 @@
+{
+    "filename": "Penicillin.recipe",
+    "name": "Penicillin",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Blended Scotch",
+            "amount": 45,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Honey-Ginger Syrup",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Float smoky Scotch on top",
+            "ingredient": "Islay Scotch",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Garnish with candied ginger",
+            "ingredient": "Candied Ginger",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Modern Scotch sour with honey, ginger, and smoky float.",
+    "version": "1.0.0"
+}

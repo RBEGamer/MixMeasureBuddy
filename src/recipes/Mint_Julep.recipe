@@ -1,0 +1,50 @@
+{
+    "filename": "Mint_Julep.recipe",
+    "name": "Mint Julep",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Add fresh mint leaves",
+            "ingredient": "Mint Leaves",
+            "amount": 6,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Bourbon",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Stir until the cup frosts",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a bouquet of mint",
+            "ingredient": "Mint Sprig",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Icy bourbon refresher with crushed mint and gentle sweetness.",
+    "version": "1.0.0"
+}

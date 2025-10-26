@@ -1,0 +1,68 @@
+{
+    "filename": "Bloody_Mary.recipe",
+    "name": "Bloody Mary",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Tomato Juice",
+            "amount": 150,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Add Worcestershire sauce",
+            "ingredient": "Worcestershire Sauce",
+            "amount": 5,
+            "action": 0
+        },
+        {
+            "text": "Add a few drops of hot sauce",
+            "ingredient": "Hot Sauce",
+            "amount": 2,
+            "action": 0
+        },
+        {
+            "text": "Add prepared horseradish",
+            "ingredient": "Prepared Horseradish",
+            "amount": 4,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Season with salt and pepper to taste",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a celery stick and lemon wedge",
+            "ingredient": "Celery Stick",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Savory brunch classic with vodka, tomato juice, citrus, and spice.",
+    "version": "1.0.0"
+}

@@ -1,0 +1,44 @@
+{
+    "filename": "Gin_and_Tonic.recipe",
+    "name": "Gin and Tonic",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 10,
+            "action": 0
+        },
+        {
+            "text": "Top with chilled tonic water",
+            "ingredient": "Tonic Water",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wedge",
+            "ingredient": "Lime Wedge",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Crisp and bubbly highball of gin, tonic, and citrus.",
+    "version": "1.0.0"
+}

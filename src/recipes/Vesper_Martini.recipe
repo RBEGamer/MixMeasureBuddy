@@ -1,0 +1,50 @@
+{
+    "filename": "Vesper_Martini.recipe",
+    "name": "Vesper Martini",
+    "steps": [
+        {
+            "text": "Add ice to the mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lillet Blanc",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Stir until well chilled",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a wide lemon peel",
+            "ingredient": "Lemon Peel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Bond's blend of gin, vodka, and aromatized wine served icy cold.",
+    "version": "1.0.0"
+}

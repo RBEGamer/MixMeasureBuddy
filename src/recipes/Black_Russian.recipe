@@ -1,0 +1,32 @@
+{
+    "filename": "Black_Russian.recipe",
+    "name": "Black Russian",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coffee Liqueur",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        }
+    ],
+    "description": "Simple blend of vodka and coffee liqueur served over ice.",
+    "version": "1.0.0"
+}

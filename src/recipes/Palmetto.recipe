@@ -1,0 +1,50 @@
+{
+    "filename": "Palmetto.recipe",
+    "name": "Palmetto",
+    "steps": [
+        {
+            "text": "Add ice to the mixing glass",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Aged Rum",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Sweet Vermouth",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "Add dashes of orange bitters",
+            "ingredient": "Orange Bitters",
+            "amount": 2,
+            "action": 0
+        },
+        {
+            "text": "Stir until well chilled",
+            "ingredient": "",
+            "amount": 20,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with an orange twist",
+            "ingredient": "Orange Twist",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Rum-based Manhattan featuring sweet vermouth and orange bitters.",
+    "version": "1.0.0"
+}

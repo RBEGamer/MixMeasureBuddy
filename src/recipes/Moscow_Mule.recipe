@@ -1,0 +1,44 @@
+{
+    "filename": "Moscow_Mule.recipe",
+    "name": "Moscow Mule",
+    "steps": [
+        {
+            "text": "Fill the serving glass with ice",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 50,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lime Juice",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "Top with fiery ginger beer",
+            "ingredient": "Ginger Beer",
+            "amount": 120,
+            "action": 0
+        },
+        {
+            "text": "Stir gently to combine",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a lime wheel",
+            "ingredient": "Lime Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Vodka buck served icy cold with spicy ginger beer.",
+    "version": "1.0.0"
+}

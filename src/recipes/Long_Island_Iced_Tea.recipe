@@ -1,0 +1,80 @@
+{
+    "filename": "Long_Island_Iced_Tea.recipe",
+    "name": "Long Island Iced Tea",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Vodka",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "White Rum",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Blanco Tequila",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Triple Sec",
+            "amount": 15,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Top with cola",
+            "ingredient": "Cola",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Garnish with a lemon wheel",
+            "ingredient": "Lemon Wheel",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "High-octane highball combining mixed white spirits, citrus, and cola.",
+    "version": "1.0.0"
+}

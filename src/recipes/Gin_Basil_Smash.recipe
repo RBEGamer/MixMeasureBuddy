@@ -1,0 +1,62 @@
+{
+    "filename": "Gin_Basil_Smash.recipe",
+    "name": "Gin Basil Smash",
+    "steps": [
+        {
+            "text": "Muddle basil leaves with lemon juice in the shaker",
+            "ingredient": "Basil Leaves",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Gin",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Lemon Juice",
+            "amount": 25,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Simple Syrup",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Basil Leaves",
+            "amount": 8,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 15,
+            "action": 2
+        },
+        {
+            "text": "Strain into a prepared glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a basil leaf",
+            "ingredient": "Basil Leaf",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "Vibrant gin sour infused with muddled basil and lemon.",
+    "version": "1.0.0"
+}
