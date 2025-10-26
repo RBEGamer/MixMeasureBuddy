@@ -4,6 +4,15 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+const repositoryName =
+  process.env.GITHUB_REPOSITORY && process.env.GITHUB_REPOSITORY.includes('/')
+    ? process.env.GITHUB_REPOSITORY.split('/')[1]
+    : 'MixMeasureBuddy';
+
+const basePath = isGitHubActions ? `/${repositoryName}` : '';
+const assetPrefix = isGitHubActions ? `/${repositoryName}` : '';
+
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
@@ -61,6 +70,8 @@ module.exports = () => {
   return plugins.reduce((acc, next) => next(acc), {
     reactStrictMode: true,
     output: 'export',
+    basePath,
+    assetPrefix,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     eslint: {
       dirs: ['app', 'components', 'layouts', 'scripts'],
