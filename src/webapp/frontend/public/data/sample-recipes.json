@@ -44,6 +44,74 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Apricot_Lavender_Sour.recipe",
+    "name": "Apricot Lavender Sour",
+    "steps": [
+      {
+        "text": "Add dried lavender and lemon juice to the shaker to bloom the aromatics",
+        "ingredient": "Dried Lavender",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Add apricot brandy",
+        "ingredient": "Apricot Brandy",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add bourbon",
+        "ingredient": "Bourbon",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add lavender honey syrup",
+        "ingredient": "Lavender Honey Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add fresh lemon juice",
+        "ingredient": "Lemon Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Separate an egg and add the white for texture",
+        "ingredient": "Egg White",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Dry shake to emulsify the egg white",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Add fresh ice and shake hard until frothy",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Fine strain into a chilled coupe glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a lavender sprig",
+        "ingredient": "Lavender Sprig",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A silky bourbon sour sweetened with apricot brandy and perfumed with lavender honey.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Aviation.recipe",
     "name": "Aviation",
     "steps": [
@@ -804,6 +872,68 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Charred_Pineapple_Smash.recipe",
+    "name": "Charred Pineapple Smash",
+    "steps": [
+      {
+        "text": "Add charred pineapple chunks to the shaker and muddle gently",
+        "ingredient": "Charred Pineapple",
+        "amount": 50,
+        "action": 1
+      },
+      {
+        "text": "Add reposado tequila",
+        "ingredient": "Tequila Reposado",
+        "amount": 55,
+        "action": 0
+      },
+      {
+        "text": "Add mezcal for smoke",
+        "ingredient": "Mezcal",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add lime juice",
+        "ingredient": "Lime Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add agave nectar",
+        "ingredient": "Agave Nectar",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add a pinch of smoked sea salt",
+        "ingredient": "Smoked Sea Salt",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Shake with pebble ice to chill",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Dump entire contents into a double old fashioned glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with pineapple fronds and lime wheel",
+        "ingredient": "Lime Wheel",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Smoky tequila smash featuring fire-kissed pineapple, mezcal, and citrus.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Cherry_Vanilla_Manhattan.recipe",
     "name": "Cherry Vanilla Manhattan",
     "steps": [
@@ -969,6 +1099,68 @@
       }
     ],
     "description": "A creamy frozen colada infused with earthy matcha tea and tropical coconut.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Coconut_Pandan_Punch.recipe",
+    "name": "Coconut Pandan Punch",
+    "steps": [
+      {
+        "text": "Add coconut rum to a shaker tin",
+        "ingredient": "Coconut Rum",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add pandan syrup",
+        "ingredient": "Pandan Syrup",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add fresh lime juice",
+        "ingredient": "Lime Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add coconut water",
+        "ingredient": "Coconut Water",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Add pineapple juice",
+        "ingredient": "Pineapple Juice",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add crushed ice and shake shortly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Dump into a tiki mug or punch glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with sparkling mineral water",
+        "ingredient": "Sparkling Water",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Garnish with pandan leaf and coconut flakes",
+        "ingredient": "Pandan Leaf",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A tropical punch balancing pandan sweetness, coconut water, and bright lime.",
     "version": "1.0.0"
   },
   {
@@ -1800,6 +1992,68 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Grapefruit_Smoked_Sage_Paloma.recipe",
+    "name": "Grapefruit Smoked Sage Paloma",
+    "steps": [
+      {
+        "text": "Rim a highball glass with smoked salt and fill with ice",
+        "ingredient": "Smoked Salt",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Add mezcal to the shaker",
+        "ingredient": "Mezcal",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "Add fresh grapefruit juice",
+        "ingredient": "Grapefruit Juice",
+        "amount": 70,
+        "action": 0
+      },
+      {
+        "text": "Add lime juice",
+        "ingredient": "Lime Juice",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add sage syrup",
+        "ingredient": "Sage Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add a splash of sparkling water",
+        "ingredient": "Sparkling Water",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "Stir gently to combine in the glass",
+        "ingredient": "",
+        "amount": 6,
+        "action": 2
+      },
+      {
+        "text": "Top with grapefruit soda",
+        "ingredient": "Grapefruit Soda",
+        "amount": 80,
+        "action": 0
+      },
+      {
+        "text": "Garnish with smoked sage sprig",
+        "ingredient": "Sage Sprig",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "Herbal Paloma combining smoky mezcal, sage syrup, and grapefruit soda over ice.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Hibiscus_Rose_Tonic.recipe",
     "name": "Hibiscus Rose Tonic",
     "steps": [
@@ -2387,6 +2641,118 @@
       }
     ],
     "description": "A tropical tiki classic combining light and dark rum, orange curaçao, lime juice, and orgeat syrup, served over crushed ice and garnished with mint.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Mango_Saffron_Margarita.recipe",
+    "name": "Mango Saffron Margarita",
+    "steps": [
+      {
+        "text": "Bloom saffron strands in warm agave nectar for 30 seconds",
+        "ingredient": "Saffron",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Add mango puree to the shaker",
+        "ingredient": "Mango Puree",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add reposado tequila",
+        "ingredient": "Tequila Reposado",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add orange liqueur",
+        "ingredient": "Orange Liqueur",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add lime juice",
+        "ingredient": "Lime Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add the saffron agave nectar",
+        "ingredient": "Saffron Agave",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake hard",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Strain into a tajin-rimmed rocks glass over fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with mango slice and lime wheel",
+        "ingredient": "Mango Slice",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A luxurious margarita marrying ripe mango with saffron-infused agave nectar.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Maple_Berry_Smash.recipe",
+    "name": "Maple Berry Smash",
+    "steps": [
+      {
+        "text": "Muddle mixed berries with maple syrup in shaker",
+        "ingredient": "Mixed Berries",
+        "amount": 40,
+        "action": 1
+      },
+      {
+        "text": "Add rye whiskey",
+        "ingredient": "Rye Whiskey",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add lemon juice",
+        "ingredient": "Lemon Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add a dash of aromatic bitters",
+        "ingredient": "Aromatic Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Fill shaker with crushed ice and shake",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Strain into a rocks glass over crushed ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with berry skewer and mint sprig",
+        "ingredient": "Mint Sprig",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A whiskey smash sweetened with maple syrup and ripe mixed berries.",
     "version": "1.0.0"
   },
   {
@@ -3374,6 +3740,74 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Pistachio_Orgeat_Flip.recipe",
+    "name": "Pistachio Orgeat Flip",
+    "steps": [
+      {
+        "text": "Add pistachio orgeat to shaker",
+        "ingredient": "Pistachio Orgeat",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add aged rum",
+        "ingredient": "Aged Rum",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add oloroso sherry",
+        "ingredient": "Oloroso Sherry",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add cream",
+        "ingredient": "Heavy Cream",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Crack a fresh egg into the shaker",
+        "ingredient": "Egg",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Add a dash of orange bitters",
+        "ingredient": "Orange Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Dry shake vigorously to emulsify",
+        "ingredient": "",
+        "amount": 12,
+        "action": 2
+      },
+      {
+        "text": "Add ice and shake again until chilled",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Fine strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with grated pistachio and nutmeg",
+        "ingredient": "Ground Pistachio",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A velvety flip cocktail showcasing pistachio orgeat, aged rum, and sherry.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Planter_s_Punch.recipe",
     "name": "Planter's Punch",
     "steps": [
@@ -3507,6 +3941,62 @@
       }
     ],
     "description": "Rich, frothy gin fizz with cream, citrus, and orange blossom.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Raspberry_Basil_Martini.recipe",
+    "name": "Raspberry Basil Martini",
+    "steps": [
+      {
+        "text": "Muddle raspberries and basil leaves with simple syrup",
+        "ingredient": "Raspberries",
+        "amount": 6,
+        "action": 1
+      },
+      {
+        "text": "Add fresh basil leaves",
+        "ingredient": "Fresh Basil",
+        "amount": 4,
+        "action": 1
+      },
+      {
+        "text": "Add vodka to the shaker",
+        "ingredient": "Vodka",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "Add raspberry liqueur",
+        "ingredient": "Raspberry Liqueur",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add lemon juice",
+        "ingredient": "Lemon Juice",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake vigorously",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Fine strain into a chilled martini glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a basil leaf and berry",
+        "ingredient": "Basil Leaf",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A vibrant martini marrying juicy raspberries with herbaceous basil and citrus.",
     "version": "1.0.0"
   },
   {
@@ -3993,6 +4483,62 @@
       }
     ],
     "description": "Layered gin sling with cherry, citrus, and sparkling length.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Smoked_Fig_Boulevardier.recipe",
+    "name": "Smoked Fig Boulevardier",
+    "steps": [
+      {
+        "text": "Add fig preserves to the mixing glass",
+        "ingredient": "Fig Preserves",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Add rye whiskey",
+        "ingredient": "Rye Whiskey",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "Add bitter aperitivo",
+        "ingredient": "Campari",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add sweet vermouth",
+        "ingredient": "Sweet Vermouth",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add two drops of smoked bitters",
+        "ingredient": "Smoked Bitters",
+        "amount": 2,
+        "action": 1
+      },
+      {
+        "text": "Add ice and stir until chilled",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Strain over a large ice cube in a rocks glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with skewered dried fig",
+        "ingredient": "Dried Fig",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A fall-ready boulevardier enhanced with fig preserves and smoky bitters.",
     "version": "1.0.0"
   },
   {
@@ -4747,6 +5293,62 @@
       }
     ],
     "description": "Creamy dessert sipper with vodka and coffee liqueur.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Yuzu_Ginger_Collins.recipe",
+    "name": "Yuzu Ginger Collins",
+    "steps": [
+      {
+        "text": "Add thin slices of ginger to the shaker and muddle",
+        "ingredient": "Fresh Ginger",
+        "amount": 4,
+        "action": 1
+      },
+      {
+        "text": "Add gin",
+        "ingredient": "Gin",
+        "amount": 50,
+        "action": 0
+      },
+      {
+        "text": "Add yuzu juice",
+        "ingredient": "Yuzu Juice",
+        "amount": 25,
+        "action": 0
+      },
+      {
+        "text": "Add ginger syrup",
+        "ingredient": "Ginger Syrup",
+        "amount": 15,
+        "action": 0
+      },
+      {
+        "text": "Fill shaker with ice and shake briskly",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "Strain into a collins glass with fresh ice",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Top with chilled soda water",
+        "ingredient": "Soda Water",
+        "amount": 120,
+        "action": 0
+      },
+      {
+        "text": "Garnish with candied ginger and lemon peel",
+        "ingredient": "Candied Ginger",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A zesty Collins featuring tart yuzu, fresh ginger, and sparkling soda.",
     "version": "1.0.0"
   },
   {

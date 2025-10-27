@@ -18,6 +18,10 @@ app.use(morgan('dev'));
 const recipeRouter = createRecipeRouter({ recipesDir: STATIC_RECIPES_DIR });
 app.use('/recipes', recipeRouter);
 
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', backend: 'MixMeasureBuddy', version: '1.0' });
+});
+
 const ensureSystemDirectory = async (systemId) => {
   const systemDir = path.join(STORAGE_ROOT, systemId);
   await fs.mkdir(systemDir, { recursive: true });

@@ -22,6 +22,7 @@
       "@/layouts/*": ["layouts/*"],
       "@/css/*": ["css/*"],
       "@/lib/*": ["lib/*"],
+      "@/context/*": ["context/*"],
       "@/theme/*": ["theme/*"],
       "@/app/*": ["app/*"],
       "shipixen-contentlayer/generated": ["./.contentlayer/generated"]

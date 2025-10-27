@@ -1,3 +1,5 @@
+'use client';
+
 import { siteConfig } from '@/data/config/site.settings';
 import { headerNavLinks } from '@/data/config/headerNavLinks';
 import Link from '@/components/shared/Link';
@@ -43,7 +45,7 @@ const Header = () => {
       <div className="flex items-center leading-5 gap-4 sm:gap-6">
         {headerNavLinks
           .filter((link) =>
-            link.id === 'manage' ? backendReachable : true,
+            link.requiresBackend ? backendReachable : true,
           )
           .map((link) => (
             <ActiveLink

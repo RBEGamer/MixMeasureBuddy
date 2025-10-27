@@ -1,22 +1,26 @@
+version: '3.9'
+
 services:
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: webapp/backend/Dockerfile
     ports:
       - '4000:4000'
     environment:
       - PORT=4000
       - RECIPE_STORAGE=/data/systems
       - RECIPE_DB_PATH=/data/assignments.json
+      - STATIC_RECIPES=/app/static
     volumes:
       - backend-data:/data
+      - ../recipes:/app/static:ro
     restart: unless-stopped
 
   web:
     build:
-      context: ./frontend
-      dockerfile:  Dockerfile
+      context: frontend
+      dockerfile: Dockerfile
     depends_on:
       - backend
     environment:

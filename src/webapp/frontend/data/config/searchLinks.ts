@@ -1,43 +1,47 @@
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+type SearchLink = {
+  id: string;
+  name: string;
+  keywords: string;
+  section: string;
+  href: string;
+  requiresBackend?: boolean;
+};
 
-export const searchLinks = [
+export const searchLinks: SearchLink[] = [
   {
-    id: '',
+    id: 'home',
     name: 'Home',
     keywords: '',
     section: 'Navigation',
-    href: '/'
+    href: '/',
   },
   {
     id: 'editor',
     name: 'Recipe Editor',
     keywords: '',
     section: 'Navigation',
-    href: '/editor'
+    href: '/editor',
   },
   {
     id: 'mixer',
     name: 'Mix Lab',
     keywords: '',
     section: 'Navigation',
-    href: '/mixer'
+    href: '/mixer',
   },
-  ...(backendUrl
-    ? [
-        {
-          id: 'manage',
-          name: 'Manage',
-          keywords: '',
-          section: 'Navigation',
-          href: '/manage',
-        },
-      ]
-    : []),
+  {
+    id: 'manage',
+    name: 'Manage',
+    keywords: '',
+    section: 'Navigation',
+    href: '/manage',
+    requiresBackend: true,
+  },
   {
     id: 'gallery',
     name: 'Recipe Gallery',
     keywords: '',
     section: 'Navigation',
-    href: '/gallery'
-  }
-]
+    href: '/gallery',
+  },
+];
