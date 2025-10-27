@@ -2,14 +2,14 @@
 
 FROM node:20-alpine AS base
 
-WORKDIR /app/backend
+WORKDIR /app
 
-COPY ./package.json ./
+COPY ./package.json ./package-lock.json ./
 
 RUN npm ci --omit=dev
 
-COPY src src
-#COPY ../../recipes /app/static/recipes
+COPY ./src ./src
+COPY ./recipes.json ./static/
 
 ENV NODE_ENV=production
 ENV STATIC_RECIPES=/app/static
