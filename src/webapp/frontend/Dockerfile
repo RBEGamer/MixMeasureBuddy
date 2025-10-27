@@ -1,10 +1,22 @@
-# syntax=docker/dockerfile:1.4
-FROM node:alpine
-RUN mkdir -p /app
-WORKDIR /app
-COPY . .
-RUN rm -rf node_modules
-RUN npm install
+# syntax=docker/dockerfile:1.6
+
+FROM node:20-alpine AS builder
+
+WORKDIR /app/frontend
+
+COPY ./package.json ./
+COPY ./package-lock.json ./
+
+RUN npm ci
+
+COPY ./ ./
+
 RUN npm run build
-EXPOSE 3000
-CMD ["npm", "run" ,"serve"]
+
+FROM nginx:1.27-alpine AS runner
+
+COPY --from=builder /app/frontend/out /usr/share/nginx/html
+
+EXPOSE 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]

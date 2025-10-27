@@ -1,3 +1,5 @@
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export const searchLinks = [
   {
     id: '',
@@ -20,6 +22,17 @@ export const searchLinks = [
     section: 'Navigation',
     href: '/mixer'
   },
+  ...(backendUrl
+    ? [
+        {
+          id: 'manage',
+          name: 'Manage',
+          keywords: '',
+          section: 'Navigation',
+          href: '/manage',
+        },
+      ]
+    : []),
   {
     id: 'gallery',
     name: 'Recipe Gallery',

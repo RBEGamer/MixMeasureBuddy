@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mixmeasurebuddy-suite
+  labels:
+    app: mixmeasurebuddy-suite
+spec:
+  containers:
+    - name: backend
+      image: mixmeasurebuddy-backend:latest
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: PORT
+          value: '4000'
+        - name: RECIPE_STORAGE
+          value: /data/systems
+        - name: RECIPE_DB_PATH
+          value: /data/assignments.json
+      ports:
+        - containerPort: 4000
+      volumeMounts:
+        - name: backend-data
+          mountPath: /data
+    - name: web
+      image: mixmeasurebuddy-web:latest
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: NEXT_PUBLIC_BACKEND_URL
+          value: http://localhost:4000
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 10
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 10
+  volumes:
+    - name: backend-data
+      emptyDir: {}
