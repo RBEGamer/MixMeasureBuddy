@@ -8,8 +8,11 @@ import ActiveLink from '@/components/shared/ActiveLink';
 import Image from 'next/image';
 import { withBasePath } from '@/lib/base-path';
 import { Github } from 'lucide-react';
+import { useBackendReachable } from '@/context/backend-context';
 
 const Header = () => {
+  const backendReachable = useBackendReachable();
+
   return (
     <header className="flex items-center justify-between py-10 flex-wrap w-full mb-20 lg:mb-32 pt-6 wide-container">
       <div>
@@ -38,16 +41,20 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex items-center leading-5 gap-4 sm:gap-6">
-        {headerNavLinks.map((link) => (
-          <ActiveLink
-            key={link.title}
-            href={link.href}
-            className="nav-link hidden sm:block"
-            activeClassName="nav-link-active"
-          >
-            <span>{link.title}</span>
-          </ActiveLink>
-        ))}
+        {headerNavLinks
+          .filter((link) =>
+            link.id === 'manage' ? backendReachable : true,
+          )
+          .map((link) => (
+            <ActiveLink
+              key={link.title}
+              href={link.href}
+              className="nav-link hidden sm:block"
+              activeClassName="nav-link-active"
+            >
+              <span>{link.title}</span>
+            </ActiveLink>
+          ))}
 
         <a
           href={siteConfig.github || 'https://github.com/RBEGamer/MixMeasureBuddy'}

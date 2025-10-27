@@ -11,6 +11,7 @@ import '@/css/globals.css';
 import { SearchProvider } from '@/components/shared/SearchProvider';
 import { AnalyticsWrapper } from '@/components/shared/Analytics';
 import MMBFooter from "@/components/mixmeasureberry/MMBFooter";
+import { BackendProvider } from '@/context/backend-context';
 import { withBasePath } from '@/lib/base-path';
 
 const baseFont = Inter({
@@ -138,14 +139,16 @@ export default function RootLayout({
         <ThemeProviders>
           <AnalyticsWrapper />
 
-          <div className="w-full flex flex-col justify-between items-center font-sans">
-            <SearchProvider>
-              <MMBHeader />
-              <main className="w-full flex flex-col items-center mb-auto">
-                {children}
-              </main>
-            </SearchProvider>
-          </div>
+          <BackendProvider>
+            <div className="w-full flex flex-col justify-between items-center font-sans">
+              <SearchProvider>
+                <MMBHeader />
+                <main className="w-full flex flex-col items-center mb-auto">
+                  {children}
+                </main>
+              </SearchProvider>
+            </div>
+          </BackendProvider>
 
           <MMBFooter className="mt-6 md:mt-10" />
         </ThemeProviders>
