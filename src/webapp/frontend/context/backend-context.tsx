@@ -12,15 +12,24 @@ const BackendContext = React.createContext<BackendContextValue>({
   backendUrl: undefined,
 });
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL_ENV = process.env.NEXT_PUBLIC_BACKEND_URL;
 const HEALTH_ENDPOINT = '/recipes/available';
 const POLL_INTERVAL_MS = 30000;
 
 export const BackendProvider = ({ children }: { children: React.ReactNode }) => {
   const [reachable, setReachable] = useState<boolean>(false);
+  const [backendUrl, setBackendUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (!BACKEND_URL) {
+    let resolvedUrl = BACKEND_URL_ENV;
+    if (!resolvedUrl && typeof window !== 'undefined') {
+      const current = new URL(window.location.href);
+      resolvedUrl = `${current.protocol}//${current.hostname}:4000`;
+    }
+
+    setBackendUrl(resolvedUrl);
+
+    if (!resolvedUrl) {
       setReachable(false);
       return;
     }
@@ -29,9 +38,9 @@ export const BackendProvider = ({ children }: { children: React.ReactNode }) => 
     let timeout: NodeJS.Timeout | undefined;
 
     const checkBackend = async () => {
-      console.info('[BackendProvider] Checking backend reachability', BACKEND_URL);
+      console.info('[BackendProvider] Checking backend reachability', resolvedUrl);
       try {
-        const response = await fetch(`${BACKEND_URL}${HEALTH_ENDPOINT}`, {
+        const response = await fetch(`${resolvedUrl}${HEALTH_ENDPOINT}`, {
           method: 'GET',
           cache: 'no-store',
         });
@@ -45,7 +54,7 @@ export const BackendProvider = ({ children }: { children: React.ReactNode }) => 
           setReachable(false);
         }
       } finally {
-        if (active && BACKEND_URL) {
+        if (active && resolvedUrl) {
           timeout = setTimeout(checkBackend, POLL_INTERVAL_MS);
         }
       }
@@ -60,7 +69,7 @@ export const BackendProvider = ({ children }: { children: React.ReactNode }) => 
   }, []);
 
   return (
-    <BackendContext.Provider value={{ reachable, backendUrl: BACKEND_URL }}>
+    <BackendContext.Provider value={{ reachable, backendUrl }}>
       {children}
     </BackendContext.Provider>
   );

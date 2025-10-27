@@ -13,6 +13,7 @@ export default function ManageContent({
 }) {
   const backendReachable = useBackendReachable();
   const { backendUrl } = useBackendInfo();
+  const effectiveConfigured = backendConfigured || Boolean(backendUrl);
 
   return (
     <div className="w-full bg-gradient-to-b from-primary-100/30 to-transparent py-10 dark:from-primary-900/20">
@@ -33,16 +34,16 @@ export default function ManageContent({
           )}
         </section>
 
-        {!backendConfigured || !backendReachable ? (
+        {!effectiveConfigured || !backendReachable ? (
           <Card>
             <CardHeader>
               <CardTitle>Backend required</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3 text-sm text-muted-foreground">
               <p>
-                {backendConfigured
-                  ? 'The configured backend is currently unreachable. Ensure it is running and accessible.'
-                  : 'Configure NEXT_PUBLIC_BACKEND_URL before building the frontend so the management interface can contact the backend API.'}
+                {effectiveConfigured
+                  ? 'The backend is currently unreachable. Ensure it is running and accessible.'
+                  : 'Configure NEXT_PUBLIC_BACKEND_URL (or expose your backend on port 4000) so the management interface can contact the API.'}
               </p>
               <p>
                 Once the backend is online, the management tools will unlock automatically.
