@@ -7,6 +7,8 @@ import {
   type RecipeStep,
   slugifyRecipeName,
   stringifyRecipe,
+  RecipeAction,
+  type RecipeActionValue,
 } from '@/lib/recipes';
 import { withBasePath } from '@/lib/base-path';
 import {
@@ -31,22 +33,177 @@ type MixerState = {
 
 const SAMPLE_DATA_ENDPOINT = withBasePath('/data/sample-recipes.json');
 
+const normalizeIngredientName = (value: string): string =>
+  value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[\u2019'’"]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const toTitleCase = (value: string): string =>
+  value
+    .split(' ')
+    .map((segment) =>
+      segment.length > 0
+        ? segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase()
+        : '',
+    )
+    .join(' ');
+
+const RAW_INGREDIENT_SYNONYMS: Record<string, string[]> = {
+  Vodka: ['Premium Vodka', 'Plain Vodka'],
+  Rum: ['White Rum', 'Dark Rum', 'Aged Rum', 'Spiced Rum'],
+  Tequila: ['Blanco Tequila', 'Reposado Tequila', 'Añejo Tequila'],
+  Gin: ['London Dry Gin', 'Dry Gin'],
+  Whiskey: ['Whisky', 'Bourbon', 'Rye Whiskey', 'Scotch'],
+  'Coffee Liqueur': ['Kahlua', 'Espresso Liqueur', 'Cold Brew Liqueur'],
+  Espresso: ['Fresh Espresso', 'Double Espresso'],
+  'Cold Brew': ['Cold Brew Coffee'],
+  'Simple Syrup': ['Sugar Syrup', 'Syrup'],
+  'Agave Syrup': ['Agave Nectar'],
+  'Lime Juice': ['Fresh Lime Juice', 'Lime'],
+  'Lemon Juice': ['Fresh Lemon Juice', 'Lemon'],
+  'Orange Juice': ['Fresh Orange Juice'],
+  'Orange Liqueur': ['Triple Sec', 'Cointreau', 'Orange Curaçao'],
+  'Grapefruit Juice': ['Pink Grapefruit Juice'],
+  'Pineapple Juice': ['Fresh Pineapple Juice'],
+  'Coconut Cream': ['Cream of Coconut'],
+  'Mint Leaves': ['Fresh Mint', 'Mint'],
+  Bitters: ['Aromatic Bitters', 'Angostura Bitters'],
+  'Sparkling Water': ['Soda Water', 'Club Soda'],
+  'Tonic Water': ['Indian Tonic'],
+};
+
+const INGREDIENT_SYNONYMS: Record<string, string[]> = Object.entries(
+  RAW_INGREDIENT_SYNONYMS,
+).reduce<Record<string, string[]>>((acc, [key, values]) => {
+  const normalizedKey = normalizeIngredientName(key);
+  if (!normalizedKey) {
+    return acc;
+  }
+  const normalizedValues = Array.from(
+    new Set(values.map((value) => normalizeIngredientName(value)).filter(Boolean)),
+  );
+  acc[normalizedKey] = normalizedValues;
+  return acc;
+}, {});
+
+type IngredientVariantIndex = {
+  canonical: string[];
+  variantSet: Set<string>;
+  variantToCanonical: Map<string, string>;
+};
+
+const buildIngredientVariantIndex = (ingredients: string[]): IngredientVariantIndex => {
+  const canonicalSet = new Set<string>();
+  const variantSet = new Set<string>();
+  const variantToCanonical = new Map<string, string>();
+
+  ingredients.forEach((ingredient) => {
+    const normalized = normalizeIngredientName(ingredient);
+    if (!normalized) return;
+
+    canonicalSet.add(normalized);
+
+    const synonyms = INGREDIENT_SYNONYMS[normalized] ?? [];
+    const variants = new Set<string>([normalized, ...synonyms]);
+    variants.forEach((variant) => {
+      if (!variant) return;
+      variantSet.add(variant);
+      if (!variantToCanonical.has(variant)) {
+        variantToCanonical.set(variant, normalized);
+      }
+    });
+  });
+
+  return {
+    canonical: Array.from(canonicalSet),
+    variantSet,
+    variantToCanonical,
+  };
+};
+
+const collectMatchingVariants = (
+  normalizedIngredient: string,
+  variants: Set<string>,
+): string[] => {
+  if (!normalizedIngredient) {
+    return [];
+  }
+
+  const matches: string[] = [];
+  variants.forEach((variant) => {
+    if (!variant) return;
+    if (
+      normalizedIngredient === variant ||
+      normalizedIngredient.includes(variant) ||
+      variant.includes(normalizedIngredient)
+    ) {
+      matches.push(variant);
+    }
+  });
+  return matches;
+};
+
+type IndexedMixerStep = RecipeStep & {
+  sourceRecipe: string;
+  sourceIndex: number;
+  globalIndex: number;
+  normalizedIngredient: string;
+};
+
+type ScoredMixerStep = {
+  step: IndexedMixerStep;
+  matches: Set<string>;
+  score: number;
+};
+
+const ACTION_PRIORITY: Record<RecipeActionValue, number> = {
+  [RecipeAction.SCALE]: 3,
+  [RecipeAction.WAIT]: 2,
+  [RecipeAction.CONFIRM]: 1,
+};
+
+const ACTION_WEIGHT: Record<RecipeActionValue, number> = {
+  [RecipeAction.SCALE]: 3,
+  [RecipeAction.WAIT]: 1.5,
+  [RecipeAction.CONFIRM]: 1,
+};
+
+const MAX_GENERATED_STEPS = 16;
+const MIN_GENERATED_STEPS = 5;
+
 const parseIngredientList = (raw: string): string[] =>
   raw
     .split(/[\n,]+/)
-    .map((entry) => entry.trim().toLowerCase())
+    .map((entry) => normalizeIngredientName(entry))
     .filter((entry) => entry.length > 0);
 
 const cloneStep = (step: RecipeStep): RecipeStep =>
   JSON.parse(JSON.stringify(step));
 
-const flattenRecipeSteps = (recipes: Recipe[]): RecipeStep[] =>
-  recipes.flatMap((recipe) =>
-    recipe.steps.map((step) => ({
-      ...cloneStep(step),
-      sourceRecipe: recipe.name,
-    })),
-  );
+const flattenRecipeSteps = (recipes: Recipe[]): IndexedMixerStep[] => {
+  const flattened: IndexedMixerStep[] = [];
+  let globalIndex = 0;
+
+  recipes.forEach((recipe) => {
+    recipe.steps.forEach((step, sourceIndex) => {
+      const copy = cloneStep(step);
+      flattened.push({
+        ...copy,
+        sourceRecipe: recipe.name,
+        sourceIndex,
+        globalIndex: globalIndex++,
+        normalizedIngredient: normalizeIngredientName(copy.ingredient ?? ''),
+      });
+    });
+  });
+
+  return flattened;
+};
 
 const DEFAULT_RECIPE_NAME = 'Custom Coffee Lab Mix';
 
@@ -61,26 +218,12 @@ const createRecipeNameFromIngredients = (ingredients: string[]): string => {
   const first = unique[0];
   const second = unique[1];
 
-  const formatWord = (word: string) => {
-    if (!word || word.length === 0) {
-      return '';
-    }
-    return word
-      .split(' ')
-      .map((segment) =>
-        segment.length > 0
-          ? segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase()
-          : '',
-      )
-      .join(' ');
-  };
-
   if (first && second) {
-    return `${formatWord(first)} ${formatWord(second)} Fusion`;
+    return `${toTitleCase(first)} ${toTitleCase(second)} Fusion`;
   }
 
   if (first) {
-    return `${formatWord(first)} Custom Blend`;
+    return `${toTitleCase(first)} Custom Blend`;
   }
 
   return DEFAULT_RECIPE_NAME;
@@ -164,54 +307,219 @@ export const RecipeMixer = () => {
     setIsGenerating(true);
 
     requestAnimationFrame(() => {
-      const flattened = flattenRecipeSteps(state.samples);
-
-      const filteredSteps = flattened.filter((step) => {
-        if (!step.ingredient || step.ingredient.trim().length === 0) {
-          return true;
+      try {
+        const flattened = flattenRecipeSteps(state.samples);
+        if (flattened.length === 0) {
+          setGeneratedRecipe(null);
+          return;
         }
 
-        const normalized = step.ingredient.trim().toLowerCase();
-        return availableIngredients.includes(normalized);
-      });
+        const variantIndex = buildIngredientVariantIndex(ingredientBadges);
+        const trimmedName = desiredName.trim();
+        const fallbackName =
+          trimmedName.length > 0
+            ? trimmedName
+            : createRecipeNameFromIngredients(ingredientBadges);
 
-      const limitedSteps = filteredSteps.slice(0, 18);
+        if (variantIndex.canonical.length === 0) {
+          const fallbackSteps = flattened.slice(0, MIN_GENERATED_STEPS).map((step) => ({
+            text: step.text,
+            ingredient: step.ingredient,
+            amount: step.amount,
+            action: step.action,
+          }));
 
-      if (limitedSteps.length === 0) {
-        // fallback: take first five steps regardless, so user still gets a recipe
-        limitedSteps.push(...flattened.slice(0, 5));
-      }
+          const recipe: Recipe = {
+            filename: slugifyRecipeName(fallbackName),
+            name: fallbackName,
+            description:
+              'A quick sample pulled from the MixMeasureBuddy library. Add ingredients to tailor the mix to your bar.',
+            steps: fallbackSteps,
+          };
 
-      const deduplicated = limitedSteps.reduce<RecipeStep[]>(
-        (acc, step) => {
-          const key = `${step.action}-${step.ingredient}-${step.text}-${step.amount}`;
-          if (!acc.some((existing) => key === `${existing.action}-${existing.ingredient}-${existing.text}-${existing.amount}`)) {
-            acc.push({
+          setGeneratedRecipe(recipe);
+          return;
+        }
+
+        const scoredSteps: ScoredMixerStep[] = flattened.map((step) => {
+          const variantMatches = collectMatchingVariants(
+            step.normalizedIngredient,
+            variantIndex.variantSet,
+          );
+          const canonicalMatches = new Set<string>();
+          variantMatches.forEach((variant) => {
+            const canonical = variantIndex.variantToCanonical.get(variant);
+            if (canonical) {
+              canonicalMatches.add(canonical);
+            }
+          });
+
+          const matchScore = canonicalMatches.size * 3;
+          const actionWeight = ACTION_WEIGHT[step.action as RecipeActionValue] ?? 0;
+          const score = matchScore + actionWeight;
+
+          return {
+            step,
+            matches: canonicalMatches,
+            score,
+          };
+        });
+
+        const matchedSteps = scoredSteps.filter((entry) => entry.matches.size > 0);
+
+        const sortedMatched = [...matchedSteps].sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          const priorityDiff =
+            ACTION_PRIORITY[b.step.action as RecipeActionValue] -
+            ACTION_PRIORITY[a.step.action as RecipeActionValue];
+          if (priorityDiff !== 0) return priorityDiff;
+          return a.step.globalIndex - b.step.globalIndex;
+        });
+
+        const selectedEntries: ScoredMixerStep[] = [];
+        const selectedIndices = new Set<number>();
+        const coverage = new Set<string>();
+
+        variantIndex.canonical.forEach((ingredient) => {
+          const candidate = sortedMatched.find(
+            (entry) =>
+              entry.matches.has(ingredient) && !selectedIndices.has(entry.step.globalIndex),
+          );
+          if (candidate) {
+            selectedEntries.push(candidate);
+            selectedIndices.add(candidate.step.globalIndex);
+            candidate.matches.forEach((match) => coverage.add(match));
+          }
+        });
+
+        for (const entry of sortedMatched) {
+          if (selectedEntries.length >= MAX_GENERATED_STEPS) break;
+          if (selectedIndices.has(entry.step.globalIndex)) continue;
+          selectedEntries.push(entry);
+          selectedIndices.add(entry.step.globalIndex);
+          entry.matches.forEach((match) => coverage.add(match));
+        }
+
+        const missingIngredients = variantIndex.canonical.filter(
+          (ingredient) => !coverage.has(ingredient),
+        );
+
+        missingIngredients.forEach((ingredient) => {
+          const ingredientVariants = new Set<string>([
+            ingredient,
+            ...(INGREDIENT_SYNONYMS[ingredient] ?? []),
+          ]);
+
+          const fallback = flattened.find(
+            (step) =>
+              !selectedIndices.has(step.globalIndex) &&
+              collectMatchingVariants(step.normalizedIngredient, ingredientVariants).length > 0,
+          );
+
+          if (fallback) {
+            selectedEntries.push({
+              step: fallback,
+              matches: new Set([ingredient]),
+              score: ACTION_WEIGHT[fallback.action as RecipeActionValue] ?? 0,
+            });
+            selectedIndices.add(fallback.globalIndex);
+            coverage.add(ingredient);
+          }
+        });
+
+        if (selectedEntries.length < MIN_GENERATED_STEPS) {
+          for (const step of flattened) {
+            if (selectedEntries.length >= MIN_GENERATED_STEPS) break;
+            if (selectedIndices.has(step.globalIndex)) continue;
+            selectedEntries.push({
+              step,
+              matches: new Set(),
+              score: ACTION_WEIGHT[step.action as RecipeActionValue] ?? 0,
+            });
+            selectedIndices.add(step.globalIndex);
+          }
+        }
+
+        const waitCandidates = flattened
+          .filter(
+            (step) =>
+              (step.action === RecipeAction.WAIT || step.action === RecipeAction.CONFIRM) &&
+              !selectedIndices.has(step.globalIndex),
+          )
+          .sort((a, b) => a.globalIndex - b.globalIndex);
+
+        const needsWait = !selectedEntries.some(
+          (entry) => entry.step.action === RecipeAction.WAIT,
+        );
+        if (needsWait) {
+          const candidate = waitCandidates.find((step) => step.action === RecipeAction.WAIT);
+          if (candidate && selectedEntries.length < MAX_GENERATED_STEPS) {
+            selectedEntries.push({
+              step: candidate,
+              matches: new Set(),
+              score: ACTION_WEIGHT[candidate.action as RecipeActionValue] ?? 0,
+            });
+            selectedIndices.add(candidate.globalIndex);
+          }
+        }
+
+        const needsConfirm = !selectedEntries.some(
+          (entry) => entry.step.action === RecipeAction.CONFIRM,
+        );
+        if (needsConfirm) {
+          const candidate = waitCandidates.find(
+            (step) =>
+              step.action === RecipeAction.CONFIRM && !selectedIndices.has(step.globalIndex),
+          );
+          if (candidate && selectedEntries.length < MAX_GENERATED_STEPS) {
+            selectedEntries.push({
+              step: candidate,
+              matches: new Set(),
+              score: ACTION_WEIGHT[candidate.action as RecipeActionValue] ?? 0,
+            });
+            selectedIndices.add(candidate.globalIndex);
+          }
+        }
+
+        const finalSteps: RecipeStep[] = [];
+        const seenKeys = new Set<string>();
+
+        selectedEntries
+          .sort((a, b) => a.step.globalIndex - b.step.globalIndex)
+          .forEach(({ step }) => {
+            const key = `${step.action}-${step.ingredient}-${step.text}-${step.amount}`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+            finalSteps.push({
               text: step.text,
               ingredient: step.ingredient,
               amount: step.amount,
               action: step.action,
             });
-          }
-          return acc;
-        },
-        [],
-      );
+          });
 
-      const fallbackName = createRecipeNameFromIngredients(ingredientBadges);
-      const finalName =
-        desiredName.trim().length > 0 ? desiredName.trim() : fallbackName;
+        if (finalSteps.length === 0) {
+          const fallbackSteps = flattened.slice(0, MIN_GENERATED_STEPS).map((step) => ({
+            text: step.text,
+            ingredient: step.ingredient,
+            amount: step.amount,
+            action: step.action,
+          }));
+          finalSteps.push(...fallbackSteps);
+        }
 
-      const recipe: Recipe = {
-        filename: slugifyRecipeName(finalName),
-        name: finalName,
-        description:
-          'A custom recipe assembled from the MixMeasureBuddy library based on your available ingredients.',
-        steps: deduplicated,
-      };
+        const recipe: Recipe = {
+          filename: slugifyRecipeName(fallbackName),
+          name: fallbackName,
+          description:
+            'A custom recipe assembled from the MixMeasureBuddy library based on your available ingredients.',
+          steps: finalSteps.slice(0, MAX_GENERATED_STEPS),
+        };
 
-      setGeneratedRecipe(recipe);
-      setIsGenerating(false);
+        setGeneratedRecipe(recipe);
+      } finally {
+        setIsGenerating(false);
+      }
     });
   };
 
@@ -298,7 +606,7 @@ export const RecipeMixer = () => {
               <div className="flex flex-wrap gap-2">
                 {ingredientBadges.map((ingredient) => (
                   <Badge key={ingredient} variant="outline">
-                    {ingredient}
+                    {toTitleCase(ingredient)}
                   </Badge>
                 ))}
               </div>
