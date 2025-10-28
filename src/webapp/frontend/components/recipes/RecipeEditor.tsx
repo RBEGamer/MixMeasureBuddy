@@ -65,6 +65,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/shared/ui/select';
+import { useBackendInfo, useBackendReachable } from '@/context/backend-context';
 
 type SampleRecipe = Recipe & { filename: string };
 
@@ -157,6 +158,9 @@ const downloadAsRecipeFile = (recipe: Recipe) => {
 };
 
 export function RecipeEditor(): JSX.Element {
+  const backendReachable = useBackendReachable();
+  const { backendUrl } = useBackendInfo();
+  const resolvedBackendUrl = backendUrl;
   const [availableSamples, setAvailableSamples] = useState<SampleRecipe[]>([]);
   const [loadingSamples, setLoadingSamples] = useState<boolean>(false);
   const [samplesLoaded, setSamplesLoaded] = useState<boolean>(false);
@@ -168,6 +172,8 @@ export function RecipeEditor(): JSX.Element {
   const [lastSourceLabel, setLastSourceLabel] =
     useState<string>('Blank recipe');
   const [exporting, setExporting] = useState<boolean>(false);
+  const [savingCustom, setSavingCustom] = useState<boolean>(false);
+  const [scaleIdForCustom, setScaleIdForCustom] = useState<string>('');
 
   const baselineRecipeRef = useRef<Recipe>(createEmptyRecipe());
   const uploadInputRef = useRef<HTMLInputElement | null>(null);
@@ -329,6 +335,36 @@ export function RecipeEditor(): JSX.Element {
       toast.error('Something went wrong while generating the download.');
     } finally {
       setExporting(false);
+    }
+  });
+
+  const handleSaveCustomRecipe = handleSubmit(async (values) => {
+    if (!backendReachable || !resolvedBackendUrl) {
+      toast.error('Backend unavailable. Start the backend service to save custom recipes.');
+      return;
+    }
+    if (!scaleIdForCustom.trim()) {
+      toast.error('Enter a scale ID before saving to your backend.');
+      return;
+    }
+    setSavingCustom(true);
+    try {
+      const response = await fetch(`${resolvedBackendUrl}/recipes/custom/${scaleIdForCustom.trim()}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: values.name, recipe: values }),
+      });
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message);
+      }
+      const payload = await response.json();
+      toast.success(`Saved custom recipe as ${payload.recipeId}. Share this ID to reuse it.`);
+    } catch (error) {
+      console.error('[RecipeEditor] Failed to save custom recipe:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to save custom recipe.');
+    } finally {
+      setSavingCustom(false);
     }
   });
 
@@ -812,9 +848,14 @@ export function RecipeEditor(): JSX.Element {
 
               <CardFooter className="flex flex-col gap-4 border-t bg-muted/30 p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <Badge variant="outline" className="text-xs font-medium">
-                    {isDirty ? 'Unsaved changes' : 'Up to date'}
-                  </Badge>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline" className="text-xs font-medium">
+                      {isDirty ? 'Unsaved changes' : 'Up to date'}
+                    </Badge>
+                    <Badge variant="outline" className="text-xs font-medium">
+                      {backendReachable ? 'Backend connected' : 'Backend offline'}
+                    </Badge>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       type="button"
@@ -841,6 +882,40 @@ export function RecipeEditor(): JSX.Element {
                         </>
                       )}
                     </Button>
+                    {backendReachable && resolvedBackendUrl && (
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                        <div className="flex flex-col gap-1">
+                          <label
+                            htmlFor="recipe-editor-scale-id"
+                            className="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+                          >
+                            Scale ID
+                          </label>
+                          <Input
+                            id="recipe-editor-scale-id"
+                            value={scaleIdForCustom}
+                            onChange={(event) => setScaleIdForCustom(event.target.value)}
+                            placeholder="scale-1234"
+                            className="w-full sm:w-48"
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outlinePrimary"
+                          disabled={savingCustom || !scaleIdForCustom.trim()}
+                          onClick={handleSaveCustomRecipe}
+                        >
+                          {savingCustom ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Saving…
+                            </>
+                          ) : (
+                            'Save to backend'
+                          )}
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardFooter>

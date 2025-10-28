@@ -5,8 +5,6 @@ services:
     build:
       context: ..
       dockerfile: webapp/backend/Dockerfile
-    ports:
-      - '4000:4000'
     environment:
       - PORT=4000
       - RECIPE_STORAGE=/data/systems
@@ -19,12 +17,23 @@ services:
 
   web:
     build:
-      context: frontend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: webapp/frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_BACKEND_URL: /api
     depends_on:
       - backend
     environment:
-      - NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:4000
+      - NEXT_PUBLIC_BACKEND_URL=/api
+    restart: unless-stopped
+
+  reverse-proxy:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+      - web
     ports:
       - '8080:80'
     restart: unless-stopped

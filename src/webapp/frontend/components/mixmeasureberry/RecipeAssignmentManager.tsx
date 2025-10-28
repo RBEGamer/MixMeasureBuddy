@@ -9,8 +9,9 @@ import { Separator } from '@/components/shared/ui/separator';
 import { Input } from '@/components/shared/ui/input';
 import { Textarea } from '@/components/shared/ui/textarea';
 import { Loader2, PlusCircle, Trash2, Share2 } from 'lucide-react';
+import { useBackendInfo, useBackendReachable } from '@/context/backend-context';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
+const BUILD_TIME_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
 
 interface RecipeAssignmentManagerProps {
   systemId: string;
@@ -64,6 +65,11 @@ const DEFAULT_STEPS = `[
 ]`;
 
 export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentManagerProps) {
+  const backendReachable = useBackendReachable();
+  const { backendUrl } = useBackendInfo();
+  const resolvedBackendUrl =
+    backendUrl ?? (BUILD_TIME_BACKEND_URL.trim().length > 0 ? BUILD_TIME_BACKEND_URL : undefined);
+
   const [available, setAvailable] = useState<string[]>([]);
   const [assigned, setAssigned] = useState<string[]>([]);
   const [customRecipes, setCustomRecipes] = useState<CustomRecipeSummary[]>([]);
@@ -77,13 +83,21 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
   const [assignById, setAssignById] = useState('');
 
   const loadData = useCallback(async () => {
+    if (!resolvedBackendUrl) {
+      setAvailable([]);
+      setAssigned([]);
+      setCustomRecipes([]);
+      setError('Backend offline. Start the backend service to manage recipes.');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
       const [availableData, assignedData, customData] = await Promise.all([
-        fetchJSON<AvailableRecipesResponse>(`${BACKEND_URL}/recipes/available`),
-        fetchJSON<AssignedRecipesResponse>(`${BACKEND_URL}/recipes/assigned/${systemId}`),
-        fetchJSON<CustomRecipesResponse>(`${BACKEND_URL}/recipes/custom/${systemId}`),
+        fetchJSON<AvailableRecipesResponse>(`${resolvedBackendUrl}/recipes/available`),
+        fetchJSON<AssignedRecipesResponse>(`${resolvedBackendUrl}/recipes/assigned/${systemId}`),
+        fetchJSON<CustomRecipesResponse>(`${resolvedBackendUrl}/recipes/custom/${systemId}`),
       ]);
       setAvailable(availableData.recipes ?? []);
       setAssigned(assignedData.recipes ?? []);
@@ -93,11 +107,21 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
     } finally {
       setLoading(false);
     }
-  }, [systemId]);
+  }, [resolvedBackendUrl, systemId]);
 
   useEffect(() => {
+    if (!backendReachable || !resolvedBackendUrl) {
+      setAvailable([]);
+      setAssigned([]);
+      setCustomRecipes([]);
+      if (!backendReachable) {
+        setError('Backend offline. Start the backend service to manage recipes.');
+      }
+      return;
+    }
+
     loadData();
-  }, [loadData]);
+  }, [backendReachable, loadData, resolvedBackendUrl]);
 
   const availableToAssign = useMemo(
     () => available.filter((recipe) => !assigned.includes(normalizeRecipeId(recipe))),
@@ -112,12 +136,16 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
   );
 
   const handleAddRecipe = async (recipe: string) => {
+    if (!resolvedBackendUrl) {
+      setError('Backend offline. Start the backend service to manage recipes.');
+      return;
+    }
     setLoading(true);
     setError(null);
     setInfo(null);
     try {
       const normalized = normalizeRecipeId(recipe);
-      await fetchJSON(`${BACKEND_URL}/recipes/assigned/${systemId}`, {
+      await fetchJSON(`${resolvedBackendUrl}/recipes/assigned/${systemId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recipe: normalized }),
@@ -131,11 +159,15 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
   };
 
   const handleRemoveRecipe = async (recipe: string) => {
+    if (!resolvedBackendUrl) {
+      setError('Backend offline. Start the backend service to manage recipes.');
+      return;
+    }
     setLoading(true);
     setError(null);
     setInfo(null);
     try {
-      await fetchJSON(`${BACKEND_URL}/recipes/assigned/${systemId}/${encodeURIComponent(recipe)}`, {
+      await fetchJSON(`${resolvedBackendUrl}/recipes/assigned/${systemId}/${encodeURIComponent(recipe)}`, {
         method: 'DELETE',
       });
       await loadData();
@@ -147,6 +179,10 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
   };
 
   const handleCreateCustomRecipe = async () => {
+    if (!resolvedBackendUrl) {
+      setError('Backend offline. Start the backend service to manage recipes.');
+      return;
+    }
     setLoading(true);
     setError(null);
     setInfo(null);
@@ -161,7 +197,7 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
         version: '1.0.0',
         steps,
       };
-      const response = await fetchJSON<{ recipeId: string }>(`${BACKEND_URL}/recipes/custom/${systemId}`, {
+      const response = await fetchJSON<{ recipeId: string }>(`${resolvedBackendUrl}/recipes/custom/${systemId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newRecipeName, recipe: recipePayload }),

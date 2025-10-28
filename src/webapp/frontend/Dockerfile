@@ -4,12 +4,15 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app/frontend
 
-COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY webapp/frontend/package.json webapp/frontend/package-lock.json ./
 
 RUN npm ci
 
-COPY ./ ./
+COPY webapp/frontend ./
+COPY recipes /recipes
+
+ARG NEXT_PUBLIC_BACKEND_URL=/api
+ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 
 RUN npm run build
 
