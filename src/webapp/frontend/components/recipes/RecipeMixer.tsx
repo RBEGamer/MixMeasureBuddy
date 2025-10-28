@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   recipeSchema,
   type Recipe,
@@ -24,6 +24,9 @@ import { Button } from '@/components/shared/ui/button';
 import { Badge } from '@/components/shared/ui/badge';
 import { Separator } from '@/components/shared/ui/separator';
 import { Loader2, Wand2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { useBackendInfo, useBackendReachable } from '@/context/backend-context';
+import { useScaleContext } from '@/context/scale-context';
 
 type MixerState = {
   loading: boolean;
@@ -91,6 +94,17 @@ const INGREDIENT_SYNONYMS: Record<string, string[]> = Object.entries(
   return acc;
 }, {});
 
+const SYNONYM_LOOKUP: Record<string, string> = Object.entries(INGREDIENT_SYNONYMS).reduce(
+  (acc, [canonical, variants]) => {
+    variants.forEach((variant) => {
+      acc[variant] = canonical;
+    });
+    acc[canonical] = canonical;
+    return acc;
+  },
+  {} as Record<string, string>,
+);
+
 type IngredientVariantIndex = {
   canonical: string[];
   variantSet: Set<string>;
@@ -103,7 +117,7 @@ const buildIngredientVariantIndex = (ingredients: string[]): IngredientVariantIn
   const variantToCanonical = new Map<string, string>();
 
   ingredients.forEach((ingredient) => {
-    const normalized = normalizeIngredientName(ingredient);
+    const normalized = SYNONYM_LOOKUP[normalizeIngredientName(ingredient)] ?? normalizeIngredientName(ingredient);
     if (!normalized) return;
 
     canonicalSet.add(normalized);
@@ -175,11 +189,21 @@ const ACTION_WEIGHT: Record<RecipeActionValue, number> = {
 
 const MAX_GENERATED_STEPS = 16;
 const MIN_GENERATED_STEPS = 5;
+const BUILD_TIME_BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
+
+const shuffleArray = <T,>(input: T[]): T[] => {
+  const array = [...input];
+  for (let index = array.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [array[index], array[swapIndex]] = [array[swapIndex], array[index]];
+  }
+  return array;
+};
 
 const parseIngredientList = (raw: string): string[] =>
   raw
     .split(/[\n,]+/)
-    .map((entry) => normalizeIngredientName(entry))
+    .map((entry) => SYNONYM_LOOKUP[normalizeIngredientName(entry)] ?? normalizeIngredientName(entry))
     .filter((entry) => entry.length > 0);
 
 const cloneStep = (step: RecipeStep): RecipeStep =>
@@ -230,6 +254,11 @@ const createRecipeNameFromIngredients = (ingredients: string[]): string => {
 };
 
 export const RecipeMixer = () => {
+  const backendReachable = useBackendReachable();
+  const { backendUrl } = useBackendInfo();
+  const resolvedBackendUrl =
+    backendUrl ?? (BUILD_TIME_BACKEND_URL.trim().length > 0 ? BUILD_TIME_BACKEND_URL : undefined);
+
   const [state, setState] = useState<MixerState>({
     loading: true,
     error: null,
@@ -240,9 +269,32 @@ export const RecipeMixer = () => {
   const [desiredName, setDesiredName] = useState<string>('My Home Bar Creation');
   const [generatedRecipe, setGeneratedRecipe] = useState<Recipe | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const {
+    scaleId,
+    clearScaleId: clearScaleContextId,
+    declinedPrompts,
+    openPrompt,
+    promptOpen,
+  } = useScaleContext();
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const recipeNameId = 'recipe-mixer-name';
   const ingredientInputId = 'recipe-mixer-ingredients';
+
+  useEffect(() => {
+    if (!backendReachable) {
+      return;
+    }
+    if (scaleId || declinedPrompts || promptOpen) {
+      return;
+    }
+    openPrompt();
+  }, [backendReachable, scaleId, declinedPrompts, promptOpen, openPrompt]);
+
+  const handleClearSystemId = useCallback(() => {
+    clearScaleContextId();
+    toast.info('Cleared saved scale ID.');
+  }, [clearScaleContextId]);
 
   useEffect(() => {
     let active = true;
@@ -298,12 +350,58 @@ export const RecipeMixer = () => {
     return unique;
   }, [availableIngredients]);
 
+  const handleSaveToBackend = useCallback(async () => {
+    if (!generatedRecipe) {
+      toast.error('Generate a recipe before saving.');
+      return;
+    }
+    if (!resolvedBackendUrl || !backendReachable) {
+      toast.error('Backend offline. Start the backend service to save recipes.');
+      return;
+    }
+    if (!scaleId.trim()) {
+      openPrompt(scaleId);
+      toast.info('Set a scale ID to save the recipe.');
+      return;
+    }
+
+    const trimmedId = scaleId.trim();
+    setIsSaving(true);
+    try {
+      const response = await fetch(
+        `${resolvedBackendUrl}/recipes/custom/${encodeURIComponent(trimmedId)}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: generatedRecipe.name, recipe: generatedRecipe }),
+        },
+      );
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || 'Failed to save custom recipe.');
+      }
+      const payload = await response.json();
+      toast.success(
+        payload?.recipeId
+          ? `Saved recipe as ${payload.recipeId}.`
+          : `Saved recipe for ${trimmedId}.`,
+      );
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Unable to save recipe to the backend.',
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  }, [backendReachable, generatedRecipe, resolvedBackendUrl, scaleId, openPrompt]);
+
   const generateRecipe = () => {
     if (state.samples.length === 0) {
       setGeneratedRecipe(null);
       return;
     }
 
+    setGeneratedRecipe(null);
     setIsGenerating(true);
 
     requestAnimationFrame(() => {
@@ -315,6 +413,7 @@ export const RecipeMixer = () => {
         }
 
         const variantIndex = buildIngredientVariantIndex(ingredientBadges);
+        const canonicalOrder = shuffleArray(variantIndex.canonical);
         const trimmedName = desiredName.trim();
         const fallbackName =
           trimmedName.length > 0
@@ -356,12 +455,13 @@ export const RecipeMixer = () => {
 
           const matchScore = canonicalMatches.size * 3;
           const actionWeight = ACTION_WEIGHT[step.action as RecipeActionValue] ?? 0;
+          const jitter = Math.random() * 0.75;
           const score = matchScore + actionWeight;
 
           return {
             step,
             matches: canonicalMatches,
-            score,
+            score: score + jitter,
           };
         });
 
@@ -380,10 +480,12 @@ export const RecipeMixer = () => {
         const selectedIndices = new Set<number>();
         const coverage = new Set<string>();
 
-        variantIndex.canonical.forEach((ingredient) => {
+        canonicalOrder.forEach((ingredient) => {
           const candidate = sortedMatched.find(
             (entry) =>
-              entry.matches.has(ingredient) && !selectedIndices.has(entry.step.globalIndex),
+              entry.matches.has(ingredient) &&
+              !selectedIndices.has(entry.step.globalIndex) &&
+              (!entry.step.normalizedIngredient || entry.step.normalizedIngredient === ingredient),
           );
           if (candidate) {
             selectedEntries.push(candidate);
@@ -392,15 +494,21 @@ export const RecipeMixer = () => {
           }
         });
 
-        for (const entry of sortedMatched) {
+        for (const entry of shuffleArray(sortedMatched)) {
           if (selectedEntries.length >= MAX_GENERATED_STEPS) break;
           if (selectedIndices.has(entry.step.globalIndex)) continue;
+          if (
+            entry.step.normalizedIngredient &&
+            coverage.has(entry.step.normalizedIngredient)
+          ) {
+            continue;
+          }
           selectedEntries.push(entry);
           selectedIndices.add(entry.step.globalIndex);
           entry.matches.forEach((match) => coverage.add(match));
         }
 
-        const missingIngredients = variantIndex.canonical.filter(
+        const missingIngredients = canonicalOrder.filter(
           (ingredient) => !coverage.has(ingredient),
         );
 
@@ -410,9 +518,10 @@ export const RecipeMixer = () => {
             ...(INGREDIENT_SYNONYMS[ingredient] ?? []),
           ]);
 
-          const fallback = flattened.find(
+          const fallback = shuffleArray(flattened).find(
             (step) =>
               !selectedIndices.has(step.globalIndex) &&
+              (!step.normalizedIngredient || !coverage.has(step.normalizedIngredient)) &&
               collectMatchingVariants(step.normalizedIngredient, ingredientVariants).length > 0,
           );
 
@@ -428,23 +537,30 @@ export const RecipeMixer = () => {
         });
 
         if (selectedEntries.length < MIN_GENERATED_STEPS) {
-          for (const step of flattened) {
+          for (const step of shuffleArray(flattened)) {
             if (selectedEntries.length >= MIN_GENERATED_STEPS) break;
             if (selectedIndices.has(step.globalIndex)) continue;
+            if (step.normalizedIngredient && coverage.has(step.normalizedIngredient)) {
+              continue;
+            }
             selectedEntries.push({
               step,
               matches: new Set(),
               score: ACTION_WEIGHT[step.action as RecipeActionValue] ?? 0,
             });
             selectedIndices.add(step.globalIndex);
+            if (step.normalizedIngredient) {
+              coverage.add(step.normalizedIngredient);
+            }
           }
         }
 
-        const waitCandidates = flattened
+        const waitCandidates = shuffleArray(flattened)
           .filter(
             (step) =>
               (step.action === RecipeAction.WAIT || step.action === RecipeAction.CONFIRM) &&
-              !selectedIndices.has(step.globalIndex),
+              !selectedIndices.has(step.globalIndex) &&
+              (!step.normalizedIngredient || !coverage.has(step.normalizedIngredient)),
           )
           .sort((a, b) => a.globalIndex - b.globalIndex);
 
@@ -639,7 +755,57 @@ export const RecipeMixer = () => {
             >
               Download .recipe
             </Button>
+            {backendReachable && resolvedBackendUrl && (
+              <Button
+                type="button"
+                variant="outline"
+                disabled={!generatedRecipe || isSaving}
+                onClick={handleSaveToBackend}
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving…
+                  </>
+                ) : scaleId ? (
+                  <>Save to {scaleId}</>
+                ) : (
+                  <>Save to scale</>
+                )}
+              </Button>
+            )}
           </div>
+
+          {backendReachable && (
+            <div className="flex flex-wrap items-center gap-3 rounded-md border border-dashed border-primary/40 bg-primary/5 p-3 text-sm">
+              <Badge variant="outline">
+                Backend: {backendReachable ? 'Connected' : 'Offline'}
+              </Badge>
+              <Badge variant="outline">
+                {scaleId ? `Scale ID: ${scaleId}` : 'No scale ID saved'}
+              </Badge>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => openPrompt(scaleId)}
+                >
+                  {scaleId ? 'Change scale ID' : 'Set scale ID'}
+                </Button>
+                {scaleId && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    onClick={handleClearSystemId}
+                  >
+                    Clear
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
 
           {state.loading && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">

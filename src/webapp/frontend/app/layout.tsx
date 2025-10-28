@@ -10,8 +10,10 @@ import { colors } from '@/data/config/colors.js';
 import '@/css/globals.css';
 import { SearchProvider } from '@/components/shared/SearchProvider';
 import { AnalyticsWrapper } from '@/components/shared/Analytics';
-import MMBFooter from "@/components/mixmeasureberry/MMBFooter";
+import MMBFooter from '@/components/mixmeasureberry/MMBFooter';
 import { BackendProvider } from '@/context/backend-context';
+import { ScaleProvider } from '@/context/scale-context';
+import { ScaleIdPrompt } from '@/components/shared/ScaleIdPrompt';
 import { withBasePath } from '@/lib/base-path';
 
 const baseFont = Inter({
@@ -140,14 +142,17 @@ export default function RootLayout({
           <AnalyticsWrapper />
 
           <BackendProvider>
-            <div className="w-full flex flex-col justify-between items-center font-sans">
-              <SearchProvider>
-                <MMBHeader />
-                <main className="w-full flex flex-col items-center mb-auto">
-                  {children}
-                </main>
-              </SearchProvider>
-            </div>
+            <ScaleProvider>
+              <ScaleIdPrompt />
+              <div className="w-full flex flex-col justify-between items-center font-sans">
+                <SearchProvider>
+                  <MMBHeader />
+                  <main className="w-full flex flex-col items-center mb-auto">
+                    {children}
+                  </main>
+                </SearchProvider>
+              </div>
+            </ScaleProvider>
           </BackendProvider>
 
           <MMBFooter className="mt-6 md:mt-10" />

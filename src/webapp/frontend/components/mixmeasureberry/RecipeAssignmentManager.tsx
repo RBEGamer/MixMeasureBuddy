@@ -386,72 +386,74 @@ export default function RecipeAssignmentManager({ systemId }: RecipeAssignmentMa
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold">Create a custom recipe</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="custom-recipe-name"
-                className="text-sm font-medium text-muted-foreground"
-              >
-                Recipe name
-              </label>
-              <Input
-                id="custom-recipe-name"
-                value={newRecipeName}
-                onChange={(event) => setNewRecipeName(event.target.value)}
-                placeholder="My Custom Mix"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="custom-recipe-description"
-                className="text-sm font-medium text-muted-foreground"
-              >
-                Description
-              </label>
-              <Textarea
-                id="custom-recipe-description"
-                value={newRecipeDescription}
-                onChange={(event) => setNewRecipeDescription(event.target.value)}
-                placeholder="Describe what this recipe does."
-              />
-            </div>
-          </div>
-
+      {/*
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold">Create a custom recipe</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
           <div className="flex flex-col gap-2">
             <label
-              htmlFor="custom-recipe-steps"
+              htmlFor="custom-recipe-name"
               className="text-sm font-medium text-muted-foreground"
             >
-              Steps (JSON array)
+              Recipe name
+            </label>
+            <Input
+              id="custom-recipe-name"
+              value={newRecipeName}
+              onChange={(event) => setNewRecipeName(event.target.value)}
+              placeholder="My Custom Mix"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="custom-recipe-description"
+              className="text-sm font-medium text-muted-foreground"
+            >
+              Description
             </label>
             <Textarea
-              id="custom-recipe-steps"
-              className="font-mono text-xs"
-              rows={8}
-              value={newRecipeSteps}
-              onChange={(event) => setNewRecipeSteps(event.target.value)}
+              id="custom-recipe-description"
+              value={newRecipeDescription}
+              onChange={(event) => setNewRecipeDescription(event.target.value)}
+              placeholder="Describe what this recipe does."
             />
-            <p className="text-xs text-muted-foreground">
-              Provide an array of step objects matching the MixMeasureBuddy format.
-              Each step can include <code>text</code>, <code>ingredient</code>, <code>amount</code>, and <code>action</code>.
-            </p>
           </div>
+            </div>
 
-          <div className="flex justify-end gap-2">
-            <Button type="button" variant="outline" onClick={() => setNewRecipeSteps(DEFAULT_STEPS)}>
-              Reset steps
-            </Button>
-            <Button type="button" onClick={handleCreateCustomRecipe}>
-              Create recipe
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+            <div className="flex flex-col gap-2">
+          <label
+            htmlFor="custom-recipe-steps"
+            className="text-sm font-medium text-muted-foreground"
+          >
+            Steps (JSON array)
+          </label>
+          <Textarea
+            id="custom-recipe-steps"
+            className="font-mono text-xs"
+            rows={8}
+            value={newRecipeSteps}
+            onChange={(event) => setNewRecipeSteps(event.target.value)}
+          />
+          <p className="text-xs text-muted-foreground">
+            Provide an array of step objects matching the MixMeasureBuddy format.
+            Each step can include <code>text</code>, <code>ingredient</code>, <code>amount</code>, and <code>action</code>.
+          </p>
+            </div>
+
+            <div className="flex justify-end gap-2">
+          <Button type="button" variant="outline" onClick={() => setNewRecipeSteps(DEFAULT_STEPS)}>
+            Reset steps
+          </Button>
+          <Button type="button" onClick={handleCreateCustomRecipe}>
+            Create recipe
+          </Button>
+            </div>
+          </CardContent>
+        </Card>
+      */}
     </div>
   );
 }

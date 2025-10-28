@@ -66,6 +66,7 @@ import {
   SelectValue,
 } from '@/components/shared/ui/select';
 import { useBackendInfo, useBackendReachable } from '@/context/backend-context';
+import { useScaleContext } from '@/context/scale-context';
 
 type SampleRecipe = Recipe & { filename: string };
 
@@ -161,6 +162,11 @@ export function RecipeEditor(): JSX.Element {
   const backendReachable = useBackendReachable();
   const { backendUrl } = useBackendInfo();
   const resolvedBackendUrl = backendUrl;
+  const {
+    scaleId: storedScaleId,
+    setScaleId: persistScaleId,
+    clearScaleId: clearStoredScaleId,
+  } = useScaleContext();
   const [availableSamples, setAvailableSamples] = useState<SampleRecipe[]>([]);
   const [loadingSamples, setLoadingSamples] = useState<boolean>(false);
   const [samplesLoaded, setSamplesLoaded] = useState<boolean>(false);
@@ -173,7 +179,7 @@ export function RecipeEditor(): JSX.Element {
     useState<string>('Blank recipe');
   const [exporting, setExporting] = useState<boolean>(false);
   const [savingCustom, setSavingCustom] = useState<boolean>(false);
-  const [scaleIdForCustom, setScaleIdForCustom] = useState<string>('');
+  const [scaleIdForCustom, setScaleIdForCustom] = useState<string>(storedScaleId ?? '');
 
   const baselineRecipeRef = useRef<Recipe>(createEmptyRecipe());
   const uploadInputRef = useRef<HTMLInputElement | null>(null);
@@ -218,6 +224,10 @@ export function RecipeEditor(): JSX.Element {
       shouldDirty: true,
     });
   }, [recipeName, isNewRecipe, filenameManuallyEdited, setValue]);
+
+  useEffect(() => {
+    setScaleIdForCustom(storedScaleId ?? '');
+  }, [storedScaleId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -338,6 +348,12 @@ export function RecipeEditor(): JSX.Element {
     }
   });
 
+  const handleClearScaleId = useCallback(() => {
+    clearStoredScaleId();
+    setScaleIdForCustom('');
+    toast.info('Cleared saved scale ID.');
+  }, [clearStoredScaleId]);
+
   const handleSaveCustomRecipe = handleSubmit(async (values) => {
     if (!backendReachable || !resolvedBackendUrl) {
       toast.error('Backend unavailable. Start the backend service to save custom recipes.');
@@ -347,6 +363,7 @@ export function RecipeEditor(): JSX.Element {
       toast.error('Enter a scale ID before saving to your backend.');
       return;
     }
+    persistScaleId(scaleIdForCustom);
     setSavingCustom(true);
     try {
       const response = await fetch(`${resolvedBackendUrl}/recipes/custom/${scaleIdForCustom.trim()}`, {
@@ -894,7 +911,11 @@ export function RecipeEditor(): JSX.Element {
                           <Input
                             id="recipe-editor-scale-id"
                             value={scaleIdForCustom}
-                            onChange={(event) => setScaleIdForCustom(event.target.value)}
+                            onChange={(event) => {
+                              const value = event.target.value;
+                              setScaleIdForCustom(value);
+                              persistScaleId(value);
+                            }}
                             placeholder="scale-1234"
                             className="w-full sm:w-48"
                           />
@@ -914,6 +935,15 @@ export function RecipeEditor(): JSX.Element {
                             'Save to backend'
                           )}
                         </Button>
+                        {scaleIdForCustom && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            onClick={handleClearScaleId}
+                          >
+                            Clear ID
+                          </Button>
+                        )}
                       </div>
                     )}
                   </div>
