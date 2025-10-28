@@ -1,0 +1,79 @@
+replicaCount: 1
+
+imagePullSecrets: []
+
+backend:
+  image:
+    repository: mixmeasurebuddy-suite-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  env:
+    port: 4000
+    recipeStorage: /data/systems
+    recipeDbPath: /data/mixmeasurebuddy.sqlite
+  readinessProbe:
+    path: /
+    port: 4000
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  livenessProbe:
+    path: /
+    port: 4000
+    initialDelaySeconds: 15
+    periodSeconds: 20
+  resources: {}
+
+web:
+  image:
+    repository: mixmeasurebuddy-suite-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  env:
+    nextPublicBackendUrl: /api
+  readinessProbe:
+    path: /
+    port: 80
+    initialDelaySeconds: 10
+    periodSeconds: 5
+  livenessProbe:
+    path: /
+    port: 80
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  resources: {}
+
+proxy:
+  image:
+    repository: mixmeasurebuddy-suite-frontend
+    tag: latest
+    pullPolicy: IfNotPresent
+  port: 80
+  readinessProbe:
+    path: /
+    port: 80
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  livenessProbe:
+    path: /
+    port: 80
+    initialDelaySeconds: 15
+    periodSeconds: 15
+  resources: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  storageClass: ""
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

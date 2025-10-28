@@ -5,6 +5,7 @@ services:
     build:
       context: ..
       dockerfile: webapp/backend/Dockerfile
+      name: mixmeasurebuddy-suite-backend
     environment:
       - PORT=4000
       - RECIPE_STORAGE=/data/systems
@@ -19,6 +20,7 @@ services:
     build:
       context: ..
       dockerfile: webapp/frontend/Dockerfile
+      name: mixmeasurebuddy-suite-frontend
       args:
         NEXT_PUBLIC_BACKEND_URL: /api
     depends_on:
@@ -31,6 +33,7 @@ services:
     build:
       context: nginx
       dockerfile: Dockerfile
+      name: mixmeasurebuddy-suite-reverse-proxy
     depends_on:
       - backend
       - web

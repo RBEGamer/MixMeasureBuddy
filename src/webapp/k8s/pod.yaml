@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: backend
-      image: mixmeasurebuddy-backend:latest
+      image: mixmeasurebuddy-suite-backend:latest
       imagePullPolicy: IfNotPresent
       env:
         - name: PORT
@@ -15,14 +15,26 @@ spec:
         - name: RECIPE_STORAGE
           value: /data/systems
         - name: RECIPE_DB_PATH
-          value: /data/assignments.json
+          value: /data/mixmeasurebuddy.sqlite
       ports:
         - containerPort: 4000
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 4000
+        initialDelaySeconds: 5
+        periodSeconds: 10
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 4000
+        initialDelaySeconds: 15
+        periodSeconds: 20
       volumeMounts:
-        - name: backend-data
+        - name: mixmeasurebuddy-suite-backend-data
           mountPath: /data
     - name: web
-      image: mixmeasurebuddy-web:latest
+      image: mixmeasurebuddy-suite-web:latest
       imagePullPolicy: IfNotPresent
       env:
         - name: NEXT_PUBLIC_BACKEND_URL
@@ -41,6 +53,23 @@ spec:
           port: 80
         initialDelaySeconds: 30
         periodSeconds: 10
+    - name: reverse-proxy
+      image: mixmeasurebuddy-suite-proxy:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 15
+        periodSeconds: 15
   volumes:
-    - name: backend-data
+    - name: mixmeasurebuddy-suite-backend-data
       emptyDir: {}

@@ -4,6 +4,8 @@ FROM node:20-alpine AS base
 
 WORKDIR /app
 
+RUN apk add --no-cache python3 make g++
+
 COPY webapp/backend/package.json webapp/backend/package-lock.json ./
 RUN npm ci --omit=dev
 

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: mixmeasurebuddy-suite
+description: Helm chart for the MixMeasureBuddy backend, frontend, and reverse-proxy stack.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

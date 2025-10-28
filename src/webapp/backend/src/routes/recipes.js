@@ -145,9 +145,9 @@ export function createRecipeRouter({ recipesDir, storageRoot }) {
 
     try {
       const updated = await addRecipeRecord(systemId, normalized);
-      if (available[staticKey]) {
-        await writeRecipeFile(systemId, normalized, available[staticKey]);
-      } else if (customRecord) {
+      if (staticMap[staticKey]) {
+        await writeRecipeFile(systemId, normalized, staticMap[staticKey]);
+      } else if (customRecord?.recipe) {
         await writeRecipeFile(systemId, normalized, customRecord.recipe);
       }
       return res.status(201).json({ systemId, recipes: updated });
