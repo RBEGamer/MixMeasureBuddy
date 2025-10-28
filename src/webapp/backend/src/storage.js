@@ -3,13 +3,19 @@ import path from 'path';
 
 const DB_PATH = process.env.RECIPE_DB_PATH || path.join(process.cwd(), 'data', 'assignments.json');
 
+const defaultDatabase = {
+  systems: {},
+  recipes: {},
+  custom: {},
+};
+
 const ensureDatabase = async () => {
   try {
     await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
     await fs.access(DB_PATH);
   } catch (error) {
     if (error.code === 'ENOENT') {
-      await fs.writeFile(DB_PATH, JSON.stringify({ systems: {}, recipes: {} }, null, 2), 'utf8');
+      await fs.writeFile(DB_PATH, JSON.stringify(defaultDatabase, null, 2), 'utf8');
       return;
     }
     throw error;
@@ -19,7 +25,12 @@ const ensureDatabase = async () => {
 const readDatabase = async () => {
   await ensureDatabase();
   const raw = await fs.readFile(DB_PATH, 'utf8');
-  return JSON.parse(raw);
+  const data = JSON.parse(raw);
+  return {
+    systems: data.systems ?? {},
+    recipes: data.recipes ?? {},
+    custom: data.custom ?? {},
+  };
 };
 
 const writeDatabase = async (data) => {
@@ -70,4 +81,38 @@ export const setAvailableRecipes = async (recipes) => {
 export const getAvailableRecipes = async () => {
   const db = await readDatabase();
   return db.recipes ?? {};
+};
+
+export const storeCustomRecipe = async (systemId, recipeId, recipe) => {
+  const db = await readDatabase();
+  db.custom[recipeId] = {
+    owner: systemId,
+    recipe,
+    name: recipe?.name ?? recipeId,
+    description: recipe?.description ?? '',
+    createdAt: new Date().toISOString(),
+  };
+  await writeDatabase(db);
+};
+
+export const getCustomRecipe = async (recipeId) => {
+  const db = await readDatabase();
+  return db.custom?.[recipeId];
+};
+
+export const getAllCustomRecipes = async () => {
+  const db = await readDatabase();
+  return db.custom ?? {};
+};
+
+export const listCustomRecipesForSystem = async (systemId) => {
+  const db = await readDatabase();
+  return Object.entries(db.custom ?? {})
+    .filter(([, value]) => value?.owner === systemId)
+    .map(([id, value]) => ({
+      id,
+      name: value?.name ?? id,
+      description: value?.description ?? '',
+      owner: value?.owner,
+    }));
 };

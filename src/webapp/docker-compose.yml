@@ -24,7 +24,7 @@ services:
     depends_on:
       - backend
     environment:
-      - NEXT_PUBLIC_BACKEND_URL=http://backend:4000
+      - NEXT_PUBLIC_BACKEND_URL=http://127.0.0.1:4000
     ports:
       - '8080:80'
     restart: unless-stopped
