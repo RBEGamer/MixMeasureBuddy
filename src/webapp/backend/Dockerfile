@@ -6,11 +6,14 @@ WORKDIR /app
 
 RUN apk add --no-cache python3 make g++
 
-COPY webapp/backend/package.json webapp/backend/package-lock.json ./
+COPY . .
+#COPY package-lock.json .
+RUN ls -la
 RUN npm ci --omit=dev
 
-COPY webapp/backend/src ./src
-COPY recipes ./static
+#COPY src ./src
+RUN ls
+#COPY ../../recipes ./static
 
 ENV NODE_ENV=production
 ENV STATIC_RECIPES=/app/static

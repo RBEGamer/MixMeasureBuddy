@@ -16,7 +16,7 @@ services:
       - ../recipes:/app/static:ro
     restart: unless-stopped
 
-  web:
+  frontend:
     build:
       context: ..
       dockerfile: webapp/frontend/Dockerfile
@@ -29,14 +29,14 @@ services:
       - NEXT_PUBLIC_BACKEND_URL=/api
     restart: unless-stopped
 
-  reverse-proxy:
+  proxy:
     build:
       context: nginx
       dockerfile: Dockerfile
-      name: mixmeasurebuddy-suite-reverse-proxy
+      name: mixmeasurebuddy-suite-proxy
     depends_on:
       - backend
-      - web
+      - frontend
     ports:
       - '8080:80'
     restart: unless-stopped

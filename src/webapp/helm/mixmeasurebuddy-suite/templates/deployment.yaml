@@ -52,15 +52,15 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
-        - name: web
-          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+        - name: frontend
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           imagePullPolicy: {{ .Values.web.image.pullPolicy }}
           env:
             - name: NEXT_PUBLIC_BACKEND_URL
-              value: "{{ .Values.web.env.nextPublicBackendUrl }}"
+              value: "{{ .Values.frontend.env.nextPublicBackendUrl }}"
           ports:
             - containerPort: 80
-          {{- with .Values.web.readinessProbe }}
+          {{- with .Values.frontend.readinessProbe }}
           readinessProbe:
             httpGet:
               path: {{ .path }}
@@ -68,7 +68,7 @@ spec:
             initialDelaySeconds: {{ .initialDelaySeconds }}
             periodSeconds: {{ .periodSeconds }}
           {{- end }}
-          {{- with .Values.web.livenessProbe }}
+          {{- with .Values.frontend.livenessProbe }}
           livenessProbe:
             httpGet:
               path: {{ .path }}
@@ -77,8 +77,8 @@ spec:
             periodSeconds: {{ .periodSeconds }}
           {{- end }}
           resources:
-            {{- toYaml .Values.web.resources | nindent 12 }}
-        - name: reverse-proxy
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
+        - name: proxy
           image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
           imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
           ports:

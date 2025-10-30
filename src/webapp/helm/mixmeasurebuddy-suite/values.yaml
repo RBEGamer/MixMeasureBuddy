@@ -4,7 +4,7 @@ imagePullSecrets: []
 
 backend:
   image:
-    repository: mixmeasurebuddy-suite-frontend
+    repository: mixmeasurebuddy-suite-backend
     tag: latest
     pullPolicy: IfNotPresent
   env:
@@ -23,7 +23,7 @@ backend:
     periodSeconds: 20
   resources: {}
 
-web:
+frontend:
   image:
     repository: mixmeasurebuddy-suite-frontend
     tag: latest
@@ -44,7 +44,7 @@ web:
 
 proxy:
   image:
-    repository: mixmeasurebuddy-suite-frontend
+    repository: mixmeasurebuddy-suite-proxy
     tag: latest
     pullPolicy: IfNotPresent
   port: 80
