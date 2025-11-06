@@ -3,14 +3,14 @@
 set -euo pipefail
 
 # Usage:
-#   REGISTRY=registry.example.com/myorg ./scripts/build_and_push_images.sh
+#   REGISTRY=registry.example.com/myorg ./build_and_push_images.sh
 # Environment:
 #   REGISTRY (required) - Docker registry/repository prefix, e.g. ghcr.io/myorg
 #   TAG (optional)      - image tag (default: latest)
 #   DOCKERFILE_BACKEND (optional)  - path to backend Dockerfile
 #   DOCKERFILE_WEB (optional)      - path to web Dockerfile
 #   DOCKERFILE_PROXY (optional)    - path to proxy Dockerfile
-#   CONTEXT (optional)             - root context directory (default: src/webapp)
+#   CONTEXT (optional)             - root context directory (default: ./)
 
 main() {
   local registry="${REGISTRY:-}"
@@ -32,17 +32,20 @@ main() {
   echo
 
   build_and_push \
-    "${registry}/mixmeasurebuddy-suite-backend:${tag}" \
+    "${registry}" \
+    "mixmeasurebuddy-suite-backend:${tag}" \
     "${dockerfile_backend}" \
     "${folder_backend}"
 
   build_and_push \
-    "${registry}/mixmeasurebuddy-suite-frontend:${tag}" \
+    "${registry}" \
+    "mixmeasurebuddy-suite-frontend:${tag}" \
     "${dockerfile_frontend}" \
     "${folder_frontend}"
 
   build_and_push \
-    "${registry}/mixmeasurebuddy-suite-proxy:${tag}" \
+    "${registry}" \
+    "mixmeasurebuddy-suite-proxy:${tag}" \
     "${dockerfile_proxy}" \
     "${folder_proxy}"
 
@@ -51,9 +54,10 @@ main() {
 }
 
 build_and_push() {
-  local image="$1"
-  local dockerfile="$2"
-  local build_context="$3"
+  local registry="$1"
+  local image="$2"
+  local dockerfile="$3"
+  local build_context="$4"
 
   echo ">>> Building ${image}"
   docker build \
