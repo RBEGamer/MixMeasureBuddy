@@ -44,6 +44,56 @@
     "version": "1.0.0"
   },
   {
+    "filename": "Apfelstrudel_Shot.recipe",
+    "name": "Apfelstrudel Shot",
+    "steps": [
+      {
+        "text": "Add ice to the shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Apple Schnapps",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Baileys Irish Cream",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Cinnamon Syrup",
+        "amount": 5,
+        "action": 0
+      },
+      {
+        "text": "Shake until well chilled",
+        "ingredient": "",
+        "amount": 10,
+        "action": 2
+      },
+      {
+        "text": "Strain into a chilled shot glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Dust with ground cinnamon",
+        "ingredient": "Ground Cinnamon",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A sweet dessert shot combining crisp apple schnapps, creamy Baileys, and warm cinnamon spice.",
+    "version": "1.0.0"
+  },
+  {
     "filename": "Apricot_Lavender_Sour.recipe",
     "name": "Apricot Lavender Sour",
     "steps": [
@@ -233,6 +283,68 @@
       }
     ],
     "description": "Vacation-ready rum medley with pineapple, orange, and coffee notes.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Banana_Baileys_Colada.recipe",
+    "name": "Banana Baileys Colada",
+    "steps": [
+      {
+        "text": "Add crushed ice to the blender cup",
+        "ingredient": "Ice",
+        "amount": 180,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Baileys Irish Cream",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "White Rum",
+        "amount": 30,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Coconut Cream",
+        "amount": 60,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Pineapple Juice",
+        "amount": 90,
+        "action": 0
+      },
+      {
+        "text": "Add a ripe banana",
+        "ingredient": "Banana",
+        "amount": 1,
+        "action": 1
+      },
+      {
+        "text": "Blend until smooth and creamy",
+        "ingredient": "",
+        "amount": 18,
+        "action": 2
+      },
+      {
+        "text": "Pour into a chilled hurricane glass",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a banana slice and pineapple frond",
+        "ingredient": "Banana Slice",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "A rich frozen colada blending Baileys Irish Cream, ripe banana, coconut, pineapple, and white rum.",
     "version": "1.0.0"
   },
   {
@@ -869,6 +981,62 @@
       }
     ],
     "description": "A Fall-inspired martini blending crisp apple cider with rich caramel and vodka.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Casanova_Cocktail.recipe",
+    "name": "Casanova Cocktail",
+    "steps": [
+      {
+        "text": "Add ice to the shaker",
+        "ingredient": "Ice",
+        "amount": -1,
+        "action": 1
+      },
+      {
+        "text": "",
+        "ingredient": "Gin",
+        "amount": 45,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Elderflower Liqueur",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Lemon Juice",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "",
+        "ingredient": "Simple Syrup",
+        "amount": 10,
+        "action": 0
+      },
+      {
+        "text": "Shake until well chilled",
+        "ingredient": "",
+        "amount": 15,
+        "action": 2
+      },
+      {
+        "text": "Strain into a chilled coupe",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      },
+      {
+        "text": "Garnish with a lemon twist",
+        "ingredient": "Lemon Twist",
+        "amount": 1,
+        "action": 1
+      }
+    ],
+    "description": "An elegant gin sour with elderflower liqueur, bright lemon, and a softly floral finish.",
     "version": "1.0.0"
   },
   {
@@ -2331,6 +2499,38 @@
       }
     ],
     "description": "Warming mug of Irish whiskey, coffee, and lightly whipped cream.",
+    "version": "1.0.0"
+  },
+  {
+    "filename": "Irish_Frog_Shot.recipe",
+    "name": "Irish Frog Shot",
+    "steps": [
+      {
+        "text": "Pour Midori into a chilled shot glass",
+        "ingredient": "Midori",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Float Baileys Irish Cream over the back of a spoon",
+        "ingredient": "Baileys Irish Cream",
+        "amount": 20,
+        "action": 0
+      },
+      {
+        "text": "Add a splash of blue curaçao",
+        "ingredient": "Blue Curaçao",
+        "amount": 5,
+        "action": 0
+      },
+      {
+        "text": "Serve immediately",
+        "ingredient": "",
+        "amount": -1,
+        "action": 2
+      }
+    ],
+    "description": "A colorful layered shot combining melon liqueur, creamy Irish cream, and blue curaçao.",
     "version": "1.0.0"
   },
   {

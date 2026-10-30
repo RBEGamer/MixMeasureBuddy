@@ -1,0 +1,62 @@
+{
+    "filename": "Banana_Baileys_Colada.recipe",
+    "name": "Banana Baileys Colada",
+    "steps": [
+        {
+            "text": "Add crushed ice to the blender cup",
+            "ingredient": "Ice",
+            "amount": 180,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Baileys Irish Cream",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "White Rum",
+            "amount": 30,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Coconut Cream",
+            "amount": 60,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Pineapple Juice",
+            "amount": 90,
+            "action": 0
+        },
+        {
+            "text": "Add a ripe banana",
+            "ingredient": "Banana",
+            "amount": 1,
+            "action": 1
+        },
+        {
+            "text": "Blend until smooth and creamy",
+            "ingredient": "",
+            "amount": 18,
+            "action": 2
+        },
+        {
+            "text": "Pour into a chilled hurricane glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Garnish with a banana slice and pineapple frond",
+            "ingredient": "Banana Slice",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A rich frozen colada blending Baileys Irish Cream, ripe banana, coconut, pineapple, and white rum.",
+    "version": "1.0.0"
+}
