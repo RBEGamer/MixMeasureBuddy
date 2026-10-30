@@ -1,0 +1,32 @@
+{
+    "filename": "Irish_Frog_Shot.recipe",
+    "name": "Irish Frog Shot",
+    "steps": [
+        {
+            "text": "Pour Midori into a chilled shot glass",
+            "ingredient": "Midori",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Float Baileys Irish Cream over the back of a spoon",
+            "ingredient": "Baileys Irish Cream",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "Add a splash of blue curaçao",
+            "ingredient": "Blue Curaçao",
+            "amount": 5,
+            "action": 0
+        },
+        {
+            "text": "Serve immediately",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        }
+    ],
+    "description": "A colorful layered shot combining melon liqueur, creamy Irish cream, and blue curaçao.",
+    "version": "1.0.0"
+}

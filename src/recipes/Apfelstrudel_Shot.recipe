@@ -1,0 +1,50 @@
+{
+    "filename": "Apfelstrudel_Shot.recipe",
+    "name": "Apfelstrudel Shot",
+    "steps": [
+        {
+            "text": "Add ice to the shaker",
+            "ingredient": "Ice",
+            "amount": -1,
+            "action": 1
+        },
+        {
+            "text": "",
+            "ingredient": "Apple Schnapps",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Baileys Irish Cream",
+            "amount": 20,
+            "action": 0
+        },
+        {
+            "text": "",
+            "ingredient": "Cinnamon Syrup",
+            "amount": 5,
+            "action": 0
+        },
+        {
+            "text": "Shake until well chilled",
+            "ingredient": "",
+            "amount": 10,
+            "action": 2
+        },
+        {
+            "text": "Strain into a chilled shot glass",
+            "ingredient": "",
+            "amount": -1,
+            "action": 2
+        },
+        {
+            "text": "Dust with ground cinnamon",
+            "ingredient": "Ground Cinnamon",
+            "amount": 1,
+            "action": 1
+        }
+    ],
+    "description": "A sweet dessert shot combining crisp apple schnapps, creamy Baileys, and warm cinnamon spice.",
+    "version": "1.0.0"
+}
