@@ -80,8 +80,28 @@ Leave every part in the band unpopulated if you don't need a battery; the rest o
 ## Fabrication files (`mmb_carrier/fab/`)
 
 * `mmb_carrier_gerbers.zip`: Gerbers and Excellon drill file
-* `mmb_carrier_bom.csv`: BOM (plus 2 × 1×20 female 2.54 mm headers if you socket the Pico, and 2 × 1×8 female 2.54 mm headers for the A1 stepper socket)
-* `mmb_carrier_pos.csv`: pick-and-place file for the SMD parts
+* `mmb_carrier_bom.csv`: BOM with an `LCSC` column (plus 2 × 1×20 female 2.54 mm headers if you socket the Pico, and 2 × 1×8 female 2.54 mm headers for the A1 stepper socket)
+* `mmb_carrier_pos.csv`: pick-and-place file for the SMD parts (KiCad format)
+* `mmb_carrier_jlcpcb_bom.csv` + `mmb_carrier_jlcpcb_cpl.csv`: BOM (`Comment, Designator, Footprint, LCSC`) and placement file (`Designator, Mid X, Mid Y, Layer, Rotation`) for JLCPCB SMT assembly of the 30 SMD parts
+
+### LCSC part numbers
+
+Every orderable part carries an `LCSC` field in the schematic and on the PCB footprint. The numbers were checked against the LCSC / JLCPCB part pages (November 2026); check stock before ordering.
+
+| Part | LCSC | Notes |
+|---|---|---|
+| 0805 resistors 330 / 1k / 2k / 10k / 24k / 75k / 100k / 220k | C17630 / C17513 / C17604 / C17414 / C17575 / C17819 / C149504 / C17556 | UNI-ROYAL 0805W8F series, 1 %; 75k is an extended part |
+| 100 nF 0805 / 1 µF 0805 / 4.7 µF 0805 / 22 µF 1206 | C49678 / C28323 / C1779 / C12891 | X7R 50 V, X7R 50 V, X5R 25 V, X5R 25 V |
+| C14 100 µF 25 V, 6.3 × 5.8 mm | C178540 | Panasonic EEE-FK1E101SP |
+| SS14 / red 0805 LED / AO3401A | C2480 / C84256 / C15127 | |
+| MCP73831T-2ACI/OT / MT3608 / CH224K | C424093 / C84817 / C970725 | extended parts |
+| L1 Bourns SRN6045TA-100M | C2046332 | second source on the same footprint: SXN SMNR6045-100MT, C135304 |
+| J9 GCT USB4125-GF-A (USB-C, power only) | C3151650 | exact part for the footprint |
+| J4 1×4 female header / A1 1×8 female header (2 pcs) | C2718488 / C27438 | 8.5 mm high |
+| J7 JST S2B-PH-K-S / SW1, SW2 6 × 6 × 5 mm tact switch | C173752 / C393938 | |
+| Male pin headers J1-J3, J5, J6, J8, J10 | C2337 | 1×40 breakable, cut to length (no field on the symbols) |
+
+The JLCPCB files cover the SMD parts only; the through-hole parts (headers, switches, JST, Pico) are hand-soldered. Rotations in the CPL are KiCad's: check the part orientation in JLCPCB's placement preview before confirming, especially for the SOT-23 parts, the diodes, the electrolytic C14, U5 and J9.
 * `../mmb_carrier_schematic.pdf`: schematic
 
 ## Regenerating
