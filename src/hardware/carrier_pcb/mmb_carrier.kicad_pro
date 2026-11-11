@@ -356,6 +356,14 @@
       {
         "netclass": "Power",
         "pattern": "VBUS"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/VMOT"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/MOT_*"
       }
     ]
   },
